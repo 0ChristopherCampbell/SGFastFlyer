@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SGFastFlyers.Models.PrintDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NeedsPrint)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrintSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDoubleSided)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NeedsPrint)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrintSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDoubleSided)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

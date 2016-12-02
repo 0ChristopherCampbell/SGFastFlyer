@@ -1,0 +1,58 @@
+﻿@model SGFastFlyers.Models.PrintDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PrintDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NeedsPrint)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NeedsPrint)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrintSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrintSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDoubleSided)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDoubleSided)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
