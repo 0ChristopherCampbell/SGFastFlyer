@@ -4193,7 +4193,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-brand {
   float: left;
-  padding: 15px 15px;
+  padding: 5px 5px;
   font-size: 18px;
   line-height: 20px;
 }
@@ -4501,8 +4501,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
-  border-color: #080808;
+  background-color: #444444;
+  border-color: #222222;
 }
 
 .navbar-inverse .navbar-brand {
@@ -4934,16 +4934,17 @@ a.list-group-item.active > .badge,
   font-weight: 200;
   line-height: 2.1428571435;
   color: inherit;
-  background-color: #eeeeee;
+  background-color: #222222;
 }
 
 .jumbotron h1 {
   line-height: 1;
-  color: inherit;
+  color: #ddd;
 }
 
 .jumbotron p {
   line-height: 1.4;
+  color: #ddd;
 }
 
 .container .jumbotron {
