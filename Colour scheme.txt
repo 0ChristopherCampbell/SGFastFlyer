@@ -1,0 +1,2 @@
+ Colour code for the yellow is #F9E141
+      Colour code for buy buttons is #7FFF00
