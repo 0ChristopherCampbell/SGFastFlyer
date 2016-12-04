@@ -1,28 +1,97 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div class="jumbotron">
-    <h1><span style="color:#F5E90C;">SG</span> Fast Flyers</h1>
-    <p color="#ddd">The fastest flyers in the west.</p>
-</div>
 
+<div class="jumbotron" style="background-color:transparent">
+
+    <h1>
+        <img src="~/Content/Images/logo.jpg" width="200" height="200" /><span style="color:#F9E141" /><span style="padding:10px"></span>SG
+        <span style="color: black" />Fast Flyers<br />
+    </h1>
+    <h1 style="text-align:center; color:black">
+        Organise your print and distribution in under <span style="color:red">10 minutes!</span>
+
+    </h1>
+</div>
 <div class="row">
-    <div class="col-md-4">
-        <h2>Example Section</h2>
+    <div class="col-md-6">
+
+        <h2>Instant Quote</h2>
         <p>
-            Section A
+            <label for="textfield">Quantity:</label>
+            <input type="text" name="textfield" id="textfield">needs to be only able to accept numbers.<br />
+            <label for="checkbox">Is the delivery area classed as Metro?</label>
+            <input type="checkbox" name="checkbox" id="checkbox" checked="checked"><br />
+            <label for="checkbox">Would you like us to print the flyers for you?</label>
+            <input type="checkbox" name="checkbox2" id="checkbox2" checked="checked"><br />
+            <label for="papersize">Pick a size for your leaflet:</label>
+            <input type="text" name="papersize" id="papersize" />DropDown List<br />
+            <label for="single/double">SingleSided/DoubleSided:</label>
+            <input type="text" name="single/double" id="single/double">DropDown List
+
         </p>
-    </div>
-    <div class="col-md-4">
-        <h2>Example Section</h2>
         <p>
-            Section B
+            <a class="btn btn-default" href="~/CreateOrderViewModel/Create" style="background-color:#7FFF00">Instant Quote &raquo; </a>
+            <input type="text" name="textfield" id="textfield">Needs to be formatted to currency and populated from input boxes and price data.
+            Need a helper text box saying to click again for another quote.<br />
         </p>
+        <p><a class="btn btn-default btn-lg" href="~/CreateOrderViewModel/Create" style="background-color:#7FFF00">Order Now &raquo;</a></p>
+
     </div>
-    <div class="col-md-4">
-        <h2>Example Section</h2>
-        <p>
-            Section C.........
-        </p>
+    <!--This section is copied from http://ldn.net.au/home I would rather the wagon wheel effect going around...but either way...as long as it looks good.-->
+    <div class="col-md-6">
+        <div class="container">
+            <h2>Why letterbox advertising?</h2>
+
+            <p class="sub-header">Letterbox advertising is a great way for SMEs to reach their target audience. &nbsp;</p>
+
+            <p class="sub-header">&nbsp;</p>
+
+
+            <ul class="statistic-list list-inline row">
+                <li class="item col-md-4 col-sm-6">
+                    <div class="item-con statistic1">
+                        <div class="progress progress-p">
+                            <span class="progressbar-back-text" style="display: none;">62</span>
+                            <span class="progressbar-back-text initial">62</span>
+                            <div class="progress-bar fastest" data-transitiongoal="62" aria-valuenow="62" style="width: 62%;"><span class="progressbar-front-text" style="width: 420px;">62</span></div>
+                        </div>
+                        <div class="">
+                            <span></span>
+                        </div>
+                        <div class="statistic-description">62% of Australians think catalogues and flyers are the most effective advertising channel</div>
+                    </div>
+                </li>
+                <li class="item col-md-4 col-sm-6">
+                    <div class="item-con statistic2">
+                        <div class="progress progress-m">
+                            <span class="progressbar-back-text" style="display: none;">3</span>
+                            <span class="progressbar-back-text initial">3.7</span>
+                            <div class="progress-bar fastest" data-transitiongoal="3.7" aria-valuenow="3" style="width: 3%;"><span class="progressbar-front-text" style="width: 420px;">3</span></div>
+                        </div>
+                        <div class="">
+                            <span></span>
+                        </div>
+                        <div class="statistic-description">3.7 million more people read letterbox media than a daily newspaper Monday to Friday.</div>
+                    </div>
+                </li>
+                <li class="item col-md-4 col-sm-6">
+                    <div class="item-con statistic3">
+                        <div class="progress progress-p">
+                            <span class="progressbar-back-text" style="display: none;">88</span>
+                            <span class="progressbar-back-text initial">88</span>
+                            <div class="progress-bar fastest" data-transitiongoal="88" aria-valuenow="88" style="width: 88%;"><span class="progressbar-front-text" style="width: 420px;">88</span></div>
+                        </div>
+                        <div class="">
+                            <span></span>
+                        </div>
+                        <div class="statistic-description">88% people that receive letterbox advertising read or look into it</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
     </div>
+
 </div>
