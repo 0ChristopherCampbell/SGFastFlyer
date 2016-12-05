@@ -22,6 +22,21 @@ namespace SGFastFlyers.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(bool prePopulated)
+        {
+            if (HttpContext.Session["instantQuoteOrder"] != null && prePopulated)
+            {
+                CreateOrderViewModel newOrder = (CreateOrderViewModel)HttpContext.Session["instantQuoteOrder"];
+                return View(newOrder);
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         // POST: CreateOrderViewModel/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -55,10 +70,19 @@ namespace SGFastFlyers.Controllers
                 {
                     OrderID = order.ID,
                     NeedsPrint = createOrderViewModel.NeedsPrint,
-                    IsDoubleSided = createOrderViewModel.IsDoubleSided,
+                    PrintFormat = createOrderViewModel.PrintFormat,
                     PrintSize = createOrderViewModel.PrintSize
                 };
                 db.PrintDetails.Add(printDetail);
+
+                Quote quote = new Quote
+                {
+                    Cost = createOrderViewModel.Cost,
+                    IsMetro = createOrderViewModel.IsMetro,
+                    Quantity = createOrderViewModel.Quantity,
+                    OrderID = order.ID
+                };
+                db.Quotes.Add(quote);
 
                 db.SaveChanges();
 

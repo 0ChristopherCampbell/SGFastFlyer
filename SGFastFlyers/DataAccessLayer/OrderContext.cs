@@ -14,11 +14,13 @@ namespace SGFastFlyers.DataAccessLayer
         public DbSet<Order> Orders { get; set; }
         public DbSet<DeliveryDetail> DeliveryDetails { get; set; }
         public DbSet<PrintDetail> PrintDetails { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            #region Model Relationship Definitions
             modelBuilder.Entity<PrintDetail>()
                 .HasKey(t => t.OrderID);
 
@@ -32,6 +34,13 @@ namespace SGFastFlyers.DataAccessLayer
             modelBuilder.Entity<Order>()
                 .HasRequired(t => t.DeliveryDetail)
                 .WithRequiredPrincipal(t => t.Order);
+
+            modelBuilder.Entity<Order>()
+                .HasRequired(t => t.Quote)
+                .WithOptional(t => t.Order);
+            #endregion
         }
+
+        public System.Data.Entity.DbSet<SGFastFlyers.ViewModels.InstantQuoteViewModel> InstantQuoteViewModels { get; set; }
     }
 }

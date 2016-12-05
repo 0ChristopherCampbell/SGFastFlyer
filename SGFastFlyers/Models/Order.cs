@@ -18,10 +18,11 @@ namespace SGFastFlyers.Models
         public string EmailAddress { get; set; }
         [Required, Display(Name = "Phone Number"), RegularExpression(@"^[0-9]*$")]
         public string PhoneNumber { get; set; }
-        [Required]
+        [Required, Range(5000, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}")]
         public int Quantity { get; set; }
 
         public virtual PrintDetail PrintDetail { get; set; }
         public virtual DeliveryDetail DeliveryDetail { get; set; }
+        public virtual Quote Quote { get; set; }
     }
 }

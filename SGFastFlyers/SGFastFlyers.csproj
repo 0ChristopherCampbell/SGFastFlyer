@@ -202,6 +202,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PrintDetailsController.cs" />
+    <Compile Include="Controllers\QuotesController.cs" />
     <Compile Include="DataAccessLayer\OrderContext.cs" />
     <Compile Include="DataAccessLayer\OrderInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,10 +214,13 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PrintDetail.cs" />
+    <Compile Include="Models\Quote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utility\Enums.cs" />
     <Compile Include="ViewModels\CreateOrderViewModel.cs" />
+    <Compile Include="ViewModels\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\InstantQuoteViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -286,8 +290,9 @@
     <Content Include="Views\DeliveryDetails\Details.cshtml" />
     <Content Include="Views\DeliveryDetails\Edit.cshtml" />
     <Content Include="Views\DeliveryDetails\Index.cshtml" />
-    <Content Include="Views\CreateOrderViewModel\Create.cshtml" />
-    <Content Include="Views\CreateOrderViewModel\Edit.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InstantQuoteViewModel.cshtml" />
+    <Content Include="Views\Home\QuoteDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

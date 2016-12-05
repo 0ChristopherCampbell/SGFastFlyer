@@ -18,4 +18,16 @@ namespace SGFastFlyers.Enums
             
         /// Etc etc    
     }
+
+    /// <summary>
+    /// The format of the flyer, double sided, folded etc
+    /// </summary>
+    public enum PrintFormat
+    {
+        Standard = 100,
+        DoubleSided = 200,
+        TriFold = 300,
+        SomeOtherFormat = 305
+            //etc..
+    }
 }

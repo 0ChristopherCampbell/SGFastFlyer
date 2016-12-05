@@ -13,7 +13,7 @@ namespace SGFastFlyers.Models
         [Required, Display(Name = "Paper Size")]
         public Enums.PrintSize? PrintSize { get; set; }
         [Required, Display(Name = "Double Sided")]
-        public bool? IsDoubleSided { get; set; }
+        public Enums.PrintFormat? PrintFormat { get; set; }
 
         public virtual Order Order { get; set; }
         // Future: Print Design
