@@ -233,6 +233,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Documents\SGFastFlyers_Letterbox_Privacy Policy .pdf" />
+    <Content Include="Content\Documents\SGFastFlyers_Letterbox_TC.pdf" />
+    <Content Include="Content\Documents\SGFastFlyers_Shipping_and_Returns_Policy.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

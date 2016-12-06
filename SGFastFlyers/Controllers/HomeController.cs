@@ -56,7 +56,7 @@ namespace SGFastFlyers.Controllers
                     Quantity = model.Quantity
                 };
 
-                // They're going ahead with the order, save their quote so it's locked in for x months
+                // They're going ahead with the order, save their quote so it's locked in for x months, and email it to them...gaining their email address.
                 db.Quotes.Add(newQuote);
                 db.SaveChanges();
 
@@ -79,14 +79,14 @@ namespace SGFastFlyers.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "A little of our story.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Feel llike a chat? Feel free to give us a bell. I'll put the kettle on!";
 
             return View();
         }

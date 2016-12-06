@@ -18,11 +18,12 @@ namespace SGFastFlyers.Models
         public int Quantity { get; set; }
         
         [Required]
-        public bool IsMetro { get; set; }
+        public bool IsMetro {get; set; }
 
         [Required]
         public decimal? Cost
         {
+            
             // TODO: Does this need to be a property somewhere
             // TODO: Metro/Country Prices
             get

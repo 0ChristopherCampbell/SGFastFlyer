@@ -37,7 +37,27 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - SGFastFlyer</p>
+            <!--This area will be for the Terms and Conditions, Privacy Policy, Refund/Cancellation policy, Shipping & Delivery policy -->
+                <div class="navbar-nav">
+                    <div class="container">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <!--This area will be for the Terms and Conditions, Privacy Policy, Shipping & Delivery policy -->
+                            <li> &copy; @DateTime.Now.Year - SG Fast Flyers</li>
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Make an Order", "Create", "Orders")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </div>
+                </div>
+          
         </footer>
     </div>
 
