@@ -10,10 +10,7 @@ namespace SGFastFlyers.Enums
     /// </summary>
     public enum PrintSize
     {   
-        A1 = 1,
-        A2 = 2,
-        A3 = 3,
-        A4 = 4,
+        DL = 1,
         A5 = 5
             
         /// Etc etc    
@@ -25,9 +22,6 @@ namespace SGFastFlyers.Enums
     public enum PrintFormat
     {
         Standard = 100,
-        DoubleSided = 200,
-        TriFold = 300,
-        SomeOtherFormat = 305
-            //etc..
+        DoubleSided = 200
     }
 }

@@ -40,7 +40,5 @@ namespace SGFastFlyers.DataAccessLayer
                 .WithOptional(t => t.Order);
             #endregion
         }
-
-        public System.Data.Entity.DbSet<SGFastFlyers.ViewModels.InstantQuoteViewModel> InstantQuoteViewModels { get; set; }
     }
 }

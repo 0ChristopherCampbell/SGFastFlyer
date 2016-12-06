@@ -3,24 +3,41 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+    <script type="text/javascript">
+        function setQuotePrice()
+        {
+           
+            var i = 0;
+            i = document.getElementById('instantQuoteViewModel_Quantity').value;
+            var metro = document.getElementById('instantQuoteViewModel_IsMetro').checked;
+            var cost = i / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
+            if (!metro)
+            {
+                cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
+            }
+            document.getElementById('quotePrice').value = cost;
+        }
+         
+    </script>
+
     <div class="form-horizontal">
         <h4>Get an Instant Quote!</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        <div class="form-group" onmouseout="setQuotePrice();">
             @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.Quantity, htmlAttributes: new { @class = "form-control" })
+                <!-- //~~ATSYMBOL~~Html.DropDownListFor(model => model.Quantity, SGFastFlyers.ViewModels.InstantQuoteViewModel.QuantityList, "-Please select-", new { htmlAttributes = new { ~~ATSYMBOL~~class = "form-control" } })-->
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.IsMetro)
+                    @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -28,9 +45,9 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.NeedsPrint)
+                    @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -38,25 +55,29 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.PrintSize, htmlAttributes: new { @class = "form-control" })
+            <div class="col-md-6">
+                @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.PrintFormat, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PrintFormat, "", new { @class = "text-danger" })
+            <div class="col-md-6">
+                @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div>
+    <input type="text" id="quotePrice" name="quotePrice" value="3333" />
+            </div>
     </div>
+    <script type="text/javascript">        
+        this.setQuotePrice();
+    </script>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+ 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

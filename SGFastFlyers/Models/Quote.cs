@@ -29,18 +29,14 @@ namespace SGFastFlyers.Models
             {
                 if (IsMetro)
                 {
-                    return (43 * (Quantity / 1000));
+                    return (decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["CostPer1000"]) * (Quantity / 1000)  );
                 }
                 else
                 {
-                    return (43 * (Quantity / 1000));
+                    return (decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["CostPer1000"]) * (Quantity / 1000) + decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["NonMetroAddition"]));
                 }
             }
-            set
-            {
-                // Not sure if this is the correct way to auto calculate cost
-                value = (43 * (Quantity / 1000));
-            }
+            set { }         
         }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
