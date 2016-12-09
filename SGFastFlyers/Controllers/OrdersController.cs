@@ -141,10 +141,21 @@ namespace SGFastFlyers.Controllers
 
                 Transaction transaction = new Transaction();
 
-                PaymentDetails paymentDetails = new PaymentDetails();
-                paymentDetails.TotalAmount = (int)(quote.Cost*100); // Convert to integer form currency (cents)
+                PaymentDetails paymentDetails = new PaymentDetails()
+                {
+                    TotalAmount = (int)(quote.Cost * 100)
+                };
+
+                Customer customerDetails = new Customer()
+                {
+                    FirstName = order.FirstName,
+                    LastName = order.LastName,
+                    Phone = order.PhoneNumber,
+                    Email = order.EmailAddress
+                };
 
                 transaction.PaymentDetails = paymentDetails;
+                transaction.Customer = customerDetails;
                 transaction.RedirectURL = "https://localhost:44300/Orders/PaymentComplete"; // Needs to be changed for live
                 transaction.CancelURL = "http://www.eway.com.au";
                 transaction.TransactionType = TransactionTypes.Purchase;
