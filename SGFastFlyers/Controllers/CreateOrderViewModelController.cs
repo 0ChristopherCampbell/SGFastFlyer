@@ -14,7 +14,7 @@ namespace SGFastFlyers.Controllers
 {
     public class CreateOrderViewModelController : Controller
     {
-        private OrderContext db = new OrderContext();
+        private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
 
         // GET: CreateOrderViewModel/Create
         public ActionResult Create()

@@ -5,17 +5,17 @@
     @Html.AntiForgeryToken()
     <script type="text/javascript">
         function setQuotePrice()
-        {
-           
+        {           
             var i = 0;
-            i = document.getElementById('instantQuoteViewModel_Quantity').value;
-            var metro = document.getElementById('instantQuoteViewModel_IsMetro').checked;
+            i = document.getElementById("HomePageQuoteViewModel_Quantity").value;
+            var metro = document.getElementById("HomePageQuoteViewModel_IsMetro").checked;
             var cost = i / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
             if (!metro)
             {
                 cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
             }
-            document.getElementById('quotePrice').value = cost;
+
+            document.getElementById("quotePrice").innerHTML = cost;
         }
      
     </script>
@@ -63,16 +63,13 @@
             </div>
        
         <div>
-    <input type="text" id="quotePrice" name="quotePrice" value="3333" />
-            </div>
+        <label>Your quote price: </label><label id="quotePrice"></label>
+    </div>
 
     <script type="text/javascript">        
-        this.setQuotePrice();
+        document.getElementById("HomePageQuoteViewModel_Quantity").onchange = setQuotePrice();
     </script>
 }
-
- 
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

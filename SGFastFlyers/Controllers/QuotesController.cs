@@ -13,7 +13,7 @@ namespace SGFastFlyers.Controllers
 {
     public class QuotesController : Controller
     {
-        private OrderContext db = new OrderContext();
+        private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
 
         // GET: Quotes
         public ActionResult Index()

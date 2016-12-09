@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ManageViewModels.cs" company="SGFastFlyers">
+//     Copyright (c) SGFastFlyers. All rights reserved.
+// </copyright>
+// <author> Unchanged - >>Fill this in when editing<< </author>
+//-----------------------------------------------------------------------
 namespace SGFastFlyers.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.Owin.Security;
+
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }

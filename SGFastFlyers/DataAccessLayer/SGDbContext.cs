@@ -5,9 +5,9 @@ using SGFastFlyers.Models;
 
 namespace SGFastFlyers.DataAccessLayer
 {
-    public class OrderContext : DbContext
+    public class SGDbContext : DbContext
     {
-        public OrderContext() : base("OrderContext")
+        public SGDbContext() : base("SGDbContext")
         {
         }
 
@@ -36,8 +36,8 @@ namespace SGFastFlyers.DataAccessLayer
                 .WithRequiredPrincipal(t => t.Order);
 
             modelBuilder.Entity<Order>()
-                .HasRequired(t => t.Quote)
-                .WithOptional(t => t.Order);
+                .HasOptional(t => t.Quote)
+                .WithOptionalPrincipal(t => t.Order);
             #endregion
         }
     }

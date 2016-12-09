@@ -1,17 +1,20 @@
-﻿using SGFastFlyers.DataAccessLayer;
-using SGFastFlyers.Models;
-using SGFastFlyers.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="HomeController.cs" company="SGFastFlyers">
+//     Copyright (c) SGFastFlyers. All rights reserved.
+// </copyright>
+// <author> Christopher Campbell </author>
+//-----------------------------------------------------------------------
 namespace SGFastFlyers.Controllers
 {
+    using System.Web.Mvc;
+
+    using DataAccessLayer;
+    using Models;
+    using ViewModels;
+
     public class HomeController : Controller
     {
-        private OrderContext db = new OrderContext();
+        private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
 
         public ActionResult Index()
         {
@@ -23,14 +26,23 @@ namespace SGFastFlyers.Controllers
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session["homePageModel"] = model.instantQuoteViewModel;
-                return RedirectToAction("QuoteDetail");
+                // They're going ahead with the order, save their quote for reference?
+                /*Quote newQuote = new Quote
+                {
+                    Cost = model.HomePageQuoteViewModel.Cost,
+                    IsMetro = model.HomePageQuoteViewModel.IsMetro,
+                    Quantity = model.HomePageQuoteViewModel.Quantity
+                };
+                db.Quotes.Add(newQuote);
+                db.SaveChanges();*///Removed for now
+                HttpContext.Session["homePageModel"] = model.HomePageQuoteViewModel;
+                return RedirectToAction("Create", "Orders", new { prepopulated = true });
             }
 
             return View();
         }
 
-
+        /* Old quote details view controller
         public ActionResult QuoteDetail()
         {
             if (HttpContext.Session["homePageModel"] != null)
@@ -76,6 +88,7 @@ namespace SGFastFlyers.Controllers
 
             return View();
         }
+        */
 
         public ActionResult About()
         {
@@ -86,7 +99,7 @@ namespace SGFastFlyers.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Feel llike a chat? Feel free to give us a bell. I'll put the kettle on!";
+            ViewBag.Message = "Feel like a chat? Feel free to give us a bell. I'll put the kettle on!";
 
             return View();
         }

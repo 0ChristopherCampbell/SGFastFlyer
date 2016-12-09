@@ -67,11 +67,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PrintDetail.PrintFormat)
+            @Html.DisplayNameFor(model => model.PrintDetail.PrintSize)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PrintDetail.PrintFormat)
+            @Html.DisplayFor(model => model.PrintDetail.PrintSize)
         </dd>
 
         <dt>
@@ -91,16 +91,14 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsPaid)
+            @Html.DisplayNameFor(model => model.Quote.Cost)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.IsPaid)
+            @Html.DisplayFor(model => model.Quote.Cost)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

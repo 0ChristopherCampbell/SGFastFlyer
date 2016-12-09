@@ -13,7 +13,7 @@ namespace SGFastFlyers.Controllers
 {
     public class PrintDetailsController : Controller
     {
-        private OrderContext db = new OrderContext();
+        private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
 
         // GET: PrintDetails
         public ActionResult Index()

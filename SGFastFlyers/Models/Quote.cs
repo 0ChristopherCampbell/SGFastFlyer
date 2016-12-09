@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using SGFastFlyers.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Quote.cs" company="SGFastFlyers">
+//     Copyright (c) SGFastFlyers. All rights reserved.
+// </copyright>
+// <author> Christopher Campbell </author>
+//-----------------------------------------------------------------------
 namespace SGFastFlyers.Models
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     /// <summary>
     /// A quote, given to the customer prior to ordering
     /// </summary>
@@ -28,13 +30,14 @@ namespace SGFastFlyers.Models
             // TODO: Metro/Country Prices
             get
             {
+                decimal cost = decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["CostPer1000"]) * (Quantity / 1000);
                 if (IsMetro)
                 {
-                    return (decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["CostPer1000"]) * (Quantity / 1000)  );
+                    return cost;
                 }
                 else
                 {
-                    return (decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["CostPer1000"]) * (Quantity / 1000) + decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["NonMetroAddition"]));
+                    return cost + decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["NonMetroAddition"]);
                 }
             }
             set { }         
@@ -49,7 +52,6 @@ namespace SGFastFlyers.Models
         /// <summary>
         /// Once an order is made the quote will have reference to the order it was used in
         /// </summary>
-        [ForeignKey("Order")]
         public int? OrderID { get; set; }
 
         public virtual Order Order { get; set; }

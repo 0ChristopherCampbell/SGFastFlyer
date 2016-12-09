@@ -1,22 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using SGFastFlyers.DataAccessLayer;
-using SGFastFlyers.Models;
-using SGFastFlyers.ViewModels;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="OrdersController.cs" company="SGFastFlyers">
+//     Copyright (c) SGFastFlyers. All rights reserved.
+// </copyright>
+// <author> Christopher Campbell </author>
+//-----------------------------------------------------------------------
 namespace SGFastFlyers.Controllers
 {
+    using System;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+
+    using DataAccessLayer;
+    using Models;
+    using ViewModels;
+    using Utility;
+
+    using eWAY.Rapid;
+    using eWAY.Rapid.Models;
+    using eWAY.Rapid.Enums;
+
+    [RequireHttps]
     public class OrdersController : Controller
     {
-        private OrderContext db = new OrderContext();
-
+        private SGDbContext db = new SGDbContext();
+        
         // GET: Orders
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var orders = db.Orders.Include(o => o.DeliveryDetail).Include(o => o.PrintDetail);
@@ -24,6 +35,7 @@ namespace SGFastFlyers.Controllers
         }
 
         // GET: Orders/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -47,17 +59,24 @@ namespace SGFastFlyers.Controllers
 
         // GET: Orders/Create?prepopulated=bool
         [HttpGet]
-        public ActionResult Create(bool? prepopulated)
-        {
-            bool prePopulated;
-            if (bool.TryParse(prepopulated.ToString(), out prePopulated))
+        public ActionResult Create(bool prepopulated = false)
+        {            
+            if (HttpContext.Session["homePageModel"] != null && prepopulated)
             {
-                if (HttpContext.Session["instantQuoteOrder"] != null && prePopulated)
+                InstantQuoteViewModel model = (InstantQuoteViewModel)HttpContext.Session["homePageModel"];
+                CreateOrderViewModel orderModel = new CreateOrderViewModel
                 {
-                    CreateOrderViewModel newOrder = (CreateOrderViewModel)HttpContext.Session["instantQuoteOrder"];
-                    return View(newOrder);
-                }
-            }
+                    Cost = model.Cost,
+                    NeedsPrint = model.NeedsPrint,
+                    PrintFormat = model.PrintFormat,
+                    IsMetro = model.IsMetro,
+                    Quantity = model.Quantity,
+                    PrintSize = model.PrintSize,
+                    DeliveryDate = DateTime.Now.AddDays(7)
+                };
+
+                return View(orderModel);
+            }            
 
             return View();
         }
@@ -89,6 +108,7 @@ namespace SGFastFlyers.Controllers
                     DeliveryArea = createOrderViewModel.DeliveryArea,
                     DeliveryDate = createOrderViewModel.DeliveryDate
                 };
+
                 db.DeliveryDetails.Add(deliveryDetail);
 
                 PrintDetail printDetail = new PrintDetail
@@ -98,26 +118,93 @@ namespace SGFastFlyers.Controllers
                     PrintFormat = createOrderViewModel.PrintFormat,
                     PrintSize = createOrderViewModel.PrintSize
                 };
+
                 db.PrintDetails.Add(printDetail);
 
                 Quote quote = new Quote
                 {
+                    OrderID = order.ID,
                     Cost = createOrderViewModel.Cost,
                     IsMetro = createOrderViewModel.IsMetro,
-                    Quantity = createOrderViewModel.Quantity,
-                    OrderID = order.ID
+                    Quantity = createOrderViewModel.Quantity                    
                 };
-                db.Quotes.Add(quote);
 
+                db.Quotes.Add(quote);
                 db.SaveChanges();
 
-                return RedirectToAction("Index", "Orders");
+                // Add the order to session for use when the customer returns from payment
+                HttpContext.Session["orderInformation"] = order;
+
+                #region Payment Processing
+
+                IRapidClient ewayClient = RapidClientFactory.NewRapidClient(Config.apiPaymentKey, Config.apiPaymentPassword, Config.apiRapidEndpoint);
+
+                Transaction transaction = new Transaction();
+
+                PaymentDetails paymentDetails = new PaymentDetails();
+                paymentDetails.TotalAmount = (int)(quote.Cost*100); // Convert to integer form currency (cents)
+
+                transaction.PaymentDetails = paymentDetails;
+                transaction.RedirectURL = "https://localhost:44300/Orders/PaymentComplete"; // Needs to be changed for live
+                transaction.CancelURL = "http://www.eway.com.au";
+                transaction.TransactionType = TransactionTypes.Purchase;
+
+                CreateTransactionResponse response = ewayClient.Create(PaymentMethod.ResponsiveShared, transaction);
+
+                if (response.Errors != null)
+                {
+                    foreach (string errorCode in response.Errors)
+                    {
+                        Console.WriteLine("Error Message: " + RapidClientFactory.UserDisplayMessage(errorCode, "EN"));
+                    }
+                }
+
+                return Redirect(response.SharedPaymentUrl);
+                #endregion
+
+                //return RedirectToAction("Index", "Orders");
             }
 
             return View(createOrderViewModel);
         }
+        
+        /// <summary>
+        /// Handles completed payment processing.
+        /// </summary>
+        /// <param name="AccessCode">The access code returned by the payment gateway, used to get payment details</param>
+        /// <returns>Complete page view</returns>
+        public ActionResult PaymentComplete(string AccessCode)
+        {
+            IRapidClient ewayClient = RapidClientFactory.NewRapidClient(Config.apiPaymentKey, Config.apiPaymentPassword, Config.apiRapidEndpoint);
+            bool paymentSuccess = false;
+            QueryTransactionResponse response = ewayClient.QueryTransaction(AccessCode);
+            if ((bool)response.TransactionStatus.Status)
+            {
+                paymentSuccess = true;
+                Console.WriteLine("Payment successful! ID: " + response.TransactionStatus.TransactionID);
+            }
+            else
+            {
+                string[] errorCodes = response.TransactionStatus.ProcessingDetails.ResponseMessage.Split(new[] { ", " }, StringSplitOptions.None);
+                foreach (string errorCode in errorCodes)
+                {
+                    Console.WriteLine("Error Message: " + RapidClientFactory.UserDisplayMessage(errorCode, "EN"));
+                }
+            }
+
+            if (HttpContext.Session["orderInformation"] != null)
+            {
+                Order completedOrder = db.Orders.Find(((Order)HttpContext.Session["orderInformation"]).ID);
+                completedOrder.IsPaid = paymentSuccess;
+                db.SaveChanges();
+                return View(completedOrder);
+            }
+
+            return View();
+        }
 
         // GET: Orders/Edit/5
+        [Authorize(Roles = "Admin")] // TODO: This will have to be changed when users are allowed to edit their orders
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -139,6 +226,7 @@ namespace SGFastFlyers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")] // TODO: This will have to be changed when users are allowed to edit their orders
         public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity")] Order order)
         {
             if (ModelState.IsValid)
@@ -153,6 +241,7 @@ namespace SGFastFlyers.Controllers
         }
 
         // GET: Orders/Delete/5
+        [Authorize(Roles = "Admin")] // TODO: This will have to be changed when users are allowed to edit their orders
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -167,9 +256,10 @@ namespace SGFastFlyers.Controllers
             return View(order);
         }
 
-        // POST: Orders/Delete/5
+        // POST: Orders/Delete/5 // TODO: This will have to be changed when users are allowed to edit their orders
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Order order = db.Orders.Find(id);

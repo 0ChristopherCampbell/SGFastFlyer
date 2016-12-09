@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using SGFastFlyers.DataAccessLayer;
-using SGFastFlyers.Models;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="DeliveryDetailsController.cs" company="SGFastFlyers">
+//     Copyright (c) SGFastFlyers. All rights reserved.
+// </copyright>
+// <author> Christopher Campbell </author>
+//-----------------------------------------------------------------------
 namespace SGFastFlyers.Controllers
 {
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+
+    using DataAccessLayer;
+    using Models;
+
     public class DeliveryDetailsController : Controller
     {
-        private OrderContext db = new OrderContext();
+        private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
 
         // GET: DeliveryDetails
         public ActionResult Index()
