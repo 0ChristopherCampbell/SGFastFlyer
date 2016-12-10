@@ -1,11 +1,11 @@
 ﻿@model SGFastFlyers.ViewModels.InstantQuoteViewModel
 
 @using (Html.BeginForm())
-{    
+{
     @Html.AntiForgeryToken()
     <script type="text/javascript">
         function setQuotePrice()
-        {           
+        {
             var i = 0;
             i = document.getElementById("HomePageQuoteViewModel_Quantity").value;
             var metro = document.getElementById("HomePageQuoteViewModel_IsMetro").checked;
@@ -17,59 +17,89 @@
 
             document.getElementById("quotePrice").innerHTML = cost;
         }
-     
+
     </script>
 
-    <div class="form-horizontal">
-    <h4>Get an Instant Quote!</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group" onmouseout="setQuotePrice();">
-                @Html.LabelFor(model => model.Quantity, htmlAttributes: new {  @class = "control-label col-md-2"  })
-                @Html.TextBoxFor(model => model.Quantity, htmlAttributes: new { @class = "form-control" })
+    
+        <h2><b>Get an Instant Quote!</b></h2>
+       <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="form-group" oninput="setQuotePrice();">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-4"})
+                @Html.TextBoxFor(model => model.Quantity, htmlAttributes: new { @class = "form-control col-md-3", Placeholder = "Question" })
                 <!-- //~~ATSYMBOL~~Html.DropDownListFor(model => model.Quantity, SGFastFlyers.ViewModels.InstantQuoteViewModel.QuantityList, "-Please select-", new { htmlAttributes = new { ~~ATSYMBOL~~class = "form-control" } })-->
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })<br /><br />
+            </div>
+        </div>
+  
+    <div class="row">
+        <div class="form-group" onclick="setQuotePrice();">
+            @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @checked = true, @class = "form-control col-md-3" })
+            @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })<br /><br />
         </div>
     </div>
 
 
-        <div class="form-group">
-                    @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-2" })
-                    @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new {  @checked = true })
-                    @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
-                </div>
-        
-        
+    <script type="text/javascript">
 
-        <div class="form-group">
-                    @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-2"})
-                    @Html.CheckBoxFor(model => model.NeedsPrint)
-                    @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })
-                </div>
+        $(document).ready(function () {
+            var checkbox = $('#NeedsPrintCheckBox'); 
+            var dependent = $('#PrintSize');
+            var dependent2 = $('#PrintFormat');
+            if (checkbox.attr('checked') !== undefined){
+                dependent.show() & dependent2.show();
+            } else {
+                dependent.hide() & dependent2.hide();
+            }
+        
+            checkbox.change(function(e){
+                dependent.toggle() & dependent2.toggle(); 
+            });
+        });
+
+    </script>
+    <div class="row">
+        <div class="form-group" id="NeedsPrintCheckBox" onchange="setQuotePrice();" >
+     
+            @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-4" })
+            @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3", @onchange = "showHide();" })
+            @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })<br /><br />
            
-        
-
-        <div class="form-group">
-                @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })
             </div>
-       
-
-        <div class="form-group">
-                @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-2" })
-                @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true })
-                @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })
-            </div>
-       
-        <div>
-        <label>Your quote price: </label><label id="quotePrice"></label>
     </div>
 
-    <script type="text/javascript">        
-        document.getElementById("HomePageQuoteViewModel_Quantity").onchange = setQuotePrice();
-    </script>
+        <div class="row">
+            <div class="form-group" id="PrintSize" style="display: none;" onclick="setQuotePrice();">
+                @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control col-md-3" })
+                @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })<br /><br />
+            </div>
+        </div>
+        
+            <div class="row">
+                <div class="form-group" id="PrintFormat" style="display: none;" onmouseout="setQuotePrice();">
+                    @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control col-md-3" })
+                    @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
+                </div>
+            </div>
+    /*
+     * <script type="text/javascript">
+
+         document.getElementById("HomePageQuoteViewModel_Quantity").onchange = setQuotePrice();
+     </script>*/
+            <div>
+                <br /><br />
+                <label>Your quote price: </label><label id="quotePrice"></label><br /><br />
+            </div>
+
+    /* <script type="text/javascript">
+
+         document.getElementById("HomePageQuoteViewModel_Quantity").onchange = setQuotePrice();
+     </script>*/
 }
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

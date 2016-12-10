@@ -22,7 +22,7 @@ namespace SGFastFlyers.ViewModels
         public string EmailAddress { get; set; }
         */
 
-        [Required, Range(5000, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}")]
+        [Required, Range(5000, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}"), Display(Name ="Quantity Needed?")]
         public int Quantity { get; set; }
 
         [Required, Display(Name = "Is this considered a metro area?")]
@@ -82,4 +82,5 @@ namespace SGFastFlyers.ViewModels
 
         public static IEnumerable<int> dropDownQuantity = Enumerable.Range(1, 10).Select(x => x * 5000);
     }
+  
 }
