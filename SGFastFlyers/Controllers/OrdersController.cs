@@ -72,7 +72,7 @@ namespace SGFastFlyers.Controllers
                     IsMetro = model.IsMetro,
                     Quantity = model.Quantity,
                     PrintSize = model.PrintSize,
-                    DeliveryDate = DateTime.Now.AddDays(7)
+                    DeliveryDate = DateTime.Now.AddDays(8)
                 };
 
                 return View(orderModel);

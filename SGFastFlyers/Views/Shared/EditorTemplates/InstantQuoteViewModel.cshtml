@@ -14,61 +14,68 @@
             {
                 cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
             }
+            cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
+           document.getElementById("quotePrice").innerHTML = cost;
+           
+            
 
-            document.getElementById("quotePrice").innerHTML = cost;
+            
         }
 
     </script>
+   
 
-    
-        <h2><b>Get an Instant Quote!</b></h2>
-       <hr />
+  
+
+
+    <h2><b>Get an Instant Quote!</b></h2>
+        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="row">
             <div class="form-group" oninput="setQuotePrice();">
-                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-4"})
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-4" })
                 @Html.TextBoxFor(model => model.Quantity, htmlAttributes: new { @class = "form-control col-md-3", Placeholder = "Question" })
                 <!-- //~~ATSYMBOL~~Html.DropDownListFor(model => model.Quantity, SGFastFlyers.ViewModels.InstantQuoteViewModel.QuantityList, "-Please select-", new { htmlAttributes = new { ~~ATSYMBOL~~class = "form-control" } })-->
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })<br /><br />
             </div>
         </div>
-  
-    <div class="row">
-        <div class="form-group" onclick="setQuotePrice();">
-            @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-4" })
-            @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @checked = true, @class = "form-control col-md-3" })
-            @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })<br /><br />
-        </div>
-    </div>
 
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            var checkbox = $('#NeedsPrintCheckBox'); 
-            var dependent = $('#PrintSize');
-            var dependent2 = $('#PrintFormat');
-            if (checkbox.attr('checked') !== undefined){
-                dependent.show() & dependent2.show();
-            } else {
-                dependent.hide() & dependent2.hide();
-            }
-        
-            checkbox.change(function(e){
-                dependent.toggle() & dependent2.toggle(); 
-            });
-        });
-
-    </script>
-    <div class="row">
-        <div class="form-group" id="NeedsPrintCheckBox" onchange="setQuotePrice();" >
-     
-            @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-4" })
-            @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3", @onchange = "showHide();" })
-            @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })<br /><br />
-           
+        <div class="row">
+            <div class="form-group" onclick="setQuotePrice();">
+                @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @checked = true, @class = "form-control col-md-3" })
+                @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })<br /><br />
             </div>
-    </div>
+        </div>
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                var checkbox = $('#NeedsPrintCheckBox');
+                var dependent = $('#PrintSize');
+                var dependent2 = $('#PrintFormat');
+                if (checkbox.attr('checked') !== undefined){
+                    dependent.show() & dependent2.show();
+                } else {
+                    dependent.hide() & dependent2.hide();
+                }
+
+                checkbox.change(function(e){
+                    dependent.toggle() & dependent2.toggle();
+                });
+            });
+
+        </script>
+        <div class="row">
+            <div class="form-group" id="NeedsPrintCheckBox" onchange="setQuotePrice();">
+
+                @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3", @onchange = "showHide();" })
+                @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })<br /><br />
+
+            </div>
+        </div>
 
         <div class="row">
             <div class="form-group" id="PrintSize" style="display: none;" onclick="setQuotePrice();">
@@ -77,29 +84,20 @@
                 @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })<br /><br />
             </div>
         </div>
-        
-            <div class="row">
-                <div class="form-group" id="PrintFormat" style="display: none;" onmouseout="setQuotePrice();">
-                    @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-4" })
-                    @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control col-md-3" })
-                    @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
-                </div>
+
+        <div class="row">
+            <div class="form-group" id="PrintFormat" style="display: none;" onmouseout="setQuotePrice();">
+                @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control col-md-3" })
+                @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
             </div>
-    /*
-     * <script type="text/javascript">
+        </div>
 
-         document.getElementById("HomePageQuoteViewModel_Quantity").onchange = setQuotePrice();
-     </script>*/
-            <div>
-                <br /><br />
-                <label>Your quote price: </label><label id="quotePrice"></label><br /><br />
-            </div>
 
-    /* <script type="text/javascript">
-
-         document.getElementById("HomePageQuoteViewModel_Quantity").onchange = setQuotePrice();
-     </script>*/
+        <br /><br />
+        <label>Your quote price: </label><label id="quotePrice"></label><br /><br />
 }
-            @section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
-            }
+           
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

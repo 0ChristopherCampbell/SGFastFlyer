@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" >
             @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
@@ -78,18 +78,33 @@
                 @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
             </div>
         </div>
+        <script type="text/javascript">
 
-        <div class="form-group">
+        $(document).ready(function () {
+            var checkbox = $('#NeedsPrintCheckBox');
+            var dependent = $('#PrintSize');
+            var dependent2 = $('#PrintFormat');
+            if (checkbox.attr('checked') !== undefined){
+                dependent.show() & dependent2.show();
+            } else {
+                dependent.hide() & dependent2.hide();
+            }
+
+            checkbox.change(function(e){
+                dependent.toggle() & dependent2.toggle();
+            });
+        });
+
+        </script>
+        <div class="form-group" id="NeedsPrintCheckBox">
             @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.NeedsPrint)
+                    @Html.EditorFor(model => model.NeedsPrint, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
+        <div class="form-group" id="PrintSize" style="display: none;">
             @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.PrintSize, htmlAttributes: new { @class = "form-control" })
@@ -97,15 +112,14 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="PrintFormat" style="display: none;">
             @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
                     @Html.EnumDropDownListFor(model => model.PrintFormat, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PrintFormat, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
+       
         
         <div class="form-group">
             @Html.LabelFor(model => model.FormattedCost, htmlAttributes: new { @class = "control-label col-md-2" })

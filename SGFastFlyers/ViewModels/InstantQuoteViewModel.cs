@@ -31,7 +31,7 @@ namespace SGFastFlyers.ViewModels
         [Required, Display(Name = "Do you require printing?")]
         public bool NeedsPrint { get; set; }
 
-        [Required, Display(Name = "Pick a size for your leaflet")]
+        [Required, Display(Name = "Pick a size for your leaflet.")]
         public Enums.PrintSize PrintSize { get; set; }
 
         [Required, Display(Name = "Do you require double sided printing?")]
