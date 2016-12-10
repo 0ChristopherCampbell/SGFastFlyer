@@ -9,10 +9,15 @@
             var i = 0;
             i = document.getElementById("HomePageQuoteViewModel_Quantity").value;
             var metro = document.getElementById("HomePageQuoteViewModel_IsMetro").checked;
+            var size = document.getElementById("HomePageQuoteViewModel_NeedsPrint").checked;
             var cost = i / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
             if (!metro)
             {
                 cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
+            }
+            if(size)
+            {
+                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
             }
             cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
            document.getElementById("quotePrice").innerHTML = cost;
