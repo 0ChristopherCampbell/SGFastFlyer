@@ -76,7 +76,7 @@
             <div class="form-group" id="NeedsPrintCheckBox" onchange="setQuotePrice();">
 
                 @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-4", @title = "Would you like us to organise your flyers to be printed?" })
-                @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3", @onchange = "showHide();", @title = "Would you like us to organise your flyers to be printed?" })
+                @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3",   @title = "Would you like us to organise your flyers to be printed?" })
                 @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })<br /><br />
 
             </div>
