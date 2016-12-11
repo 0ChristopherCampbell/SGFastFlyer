@@ -16,6 +16,7 @@ namespace SGFastFlyers.Enums
     /// </summary>
     public enum PrintSize
     {   
+        
         DL = 1,
         A5 = 5            
         /// Etc etc    

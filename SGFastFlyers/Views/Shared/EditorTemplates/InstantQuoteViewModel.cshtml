@@ -4,27 +4,90 @@
 {
     @Html.AntiForgeryToken()
     <script type="text/javascript">
+       /* function setQuantityValue()
+        {
+            var quantity = 0;
+            quantity = document.getElementById("HomePageQuoteViewModel_Quantity").value;
+            if(quantity < 20000)
+            {
+                quantity = "underTwenty";
+            }
+            return;
+        }
+        function getPrintingCombination()
+        {
+            var printingCombination = "";
+            var printSize = document.getElementById("HomePageQuoteViewModel_PrintSize").value;
+            var printFormat = document.getElementById("HomePageQuoteViewModel_PrintFormat").value;
+            if(printSize == 1 && printFormat == 100)
+            {
+                printingCombination = "DLS";
+            }
+            if(printSize == 1 && printFormat == 200)
+            {
+                printingCombination = "DLD";
+            }
+            if(printSize == 5 && printFormat == 100)
+            {
+                printingCombination = "A5S";
+            }
+            if(printSize == 5 && printFormat == 200)
+            {
+                printingCombination = "A5D";
+            }
+            return printingCombination;
+        }
+
+        function getPrintingPrice()
+        {
+            var printingPrice = 0;
+            if(getPrintingCombination == "A5D" && setQuantityValue == "underTwenty")
+            {
+                printingPrice = 55.9;
+            }
+            return;
+            printingPrice = printingPrice.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
+            document.getElementById("quotePrice").innerHTML = printingPrice;
+        }*/
+
         function setQuotePrice()
         {
             var i = 0;
             i = document.getElementById("HomePageQuoteViewModel_Quantity").value;
             var metro = document.getElementById("HomePageQuoteViewModel_IsMetro").checked;
             var size = document.getElementById("HomePageQuoteViewModel_NeedsPrint").checked;
+            var isDoubleSided = document.getElementById("HomePageQuoteViewModel_IsDoubleSided").checked;
+            var printSize = document.getElementById("HomePageQuoteViewModel_PrintSize").value;
+
             var cost = i / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
-            if (!metro)
+           if (!metro)
             {
                 cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
-            }
-            if(size)
+           }
+
+            if(size = true && printSize == 1 && isDoubleSided == true)
             {
                 cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
             }
-            cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
-           document.getElementById("quotePrice").innerHTML = cost;
-           
-            
+            if(size = true && printSize == 1 && isDoubleSided == false)
+            {
+                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
+            }
+            if(size = true && printSize == 5 && isDoubleSided == true)
+            {
+                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
+            }
+            if(size = true && printSize == 5 && isDoubleSided == false)
+            {
+                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
+            }
 
-            
+            cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
+            document.getElementById("quotePrice").innerHTML = cost;
+
+
+
+
         }
 
     </script>
@@ -73,7 +136,7 @@
 
         </script>
         <div class="row">
-            <div class="form-group" id="NeedsPrintCheckBox" onchange="setQuotePrice();">
+            <div class="form-group" id="NeedsPrintCheckBox" onclick="setQuotePrice();">
 
                 @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-4", @title = "Would you like us to organise your flyers to be printed?" })
                 @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3",   @title = "Would you like us to organise your flyers to be printed?" })
@@ -83,7 +146,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group" id="PrintSize" style="display: none;" onclick="setQuotePrice();">
+            <div class="form-group" id="PrintSize" style="display: none;" onchange="setQuotePrice();">
                 @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-4", @title = "Choose DL or A5. For other sizes please contact us for a quote." })
                 @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control col-md-3", @title = "Choose DL or A5. For other sizes please contact us for a quote." })
                 @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })<br /><br />
@@ -91,7 +154,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group" id="PrintFormat" style="display: none;" onmouseout="setQuotePrice();">
+            <div class="form-group" id="PrintFormat" style="display: none;" onclick="setQuotePrice();">
                 @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-4", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
                 @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control col-md-3", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
                 @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />

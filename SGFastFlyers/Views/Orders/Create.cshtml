@@ -80,20 +80,11 @@
         </div>
         <script type="text/javascript">
 
-            $(document).ready(function () {             
-            var checkbox = $('#NeedsPrintCheckBox');
-            var dependent = $('#PrintSize');
-            var dependent2 = $('#PrintFormat');
-            if (document.getElementById("NeedsPrintCheckBox").checked = true ) {
-                dependent.show() & dependent2.show();
-            } else {
-                dependent.hide() & dependent2.hide();
+            var needsPrint = 'NeedsPrintCheckBox';
+            if (needsPrint == 'checked'){
+                'PrintSize'.length>0
             }
-
-            checkbox.change(function(e){
-                dependent.toggle() & dependent2.toggle();
-            });
-        });
+        
         ready();
         </script>
         <div class="form-group" id="NeedsPrintCheckBox">

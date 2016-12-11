@@ -25,6 +25,14 @@ namespace SGFastFlyers.Utility
         {
             return decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["DLDoubleSidedPer1000"]);
         }
+        public static decimal? A5DoubleSidedPer1000()
+        {
+            return decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["A5DoubleSidedPer1000"]);
+        }
+        public static decimal? A5SingleSidedPer1000()
+        {
+            return decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["A5SingleSidedPer1000"]);
+        }
 
         /// <summary>
         /// Used to make payments with eWay - Api Key
