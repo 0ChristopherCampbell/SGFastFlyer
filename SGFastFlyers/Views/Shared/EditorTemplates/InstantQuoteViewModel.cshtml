@@ -4,97 +4,53 @@
 {
     @Html.AntiForgeryToken()
     <script type="text/javascript">
-       /* function setQuantityValue()
+        
+        function setQuotePrice()
         {
             var quantity = 0;
             quantity = document.getElementById("HomePageQuoteViewModel_Quantity").value;
-            if(quantity < 20000)
-            {
-                quantity = "underTwenty";
-            }
-            return;
-        }
-        function getPrintingCombination()
-        {
-            var printingCombination = "";
-            var printSize = document.getElementById("HomePageQuoteViewModel_PrintSize").value;
-            var printFormat = document.getElementById("HomePageQuoteViewModel_PrintFormat").value;
-            if(printSize == 1 && printFormat == 100)
-            {
-                printingCombination = "DLS";
-            }
-            if(printSize == 1 && printFormat == 200)
-            {
-                printingCombination = "DLD";
-            }
-            if(printSize == 5 && printFormat == 100)
-            {
-                printingCombination = "A5S";
-            }
-            if(printSize == 5 && printFormat == 200)
-            {
-                printingCombination = "A5D";
-            }
-            return printingCombination;
-        }
-
-        function getPrintingPrice()
-        {
-            var printingPrice = 0;
-            if(getPrintingCombination == "A5D" && setQuantityValue == "underTwenty")
-            {
-                printingPrice = 55.9;
-            }
-            return;
-            printingPrice = printingPrice.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
-            document.getElementById("quotePrice").innerHTML = printingPrice;
-        }*/
-
-        function setQuotePrice()
-        {
-            var i = 0;
-            i = document.getElementById("HomePageQuoteViewModel_Quantity").value;
             var metro = document.getElementById("HomePageQuoteViewModel_IsMetro").checked;
-            var size = document.getElementById("HomePageQuoteViewModel_NeedsPrint").checked;
+            var needsPrint = document.getElementById("HomePageQuoteViewModel_NeedsPrint").checked;
             var isDoubleSided = document.getElementById("HomePageQuoteViewModel_IsDoubleSided").checked;
             var printSize = document.getElementById("HomePageQuoteViewModel_PrintSize").value;
 
-            var cost = i / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
+            var cost = quantity / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
            if (!metro)
             {
                 cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
            }
 
-            if(size = true && printSize == 1 && isDoubleSided == true)
+            if(needsPrint)
             {
-                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
+                if(isDoubleSided)
+                {
+                    if( printSize == 1)
+                    {
+                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
+                    }
+                    if( printSize == 5)
+                    {
+                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
+                    }
+                }else{
+               
+                    if(printSize == 1 )
+                    {
+                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
+                    }
+               
+                    if(printSize == 5)
+                    {
+                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
+                    }
+                }
             }
-            if(size = true && printSize == 1 && isDoubleSided == false)
-            {
-                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
-            }
-            if(size = true && printSize == 5 && isDoubleSided == true)
-            {
-                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
-            }
-            if(size = true && printSize == 5 && isDoubleSided == false)
-            {
-                cost = cost + (i/1000 * @SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
-            }
-
             cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
+       
             document.getElementById("quotePrice").innerHTML = cost;
-
-
-
-
         }
 
     </script>
-   
-
-  
-
 
     <h2><b>Get an Instant Quote!</b></h2>
         <hr />
