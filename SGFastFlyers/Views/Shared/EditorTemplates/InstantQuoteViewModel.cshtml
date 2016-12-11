@@ -117,29 +117,12 @@
         </div>
 
 
-        <script type="text/javascript">
-
-            $(document).ready(function () {
-                var checkbox = $('#NeedsPrintCheckBox');
-                var dependent = $('#PrintSize');
-                var dependent2 = $('#PrintFormat');
-                if (checkbox.attr('checked') !== undefined){
-                    dependent.show() & dependent2.show();
-                } else {
-                    dependent.hide() & dependent2.hide();
-                }
-
-                checkbox.change(function(e){
-                    dependent.toggle() & dependent2.toggle();
-                });
-            });
-
-        </script>
+       
         <div class="row">
             <div class="form-group" id="NeedsPrintCheckBox" onclick="setQuotePrice();">
 
                 @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-4", @title = "Would you like us to organise your flyers to be printed?" })
-                @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3",   @title = "Would you like us to organise your flyers to be printed?" })
+                @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3",   @title = "Would you like us to organise your flyers to be printed?", @onchange = "checkandChange()" })
                 @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })<br /><br />
 
             </div>
@@ -160,8 +143,28 @@
                 @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
             </div>
         </div>
+     
+        <script type="text/javascript">
+         
+            function checkandChange()
+            {
+                var checkbox =   document.getElementById('HomePageQuoteViewModel_NeedsPrint');
+                var dependent =  $('#PrintSize');
+                var dependent2 =   $('#PrintFormat');
+                if (checkbox.checked){                   
+                    dependent.show();
+                    dependent2.show();
+                } else {                    
+                    dependent.hide();
+                    dependent2.hide();
+                }
+            }
 
-
+            $(document).ready(function () {                
+                checkandChange();             
+            });
+            
+        </script>
         <br /><br />
         <label>Your quote price: </label><label id="quotePrice"></label><br /><br />
 }

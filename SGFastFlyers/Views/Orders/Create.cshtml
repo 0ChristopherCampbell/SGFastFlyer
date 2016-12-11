@@ -78,19 +78,11 @@
                 @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
             </div>
         </div>
-        <script type="text/javascript">
-
-            var needsPrint = 'NeedsPrintCheckBox';
-            if (needsPrint == 'checked'){
-                'PrintSize'.length>0
-            }
-        
-        ready();
-        </script>
+         
         <div class="form-group" id="NeedsPrintCheckBox">
             @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                    @Html.EditorFor(model => model.NeedsPrint, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.NeedsPrint, new { htmlAttributes = new { @class = "form-control", @onchange = "checkandChange()" } })
                     @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -125,6 +117,27 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+
+            function checkandChange()
+            {
+                var checkbox = document.getElementById('NeedsPrint');
+                var dependent =  $('#PrintSize');
+                var dependent2 =   $('#PrintFormat');
+                if (checkbox.checked){                    
+                    dependent.show();
+                    dependent2.show();
+                } else {                    
+                    dependent.hide();
+                    dependent2.hide();
+                }
+            }
+
+            $(document).ready(function () {
+                checkandChange();
+            });
+
+    </script>
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
