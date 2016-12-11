@@ -80,11 +80,11 @@
         </div>
         <script type="text/javascript">
 
-        $(document).ready(function () {
+            $(document).ready(function () {             
             var checkbox = $('#NeedsPrintCheckBox');
             var dependent = $('#PrintSize');
             var dependent2 = $('#PrintFormat');
-            if (checkbox.attr('checked') !== undefined){
+            if (document.getElementById("NeedsPrintCheckBox").checked = true ) {
                 dependent.show() & dependent2.show();
             } else {
                 dependent.hide() & dependent2.hide();
@@ -94,7 +94,7 @@
                 dependent.toggle() & dependent2.toggle();
             });
         });
-
+        ready();
         </script>
         <div class="form-group" id="NeedsPrintCheckBox">
             @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-2" })
