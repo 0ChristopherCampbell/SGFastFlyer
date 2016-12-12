@@ -45,8 +45,21 @@ namespace SGFastFlyers.ViewModels
         [Required, Display(Name = "Paper Size")]
         public Enums.PrintSize? PrintSize { get; set; }
 
-        [Required, Display(Name = "Print Format")]
-        public Enums.PrintFormat PrintFormat { get; set; }
+        [Required, Display(Name = "Do you require double sided printing?")]
+        public Enums.PrintFormat PrintFormat
+        {
+            get
+            {
+                if (IsDoubleSided)
+                {
+                    return Enums.PrintFormat.DoubleSided;
+                }
+                else
+                {
+                    return Enums.PrintFormat.Standard;
+                }
+            }
+        }
 
         public decimal? Cost
         {
@@ -70,5 +83,6 @@ namespace SGFastFlyers.ViewModels
         {
             get { return string.Format("{0:C}", Cost); }
         }
+        public bool IsDoubleSided { get; set; }
     }
 }

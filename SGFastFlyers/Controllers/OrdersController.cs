@@ -68,7 +68,7 @@ namespace SGFastFlyers.Controllers
                 {
                     Cost = model.Cost,
                     NeedsPrint = model.NeedsPrint,
-                    PrintFormat = model.PrintFormat,
+                    IsDoubleSided = model.IsDoubleSided,
                     IsMetro = model.IsMetro,
                     Quantity = model.Quantity,
                     PrintSize = model.PrintSize,
