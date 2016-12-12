@@ -22,3 +22,24 @@ select,
 textarea {
     max-width: 280px;
 }
+div.row
+{
+    clear:left;
+    margin:6px;
+}
+label
+{
+    float:left;
+    width:200px;
+}
+textarea
+{
+    width:200px;
+    height:100px;
+}
+div.buttons
+{
+    margin-left:300px;
+    margin-top:16px;
+}
+

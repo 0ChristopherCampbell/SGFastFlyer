@@ -1,17 +1,95 @@
-﻿@{
+﻿@model SGFastFlyers.Models.ContactModels
+@{
     ViewBag.Title = "Let's Talk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+  
+        //The AjaxOptions determine the behavoiur of the AJAX call
+        //(e.g. what method on the server is called, what html element to update upon completion, etc.)
+
+        AjaxOptions ajaxOptions = new AjaxOptions
+        {
+            LoadingElementId = "loading-area",
+            LoadingElementDuration = 1000,
+            Url = Url.Action("Submit"),
+            OnBegin = "HideForm",
+            OnFailure = "ShowFailure",
+            UpdateTargetId = "message-area"
+        };
+   
 }
+
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
+<br /><br />
+<div class="container col-md-6">
+    <address style="font-size:24px">
+        29/52 Daw Rd<br />
+        Runcorn, Qld. 4113<br />
+        <abbr title="Phone">P:</abbr>
+        (07) 3841 6742
+    </address>
 
-<address>
-    29/52 Daw Rd<br />
-    Runcorn, Qld. 4113<br />
-    <abbr title="Phone">P:</abbr>
-    (07) 3841 6742
-</address>
-
-<address>
-    <strong>Contact Us:</strong>   <a href="mailto:contactus@sgfastflyers.com.au">contactus@sgfastflyers.com.au</a><br />
    
-</address>
+</div>
+
+    <div class="container col-md-6">
+        <!-- The loading area will be where we display a message during the AJAX call.
+            this way, the user knows something is happening in the background.-->
+        <div id="loading-area" style="display:none">
+            <div class="alert alert-info"><strong>Sending....</strong></div>
+        </div>
+
+        <!-- The message area will be where we display a message after the AJAX call
+             about whether or not the contact form was successfully sent.-->
+        <div id="message-area"></div>
+
+        <!--The form area contains the contact form that will be summitted via AJAX-->
+        <div id="form-area">
+    @using (Ajax.BeginForm(ajaxOptions))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-7">
+            <h1>Contact Us</h1>
+        </div>
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { id = "rcorners1", Placeholder = "First Name", style = "background-color:#F9E141" })
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.LastName, new { id = "rcorners1", Placeholder = "Surname", style = "background-color:#F9E141" })
+        </div>
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.Email, new { id = "rcorners1", Placeholder = "Email", style = "background-color:#F9E141" })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.Subject, new {@id = "rcorners1", Placeholder = "Subject", style = "background-color:#F9E141" })
+        </div>
+        <div class="form-group">
+            @Html.TextAreaFor(model => model.Comment, new { id = "rcorners2", Placeholder = "Comments", style = "background-color:#F9E141" })
+        </div>
+        
+
+        
+            <input type="submit" value="Send"/>
+    }
+        </div>
+    </div>
+<!--These methods are invoked at different stages of the AJAX call-->
+<script type="text/javascript">
+    function HideForm()
+    {
+        //When the form is submitted, we hide the form
+        $("#form-area").HideForm();
+    }
+    function ShowFailure()
+    {
+        //In the case that the AJAX call fails to communicate with the server
+        //(e.g. the users internet connection cuts out), we should display a message to that effect
+        $('#message-area').html("<div class='alert alert-danger'><strong>Error!</strong> The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
+    }
+</script>
+
+
+

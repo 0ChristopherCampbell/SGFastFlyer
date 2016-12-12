@@ -11,6 +11,13 @@ namespace SGFastFlyers.Controllers
     using DataAccessLayer;
     using Models;
     using ViewModels;
+    using System.Net.Mail;
+    using System.Text;
+    using System;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using System.Linq;
+
 
     public class HomeController : Controller
     {
@@ -97,11 +104,40 @@ namespace SGFastFlyers.Controllers
             return View();
         }
 
+      
         public ActionResult Contact()
         {
             ViewBag.Message = "Feel like a chat? Feel free to give us a bell. I'll put the kettle on!";
+ 
+                return View();
+            
+        }
 
-            return View();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<PartialViewResult> Submit(ContactModels model)
+        {
+            bool isMessageSent = true;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await EmailService.SendContactForm(model);
+                }
+                catch (Exception ex)
+                {
+                    isMessageSent = false;
+
+                }
+            }
+            else
+            {
+                isMessageSent = false;
+            }
+            return PartialView("_SubmitMessage", isMessageSent);
         }
     }
+
+
 }

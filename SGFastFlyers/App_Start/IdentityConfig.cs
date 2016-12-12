@@ -21,6 +21,11 @@ namespace SGFastFlyers
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
         }
+
+        internal static Task SendContactForm(ContactModels model)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class SmsService : IIdentityMessageService
