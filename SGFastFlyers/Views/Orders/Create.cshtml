@@ -10,6 +10,16 @@
 @using (Html.BeginForm("Create", "Orders"))
 {
     @Html.AntiForgeryToken()
+    <style>
+        div.absolute {
+    position: absolute;
+   
+    bottom:10px;
+   
+   
+    
+}
+    </style>
     <div class="row">
         <div class="col-md-8">
 
@@ -137,10 +147,12 @@
                     </div>
                 </div>
             </div>
-        <div class="col-md-4 bottom-left" style="height:435px;">
-            <p class="full-circle"></p>
-            <p class="full-circle-med col-md-offset-2"></p>
-            <p class="full-circle-sm"></p>
+        <div class="col-md-4" style="height:600px; ">
+            <div class="absolute">
+                <p class="full-circle"></p><br />
+                <p class="full-circle-med col-md-offset-2"></p><br />
+                <p class="full-circle-sm"></p>
+            </div>
         </div>
         </div>
         <script type="text/javascript">
@@ -224,6 +236,10 @@
                
             }
             window.onload = setQuotePrice();
+
+
+
+          
         </script>
         }
         @section Scripts {

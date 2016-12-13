@@ -6840,11 +6840,13 @@ td.visible-print {
     height: 65px;
 }
 .full-circle {
+  
     background-color:#E1FF19;
     height:130px;
     width:130px;
     -webkit-border-radius:75px;
     -moz-border-radius:75px;
+   
 }
 .full-circle-med {
     background-color:#E1FF19;

@@ -16,4 +16,5 @@ namespace SGFastFlyers.ViewModels
         /// </summary>
         public InstantQuoteViewModel HomePageQuoteViewModel { get; set; }
     }
+    
 }

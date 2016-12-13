@@ -55,7 +55,28 @@ namespace SGFastFlyers.Controllers
         {
             return View();
         }
-        
+        public DateTime GetNextSaturday(DateTime date)
+        {
+            switch (date.DayOfWeek)
+            {
+               
+                case DayOfWeek.Sunday:
+                    return date.AddDays(+13);
+                case DayOfWeek.Monday:
+                    return date.AddDays(+12);
+                case DayOfWeek.Tuesday:
+                    return date.AddDays(+11);
+                case DayOfWeek.Wednesday:
+                    return date.AddDays(+10);
+                case DayOfWeek.Thursday:
+                    return date.AddDays(+9);
+                case DayOfWeek.Friday:
+                    return date.AddDays(+8);
+                default:
+                    return date.AddDays(+14);
+
+            }
+        }
 
         // GET: Orders/Create?prepopulated=bool
         [HttpGet]
