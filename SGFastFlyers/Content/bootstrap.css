@@ -6817,18 +6817,46 @@ td.visible-print {
   }
 }
 #rcorners1 {
-    border-radius: 15px;
-    border:#F9E141;
-    background: #F9E141;
+    border-radius: 4px;
+    border:#E1FF19;
+    background: #E1FF19;
     padding: 20px; 
     width: 300px;
     height: 26px; 
 }
 #rcorners2 {
-    border-radius: 15px;
-    border:#F9E141;
-    background:#F9E141;
+    border-radius: 4px;
+    border:#E1FF19;
+    background:#E1FF19;
     padding: 20px; 
     width: 300px;
     height: 150px; 
+}
+#circle1 {
+    left: 353px;
+    width: 65px;
+    position: absolute;
+    top: 19px;
+    height: 65px;
+}
+.full-circle {
+    background-color:#E1FF19;
+    height:130px;
+    width:130px;
+    -webkit-border-radius:75px;
+    -moz-border-radius:75px;
+}
+.full-circle-med {
+    background-color:#E1FF19;
+    height:80px;
+    width:80px;
+    -webkit-border-radius:75px;
+    -moz-border-radius:75px;
+}
+.full-circle-sm {
+    background-color:#E1FF19;
+    height:50px;
+    width:50px;
+    -webkit-border-radius:75px;
+    -moz-border-radius:75px;
 }

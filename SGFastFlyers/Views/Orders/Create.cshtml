@@ -10,118 +10,150 @@
 @using (Html.BeginForm("Create", "Orders"))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Please fill in the details below to create an order. <br />Already have an account? Please logon via the top right hand corner.</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-md-8">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <h4>Please fill in the details below to create an order. <br />Already have an account? Please logon via the top right hand corner.</h4>
+            <hr />
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group"  oninput="setQuotePrice();" >
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group" >
-            @Html.LabelFor(model => model.DeliveryArea, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DeliveryArea, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DeliveryArea, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group"  onclick="setQuotePrice();">
-            @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new  { @class = "form-control col-md-3" } )
-                @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
-            </div>
-        </div>
-         
-        <div class="form-group" id="NeedsPrintCheckBox"  onclick="setQuotePrice();">
-            @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control col-md-3", @onchange = "checkandChange()" } )
-                    @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group" oninput="setQuotePrice();">
+                        @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DeliveryArea, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DeliveryArea, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DeliveryArea, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group" onclick="setQuotePrice();">
+                        @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()" })
+                            @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group" id="NeedsPrintCheckBox" onclick="setQuotePrice();">
+                        @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()" })
+                            @Html.ValidationMessageFor(model => model.NeedsPrint, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="form-group" id="PrintSize" style="display: none;" onclick="setQuotePrice();">
+                        @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()" })
+                            @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="form-group" id="PrintFormat" style="display: none;" onclick="setQuotePrice();">
+                        @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-2", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
+                        <div class="col-md-10">
+                            @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control", @onchange = "checkandChange()", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
+                            @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        <div class="form-group" id="PrintSize" style="display: none;"  onclick="setQuotePrice();">
-            @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group" id="PrintFormat" style="display: none;"  onclick="setQuotePrice();">
-            @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-2", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control col-md-3", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
-                @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
+            <br /><br />
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Your quote price: </label>
+                </div>
+                    <div class="col-md-10">
+                        <label id="quotePrice" onforminput="setQuotePrice();"></label>
+                    </div>
+               
+                <br /><br />
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00" />
+                        </div>
+                    </div>
                 </div>
             </div>
-      
-        <br /><br />
-        <label>Your quote price: </label><label id="quotePrice" onforminput="setQuotePrice();"></label><br /><br />
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00"/>
-            </div>
+        <div class="col-md-4 bottom-left" style="height:435px;">
+            <p class="full-circle"></p>
+            <p class="full-circle-med col-md-offset-2"></p>
+            <p class="full-circle-sm"></p>
         </div>
-    </div>
-    <script type="text/javascript">
+        </div>
+        <script type="text/javascript">
 
             function checkandChange()
             {
                 var checkbox = document.getElementById('NeedsPrint');
                 var dependent =  $('#PrintSize');
                 var dependent2 =   $('#PrintFormat');
-                if (checkbox.checked){                    
+                if (checkbox.checked){
                     dependent.show();
                     dependent2.show();
-                } else {                    
+                } else {
                     dependent.hide();
                     dependent2.hide();
                 }
@@ -131,68 +163,66 @@
                 checkandChange();
             });
 
-    </script>
+        </script>
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
-        function setQuotePrice()
-        {
-            var quantity = 0;
-            quantity = document.getElementById('Quantity').value;
-            var metro = document.getElementById('IsMetro').checked;
-            var needsPrint = document.getElementById('NeedsPrint').checked;
-            var checkChecked = document.getElementById('NeedsPrint').checked;
-            var isDoubleSided = document.getElementById('IsDoubleSided').checked;
-            var printSize = document.getElementById('PrintSize').value;
-
-            var cost = quantity / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
-           if (!metro)
+            function setQuotePrice()
             {
-                cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
-           }
+                var quantity = 0;
+                quantity = document.getElementById('Quantity').value;
+                var metro = document.getElementById('IsMetro').checked;
+                var needsPrint = document.getElementById('NeedsPrint').checked;
+                var checkChecked = document.getElementById('NeedsPrint').checked;
+                var isDoubleSided = document.getElementById('IsDoubleSided').checked;
+                var printSize = document.getElementById('PrintSize').value;
 
-           // alert('needsPrint ' + needsPrint.value);
-
-            if(needsPrint)
-                
-             {
-                if(isDoubleSided)
-                    
+                var cost = quantity / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
+                if (!metro)
                 {
-                    if( printSize == 1)
-                        
+                    cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
+                }
+
+                // alert('needsPrint ' + needsPrint.value);
+
+                if(needsPrint)
+
+                {
+                    if(isDoubleSided)
+
                     {
-                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
+                        if( printSize == 1)
+
+                        {
+                            cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
+                        }
+                        if( printSize == 5)
+                        {
+                            cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
+                        }
                     }
-                    if( printSize == 5)
+                    else
                     {
-                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
+
+                        if(printSize == 1 )
+                        {
+                            cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
+                        }
+
+                        if(printSize == 5)
+                        {
+                            cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
+                        }
                     }
                 }
-                else
-                {
 
-                    if(printSize == 1 )
-                    {
-                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
-                   }
+                cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
 
-                    if(printSize == 5)
-                    {
-                        cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
-                   }
-               } 
+                document.getElementById("quotePrice").innerHTML = cost;
             }
 
-            cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
-
-            document.getElementById("quotePrice").innerHTML = cost;
+        </script>
         }
-
-    </script>
-
-
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
