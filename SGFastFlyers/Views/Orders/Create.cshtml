@@ -172,10 +172,10 @@
                 var quantity = 0;
                 quantity = document.getElementById('Quantity').value;
                 var metro = document.getElementById('IsMetro').checked;
-                var needsPrint = document.getElementById('NeedsPrint').checked;
-                var checkChecked = document.getElementById('NeedsPrint').checked;
-                var isDoubleSided = document.getElementById('IsDoubleSided').checked;
-                var printSize = document.getElementById('PrintSize').value;
+                var needsPrint = document.getElementById("NeedsPrint").checked;
+                var isDoubleSided = document.getElementById("IsDoubleSided").checked;
+                var printSize = document.getElementById("PrintSize");
+                var strUser = printSize.innerHTML;
 
                 var cost = quantity / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
                 if (!metro)
@@ -183,20 +183,22 @@
                     cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
                 }
 
-                // alert('needsPrint ' + needsPrint.value);
+              alert("printSize " + strUser);
 
-                if(needsPrint)
+                if(needsPrint) 
+                    
 
                 {
                     if(isDoubleSided)
 
                     {
-                        if( printSize == 1)
-
+                        
+                        if( strUser == 1)
+                            
                         {
                             cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
                         }
-                        if( printSize == 5)
+                        if( strUser == 5)
                         {
                             cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
                         }
@@ -204,12 +206,12 @@
                     else
                     {
 
-                        if(printSize == 1 )
+                        if(strUser == 1)
                         {
                             cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
                         }
 
-                        if(printSize == 5)
+                        if(strUser == 5)
                         {
                             cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
                         }
