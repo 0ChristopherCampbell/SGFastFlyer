@@ -136,7 +136,7 @@
                     <label>Your quote price: </label>
                 </div>
                     <div class="col-md-10">
-                        <label id="quotePrice" title="Minimum Order of $375"></label>
+                        <label id="quotePrice" title="Minimum Order of $400"></label>
                     </div>
                
                 <br /><br />
@@ -229,9 +229,9 @@
                         }
                     }
                 }
-                if(cost < 375)
+                if(cost < 400)
                 {
-                    cost = 375;
+                    cost = 400;
                 }
                 cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
 
@@ -244,7 +244,10 @@
 
           
         </script>
-        }
+      
+
+}
+
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")
         }

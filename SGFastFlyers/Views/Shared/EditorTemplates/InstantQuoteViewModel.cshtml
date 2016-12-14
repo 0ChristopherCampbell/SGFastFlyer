@@ -45,9 +45,9 @@
                     }
                 }
             }
-            if(cost < 375)
+            if(cost < 400)
             {
-                cost = 375;
+                cost = 400;
             }
             cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
        
@@ -102,8 +102,16 @@
                 @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control col-md-3", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
                 @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
             </div>
+        </div><br />
+        <div class="row">
+            <div class="col-md-4">
+                <label>Your quote price: </label>
+            </div>
+            <div class="col-md-8">
+                <label id="quotePrice" title="Minimum Order of $400"></label>
+            </div>
         </div>
-     
+
         <script type="text/javascript">
          
             function checkandChange()
@@ -125,10 +133,9 @@
             });
             
         </script>
-        <br /><br />
-        <label>Your quote price: </label><label id="quotePrice"></label><br /><br />
-}
-           
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        
+            }
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

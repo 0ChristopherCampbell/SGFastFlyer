@@ -113,31 +113,9 @@ namespace SGFastFlyers.Controllers
             
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<PartialViewResult> Submit(ContactModels model)
-        {
-            bool isMessageSent = true;
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await EmailService.SendContactForm(model);
-                }
-                catch (Exception ex)
-                {
-                    isMessageSent = false;
-
-                }
-            }
-            else
-            {
-                isMessageSent = false;
-            }
-            return PartialView("_SubmitMessage", isMessageSent);
-        }
     }
-
-
 }
+
+
+
