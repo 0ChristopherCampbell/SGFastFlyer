@@ -210,6 +210,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PolicyDocumentsController.cs" />
     <Compile Include="Controllers\PrintDetailsController.cs" />
     <Compile Include="Controllers\QuotesController.cs" />
     <Compile Include="DataAccessLayer\SGDbContext.cs" />
@@ -319,6 +320,9 @@
     <Content Include="Views\Home\QuoteDetail.cshtml" />
     <Content Include="Views\Orders\PaymentComplete.cshtml" />
     <Content Include="Views\Contact\_SubmitMessage.cshtml" />
+    <Content Include="Views\PolicyDocuments\TermsandConditions.cshtml" />
+    <Content Include="Views\PolicyDocuments\PrivacyPolicy.cshtml" />
+    <Content Include="Views\PolicyDocuments\ShippingandReturnsPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

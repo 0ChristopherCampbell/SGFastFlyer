@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - SGFastFlyer</title>
+    <title>@ViewBag.Title - SG Fast Flyers</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -49,19 +49,25 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
+                        
+                       
                     </div>
                     <div class="navbar-collapse collapse">
+                        <a href="/" class="navbar-brand"> <img src="~/Content/Images/Logo.jpg" alt="Company logo" height="40" /><span style="color: #F9E141"> SG </span> Fast Flyers </a>
                         <ul class="nav navbar-nav">
                             <!--This area will be for the Terms and Conditions, Privacy Policy, Shipping & Delivery policy -->
-                            <li> &copy; @DateTime.Now.Year - SG Fast Flyers</li>
-                            <li>@Html.ActionLink("Terms & Conditions", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Privacy Policy", "Create", "Orders")</li>
-                            <li>@Html.ActionLink("Shipping & Delivery Policy", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                           
+                            <li>@Html.ActionLink("Terms & Conditions", "TermsandConditions", "PolicyDocuments")</li>
+                            <li>@Html.ActionLink("Privacy Policy", "PrivacyPolicy", "PolicyDocuments")</li>
+                            <li>@Html.ActionLink("Shipping & Delivery Policy", "ShippingandReturnsPolicy", "PolicyDocuments")</li>
+                            <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                            
                         </ul>
+                        <div style="height:50px; text-align:center">
+                            <span> &copy; 2016 - SG Fast Flyers </span>
+                        </div>
                     </div>
                 </div>
-          
         </footer>
     </div>
 

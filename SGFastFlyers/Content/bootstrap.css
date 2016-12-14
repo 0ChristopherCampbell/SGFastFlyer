@@ -6846,6 +6846,7 @@ td.visible-print {
     width:130px;
     -webkit-border-radius:75px;
     -moz-border-radius:75px;
+    border-radius:75px;
    
 }
 .full-circle-med {
@@ -6854,6 +6855,7 @@ td.visible-print {
     width:80px;
     -webkit-border-radius:75px;
     -moz-border-radius:75px;
+    border-radius:75px
 }
 .full-circle-sm {
     background-color:#E1FF19;
@@ -6861,4 +6863,5 @@ td.visible-print {
     width:50px;
     -webkit-border-radius:75px;
     -moz-border-radius:75px;
+    border-radius:75px;
 }

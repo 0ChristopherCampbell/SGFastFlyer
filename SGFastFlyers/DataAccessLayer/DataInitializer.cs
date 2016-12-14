@@ -18,7 +18,7 @@ namespace SGFastFlyers.DataAccessLayer
 
     public class DataInitializer : CreateDatabaseIfNotExists<SGDbContext>
     {
-        string defaultAdminUserName = "admin@sgfastflyers.com";
+        string defaultAdminUserName = "admin@sgfastflyers.com.au";
         string defaultAdminPassword = "defaultpassword_1";
 
         protected override void Seed(SGDbContext context)

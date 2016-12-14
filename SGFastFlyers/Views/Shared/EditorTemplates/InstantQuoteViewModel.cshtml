@@ -45,7 +45,11 @@
                     }
                 }
             }
-            cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
+            if(cost < 375)
+            {
+                cost = 375;
+            }
+            cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
        
             document.getElementById("quotePrice").innerHTML = cost;
         }

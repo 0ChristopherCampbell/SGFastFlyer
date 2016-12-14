@@ -136,7 +136,7 @@
                     <label>Your quote price: </label>
                 </div>
                     <div class="col-md-10">
-                        <label id="quotePrice" ></label>
+                        <label id="quotePrice" title="Minimum Order of $375"></label>
                     </div>
                
                 <br /><br />
@@ -229,8 +229,11 @@
                         }
                     }
                 }
-
-                cost = cost.toLocaleString('usd-USD', { style: 'currency', currency: 'USD' });
+                if(cost < 375)
+                {
+                    cost = 375;
+                }
+                cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
 
                 document.getElementById("quotePrice").innerHTML = cost;
                
