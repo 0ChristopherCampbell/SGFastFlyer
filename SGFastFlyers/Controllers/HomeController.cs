@@ -7,17 +7,11 @@
 namespace SGFastFlyers.Controllers
 {
     using System.Web.Mvc;
-
-    using DataAccessLayer;
     using Models;
     using ViewModels;
     using System.Net.Mail;
-    using System.Text;
-    using System;
     using System.Threading.Tasks;
-    using System.Collections.Generic;
-    using System.Linq;
-
+    using System.Web;
 
     public class HomeController : Controller
     {
@@ -112,7 +106,39 @@ namespace SGFastFlyers.Controllers
                 return View();
             
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Contact(ContactModels model, HttpPostedFileBase Attachment)
+        {
+            if (ModelState.IsValid)
+            {
+                var body = "<p>Email From: {0} {1} ({2})><p>Subject: {3}</p>{4}<p>Message:</p><p>{5}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress("cruzinbud@hotmail.com"));  // replace with valid value 
+                message.From = new MailAddress("cruzinbud@hotmail.com");  // replace with valid value
+                message.Subject = "Your email subject";
+                message.Body = string.Format(body, model.FirstName, model.LastName, model.Email, model.Subject, model.Attachment, model.Comment);
+                message.IsBodyHtml = true;
+                if (model.Attachment != null && model.Attachment.ContentLength > 0)
+                {
+                    var attachment = new Attachment(model.Attachment.InputStream, model.Attachment.FileName);
+                    message.Attachments.Add(attachment);
+                }
 
+                using (SmtpClient smtp = new SmtpClient())
+                {
+                 
+                    await smtp.SendMailAsync(message);
+                    return RedirectToAction("Sent");
+                }
+            }
+
+            return View(model);
+        }
+        public ActionResult Sent()
+        {
+            return View();
+        }
 
     }
 }

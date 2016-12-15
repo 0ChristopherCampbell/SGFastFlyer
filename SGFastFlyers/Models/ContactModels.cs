@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace SGFastFlyers.Models
 {
     public class ContactModels
@@ -22,5 +23,6 @@ namespace SGFastFlyers.Models
         public string Email { get; set; }
         public string Subject { get; set; }
         public string Comment { get; set; }
+        public HttpPostedFileBase Attachment { get; set; }
     }
 }

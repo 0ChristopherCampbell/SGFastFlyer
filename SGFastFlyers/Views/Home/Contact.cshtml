@@ -3,20 +3,7 @@
     ViewBag.Title = "Let's Talk";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-  
-        //The AjaxOptions determine the behavoiur of the AJAX call
-        //(e.g. what method on the server is called, what html element to update upon completion, etc.)
-
-        AjaxOptions ajaxOptions = new AjaxOptions
-        {
-            LoadingElementId = "loading-area",
-            LoadingElementDuration = 1000,
-            Url = Url.Action("Submit"),
-            OnBegin = "HideForm",
-            OnFailure = "ShowFailure",
-            UpdateTargetId = "message-area"
-        };
-   
+    
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -25,10 +12,10 @@
 <br /><br />
 <div class="row">
     <div class="col-md-4">
-        
-        
-            <span style="color: #F9E141; font-size:36px"> SG </span> <span style="font-size:36px">Fast Flyers</span> 
-     <br />
+
+
+        <span style="color: #F9E141; font-size:36px"> SG </span> <span style="font-size:36px">Fast Flyers</span>
+        <br />
         <address style="font-size:24px">
             29/52 Daw Rd<br />
             Runcorn, Qld. 4113<br />
@@ -37,70 +24,45 @@
             ABN: 72 611 139 845
         </address>
     </div>
-            <div class="col-md-4 bottom-left" style="height:435px;">
-                <p class="full-circle"></p>
-                <p class="full-circle-med col-md-offset-2"></p>
-                <p class="full-circle-sm"></p>
-            </div>
-    <div class="container col-md-4">
-                <!-- The loading area will be where we display a message during the AJAX call.
-                    this way, the user knows something is happening in the background.-->
-                <div id="loading-area" style="display:none">
-                    <div class="alert alert-info"><strong>Sending....</strong></div>
-                </div>
-
-                <!-- The message area will be where we display a message after the AJAX call
-                     about whether or not the contact form was successfully sent.-->
-                <div id="message-area"></div>
-
-                <!--The form area contains the contact form that will be summitted via AJAX-->
-                <p id="form-area">
-
-                    @using (Ajax.BeginForm(ajaxOptions))
-                    {
-                    @Html.AntiForgeryToken()
-
-                    <h1>Contact Us</h1>
-
-                    <div class="form-group">
-                       
-                        @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new {  id = "rcorners1", Placeholder = "First Name" })
-                        @Html.ValidationMessageFor(model => model.FirstName)
-                    </div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(model => model.LastName, new { id = "rcorners1", Placeholder = "Surname"})
-                    </div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(model => model.Email, new { id = "rcorners1", Placeholder = "Email" })
-                        @Html.ValidationMessageFor(model => model.Email)
-                    </div>
-                    <div class="form-group">
-                        @Html.TextBoxFor(model => model.Subject, new {@id = "rcorners1", Placeholder = "Subject"})
-                    </div>
-                    <div class="form-group">
-                        @Html.TextAreaFor(model => model.Comment, new { id = "rcorners2", Placeholder = "Comments" })
-                    </div>
-                    <input type="submit" value="Send" />
-                    }
-            </div>
+    <div class="col-md-4 bottom-left" style="height:435px;">
+        <p class="full-circle"></p>
+        <p class="full-circle-med col-md-offset-2"></p>
+        <p class="full-circle-sm"></p>
     </div>
-
-
-
-<!--These methods are invoked at different stages of the AJAX call-->
-<script type="text/javascript">
-    function HideForm()
+    @using (Html.BeginForm())
     {
-        //When the form is submitted, we hide the form
-        $("#form-area").HideForm();
-    }
-    function ShowFailure()
-    {
-        //In the case that the AJAX call fails to communicate with the server
-        //(e.g. the users internet connection cuts out), we should display a message to that effect
-        $('#message-area').html("<div class='alert alert-danger'><strong>Error!</strong> The server could not be contacted and your message has not been sent. Please check your internet connection and try again later.</div>");
-    }
-</script>
+        @Html.AntiForgeryToken()
+        <div class="container col-md-4">
 
+            <h1>Contact Us</h1>
+
+            <div class="form-group">
+
+                @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { id = "rcorners1", Placeholder = "First Name" })
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.LastName, new { id = "rcorners1", Placeholder = "Surname" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.Email, new { id = "rcorners1", Placeholder = "Email" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.Subject, new { @id = "rcorners1", Placeholder = "Subject" })
+            </div>
+            <div class="form-group">
+               
+                @Html.TextBoxFor(Model => Model.Attachment, new {Placeholder = "Attach File" , type = "file"  })
+            </div>
+            <div class="form-group">
+                @Html.TextAreaFor(model => model.Comment, new { id = "rcorners2", Placeholder = "Comments" })
+            </div>
+            <input type="submit" value="Send" />
+
+        </div>
+
+    }
+</div>
 
 
