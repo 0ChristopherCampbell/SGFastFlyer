@@ -160,26 +160,28 @@ namespace SGFastFlyers.Controllers
 
                 IRapidClient ewayClient = RapidClientFactory.NewRapidClient(Config.apiPaymentKey, Config.apiPaymentPassword, Config.apiRapidEndpoint);
 
+                PaymentDetails paymentDetails = new PaymentDetails();
+                paymentDetails.TotalAmount = (int)(quote.Cost * 100);
+                paymentDetails.CurrencyCode = "AUD";
+                paymentDetails.InvoiceNumber = "I" + quote.OrderID;
+
+
+                Customer customerDetails = new Customer();
+                customerDetails.FirstName = order.FirstName;
+                customerDetails.LastName = order.LastName;
+                customerDetails.Phone = order.PhoneNumber;
+                customerDetails.Email = order.EmailAddress;
+
+
+
                 Transaction transaction = new Transaction();
-
-                PaymentDetails paymentDetails = new PaymentDetails()
-                {
-                    TotalAmount = (int)(quote.Cost * 100)
-                };
-
-                Customer customerDetails = new Customer()
-                {
-                    FirstName = order.FirstName,
-                    LastName = order.LastName,
-                    Phone = order.PhoneNumber,
-                    Email = order.EmailAddress
-                };
-
                 transaction.PaymentDetails = paymentDetails;
                 transaction.Customer = customerDetails;
                 transaction.RedirectURL = "https://localhost:44300/Orders/PaymentComplete"; // Needs to be changed for live
                 transaction.CancelURL = "http://www.eway.com.au";
                 transaction.TransactionType = TransactionTypes.Purchase;
+                
+
 
                 CreateTransactionResponse response = ewayClient.Create(PaymentMethod.ResponsiveShared, transaction);
 

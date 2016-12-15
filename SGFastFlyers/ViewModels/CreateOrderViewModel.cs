@@ -42,7 +42,7 @@ namespace SGFastFlyers.ViewModels
         [Display(Name = "Do you require us to print your flyers?")]
         public bool NeedsPrint { get; set; }
 
-        [Required, Display(Name = "Paper Size")]
+        [ Display(Name = "Paper Size")]
         public Enums.PrintSize? PrintSize { get; set; }
 
         [Required, Display(Name = "Do you require double sided printing?")]
@@ -66,14 +66,56 @@ namespace SGFastFlyers.ViewModels
             get
             {
                 decimal cost = (decimal)Quantity / 1000 * Config.CostPer1000() ?? -1;
-                if (this.IsMetro)
+
+
+                  
+                if (!IsMetro)
                 {
+                    cost = cost + (decimal)SGFastFlyers.Utility.Config.NonMetroAddition();
+                }
+
+
+
+                if (NeedsPrint)
+
+
+                {
+                    if (IsDoubleSided)
+
+                    {
+
+                        if (PrintSize ==  Enums.PrintSize.DL)
+
+                        {
+                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
+                        }
+                        if (PrintSize == Enums.PrintSize.A5)
+                        {
+                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
+                        }
+                    }
+                    else
+                    {
+
+                        if (PrintSize == Enums.PrintSize.DL)
+                        {
+                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
+                        }
+
+                        if (PrintSize ==  Enums.PrintSize.A5)
+                        {
+                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
+                        }
+                    }
+                }
+                if (cost < 400)
+                {
+                    cost = 400;
+                }
+
+ 
                     return cost;
-                }
-                else
-                {
-                    return cost + Config.NonMetroAddition();
-                }
+               
             }
             set { }
         }

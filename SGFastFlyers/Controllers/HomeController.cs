@@ -106,24 +106,25 @@ namespace SGFastFlyers.Controllers
                 return View();
             
         }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Contact(ContactModels model, HttpPostedFileBase Attachment)
         {
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} {1} ({2})><p>Subject: {3}</p>{4}<p>Message:</p><p>{5}</p>";
+                var body = "<p>Email From: {0} {1} ({2})><p>Subject: {3}</p><p>Message:</p><p>{4}</p>";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress("cruzinbud@hotmail.com"));  // replace with valid value 
                 message.From = new MailAddress("cruzinbud@hotmail.com");  // replace with valid value
                 message.Subject = "Your email subject";
-                message.Body = string.Format(body, model.FirstName, model.LastName, model.Email, model.Subject, model.Attachment, model.Comment);
+                message.Body = string.Format(body, model.FirstName, model.LastName, model.Email, model.Subject, model.Comment);
                 message.IsBodyHtml = true;
-                if (model.Attachment != null && model.Attachment.ContentLength > 0)
+                if (Request.Files.Count > 0)
                 {
-                    var attachment = new Attachment(model.Attachment.InputStream, model.Attachment.FileName);
+                    var attachment = new Attachment(Request.Files[0].FileName);
                     message.Attachments.Add(attachment);
-                }
+                }                
 
                 using (SmtpClient smtp = new SmtpClient())
                 {
