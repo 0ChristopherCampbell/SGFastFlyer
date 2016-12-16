@@ -28,11 +28,11 @@ namespace SGFastFlyers.Models
         
         [Required]
         public bool IsMetro {get; set; }
+            [Required]
+        public decimal Cost { get; set; }
 
-        [Required]
-        public decimal? Cost{ get; set; }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+      
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd-Mmm-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ExpiryDate
         {
             get { return DateTime.Now.AddMonths(1); }

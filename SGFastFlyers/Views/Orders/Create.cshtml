@@ -92,7 +92,7 @@
                     <div class="form-group" onclick="setQuotePrice();">
                         @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()" })
+                            @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @checked = true, @class = "form-control", @onchange = "checkandChange()", @value = "true" })
                             @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                 <p class="full-circle-sm"></p>
             </div>
         </div>
-        </div>
+    </div>
         <script type="text/javascript">
             function checkandChange()
             {
@@ -233,6 +233,6 @@
         </script>     
 }
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

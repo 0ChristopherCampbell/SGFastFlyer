@@ -65,6 +65,7 @@ namespace SGFastFlyers.ViewModels
         /// Gets or sets a value indicating whether this is classified as a metro area.
         /// </summary>
         [Display(Name = "Is this delivery classified as metro?")]
+ 
         public bool IsMetro { get; set; }
 
         /// <summary>
