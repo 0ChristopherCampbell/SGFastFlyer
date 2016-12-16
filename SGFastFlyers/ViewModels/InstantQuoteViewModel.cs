@@ -54,7 +54,7 @@ namespace SGFastFlyers.ViewModels
         {
             get
             {
-                decimal cost = Config.CostPer1000() * 1000 ?? -1;
+                decimal cost = Config.BaseCostPer1000() * 1000 ?? -1;
                 if (this.IsMetro)
                 {
                     return cost;

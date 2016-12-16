@@ -21,23 +21,32 @@ namespace SGFastFlyers.DataAccessLayer
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             #region Model Relationship Definitions
-            modelBuilder.Entity<PrintDetail>()
-                .HasKey(t => t.OrderID);
+                #region Order Detail Relations
+                modelBuilder.Entity<PrintDetail>()
+                    .HasKey(t => t.OrderID);
 
-            modelBuilder.Entity<DeliveryDetail>()
-                .HasKey(t => t.OrderID);
+                modelBuilder.Entity<DeliveryDetail>()
+                    .HasKey(t => t.OrderID);
 
-            modelBuilder.Entity<Order>()
-                .HasRequired(t => t.PrintDetail)
-                .WithRequiredPrincipal(t => t.Order);
+                modelBuilder.Entity<Quote>()
+                    .HasKey(t => t.OrderID);
 
-            modelBuilder.Entity<Order>()
-                .HasRequired(t => t.DeliveryDetail)
-                .WithRequiredPrincipal(t => t.Order);
+                modelBuilder.Entity<Order>()
+                    .HasRequired(t => t.PrintDetail)
+                    .WithRequiredPrincipal(t => t.Order);
 
-            modelBuilder.Entity<Order>()
-                .HasOptional(t => t.Quote)
-                .WithOptionalPrincipal(t => t.Order);
+                modelBuilder.Entity<Order>()
+                    .HasRequired(t => t.DeliveryDetail)
+                    .WithRequiredPrincipal(t => t.Order);
+
+                modelBuilder.Entity<Order>()
+                    .HasRequired(t => t.Quote)
+                    .WithRequiredPrincipal(t => t.Order);
+                #endregion
+
+                #region Some other relationship Definitions
+
+                #endregion
             #endregion
         }
     }

@@ -111,6 +111,34 @@ namespace SGFastFlyers.DataAccessLayer
                     }
                 }
             }
+
+            var quotes = new List<Quote>
+            {
+            new Quote{OrderID=1, Cost=99999, IsMetro = true, Quantity = 20000},
+            new Quote{OrderID=2, Cost=99999, IsMetro = true, Quantity = 20000},
+            new Quote{OrderID=3, Cost=99999, IsMetro = true, Quantity = 20000},
+            new Quote{OrderID=4, Cost=99999, IsMetro = true, Quantity = 20000},
+            new Quote{OrderID=5, Cost=99999, IsMetro = true, Quantity = 20000},
+            new Quote{OrderID=6, Cost=99999, IsMetro = true, Quantity = 20000},
+            new Quote{OrderID=7, Cost=99999, IsMetro = true, Quantity = 20000}
+            };
+            quotes.ForEach(q => context.Quotes.Add(q));
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                                                validationError.PropertyName,
+                                                validationError.ErrorMessage);
+                    }
+                }
+            }
         }
 
         public bool createRolesAndDefaultUser()

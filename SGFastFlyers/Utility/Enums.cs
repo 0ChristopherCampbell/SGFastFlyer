@@ -6,18 +6,19 @@
 //-----------------------------------------------------------------------
 namespace SGFastFlyers.Enums
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-
     /// <summary>
     /// The paper size for an order
     /// </summary>
     public enum PrintSize
     {   
-        
+        /// <summary>
+        /// DL paper size
+        /// </summary>
         DL = 1,
+
+        /// <summary>
+        /// A5 paper size
+        /// </summary>
         A5 = 5            
         /// Etc etc    
     }
@@ -27,7 +28,14 @@ namespace SGFastFlyers.Enums
     /// </summary>
     public enum PrintFormat
     {
+        /// <summary>
+        /// Single sided leaflet
+        /// </summary>
         Standard = 100,
+
+        /// <summary>
+        /// Double sided leaflet
+        /// </summary>
         DoubleSided = 200
     }
 }

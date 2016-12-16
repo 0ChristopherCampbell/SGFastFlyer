@@ -8,49 +8,91 @@ namespace SGFastFlyers.ViewModels
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-
+    using Models;
     using Utility;
 
+    /// <summary>
+    /// Create order view model, used on the order page to bind properties required for <see cref="Order"/> 
+    /// <para>
+    /// <seealso cref="PrintDetail"/>, <seealso cref="DeliveryDetail"/>, <seealso cref="Quote"/> 
+    /// </para>
+    /// </summary>
     public class CreateOrderViewModel
     {
+        /// <summary>
+        /// Gets or sets the ID
+        /// </summary>
         public int ID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
         [Required, Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
         [Required, Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the email address.
+        /// </summary>
         [Required, Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
+        /// <summary>
+        /// Gets or sets the phone number.
+        /// </summary>
         [Required, Display(Name = "Phone Number"), RegularExpression(@"^[0-9]*$")]
         public string PhoneNumber { get; set; }
 
+        /// <summary>
+        /// Gets or sets the quantity.
+        /// </summary>
         [Required]
         public int Quantity { get; set; }
 
+        /// <summary>
+        /// Gets or sets the delivery date
+        /// </summary>
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DeliveryDate { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this is classified as a metro area.
+        /// </summary>
         [Display(Name = "Is this delivery classified as metro?")]
         public bool IsMetro { get; set; }
 
+        /// <summary>
+        /// Gets or sets the delivery area
+        /// </summary>
         public string DeliveryArea { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the customer requires printing.
+        /// </summary>
         [Display(Name = "Do you require us to print your flyers?")]
         public bool NeedsPrint { get; set; }
 
-        [ Display(Name = "Paper Size")]
+        /// <summary>
+        /// Gets or sets the size of the paper <see cref="Enums.PrintSize"/> for more details. 
+        /// </summary>
+        [Display(Name = "Paper Size")]
         public Enums.PrintSize? PrintSize { get; set; }
 
+        /// <summary>
+        /// Gets the printing format for the order <see cref="Enums.PrintFormat"/> for more details.
+        /// </summary>
         [Required, Display(Name = "Do you require double sided printing?")]
         public Enums.PrintFormat PrintFormat
         {
             get
             {
-                if (IsDoubleSided)
+                if (this.IsDoubleSided)
                 {
                     return Enums.PrintFormat.DoubleSided;
                 }
@@ -61,70 +103,79 @@ namespace SGFastFlyers.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the cost of the new order.
+        /// Price logic currently resides here.
+        /// <para>
+        /// TODO:
+        ///     Work out a more centralized way to calculate cost.
+        ///         -Won't have to update it across both views and controllers when the logic changes
+        /// </para>
+        /// </summary>
         public decimal? Cost
         {
             get
             {
-                decimal cost = (decimal)Quantity / 1000 * Config.CostPer1000() ?? -1;
-
-
+                decimal cost = (decimal)this.Quantity / 1000 * Config.BaseCostPer1000() ?? -1;
                   
-                if (!IsMetro)
+                if (!this.IsMetro)
                 {
-                    cost = cost + (decimal)SGFastFlyers.Utility.Config.NonMetroAddition();
+                    cost = cost + (decimal)Config.NonMetroAddition();
                 }
 
-
-
-                if (NeedsPrint)
-
-
+                if (this.NeedsPrint)
                 {
-                    if (IsDoubleSided)
-
+                    if (this.IsDoubleSided)
                     {
-
-                        if (PrintSize ==  Enums.PrintSize.DL)
-
+                        if (this.PrintSize == Enums.PrintSize.DL)
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
+                            cost = cost + ((decimal)this.Quantity / 1000 * (decimal)Config.DLDoubleSidedPer1000());
                         }
-                        if (PrintSize == Enums.PrintSize.A5)
+
+                        if (this.PrintSize == Enums.PrintSize.A5)
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
+                            cost = cost + ((decimal)this.Quantity / 1000 * (decimal)Config.A5DoubleSidedPer1000());
                         }
                     }
                     else
                     {
-
-                        if (PrintSize == Enums.PrintSize.DL)
+                        if (this.PrintSize == Enums.PrintSize.DL)
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
+                            cost = cost + ((decimal)this.Quantity / 1000 * (decimal)Config.DLSingleSidedPer1000());
                         }
 
-                        if (PrintSize ==  Enums.PrintSize.A5)
+                        if (this.PrintSize == Enums.PrintSize.A5)
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
+                            cost = cost + ((decimal)this.Quantity / 1000 * (decimal)Config.A5SingleSidedPer1000());
                         }
                     }
                 }
+
                 if (cost < 400)
                 {
                     cost = 400;
-                }
+                } 
 
- 
-                    return cost;
-               
+                return cost;               
             }
-            set { }
+
+            set
+            {
+            }
         }
 
+        /// <summary>
+        /// Gets the formatted cost (i.e. Dollars and cents (XXXXX.YY)
+        /// </summary>
         [Display(Name = "Total Quoted Cost:")]
         public string FormattedCost
         {
-            get { return string.Format("{0:C}", Cost); }
+            get { return string.Format("{0:C}", this.Cost); }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the paper is double sided (to accommodate double sided checkboxes)
+        /// </summary>
         public bool IsDoubleSided { get; set; }
     }
 }
