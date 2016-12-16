@@ -209,7 +209,9 @@
     <Compile Include="Controllers\DeliveryDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\OrdersController.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Controllers\PolicyDocumentsController.cs" />
     <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\PrintDetailsController.cs" />
@@ -219,9 +221,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612090705160_Initial.cs" />
-    <Compile Include="Migrations\201612090705160_Initial.Designer.cs">
-      <DependentUpon>201612090705160_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201612160551501_Initial.cs" />
+    <Compile Include="Migrations\201612160551501_Initial.Designer.cs">
+      <DependentUpon>201612160551501_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -250,6 +252,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Migrations\MigrationNotes\ReadmeForCommit20161216.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Documents\SGFastFlyers_Letterbox_Privacy Policy .pdf" />
@@ -317,7 +320,6 @@
     <Content Include="Views\DeliveryDetails\Index.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InstantQuoteViewModel.cshtml" />
-    <Content Include="Views\Home\QuoteDetail.cshtml" />
     <Content Include="Views\Orders\PaymentComplete.cshtml" />
     <Content Include="Views\PolicyDocuments\TermsandConditions.cshtml" />
     <Content Include="Views\PolicyDocuments\PrivacyPolicy.cshtml" />
@@ -342,8 +344,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612090705160_Initial.resx">
-      <DependentUpon>201612090705160_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612160551501_Initial.resx">
+      <DependentUpon>201612160551501_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

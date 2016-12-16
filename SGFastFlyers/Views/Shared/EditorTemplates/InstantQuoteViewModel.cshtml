@@ -3,8 +3,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <script type="text/javascript">
-        
+    <script type="text/javascript">        
         function setQuotePrice()
         {
             var quantity = 0;
@@ -14,11 +13,11 @@
             var isDoubleSided = document.getElementById("HomePageQuoteViewModel_IsDoubleSided").checked;
             var printSize = document.getElementById("HomePageQuoteViewModel_PrintSize").value;
 
-            var cost = quantity / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
-           if (!metro)
+            var cost = quantity / 1000 *  @SGFastFlyers.Utility.Config.BaseCostPer1000();
+            if (!metro)
             {
                 cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
-           }
+            }
 
             if(needsPrint)
             {
@@ -28,12 +27,14 @@
                     {
                         cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
                     }
+
                     if( printSize == 5)
                     {
                         cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
                     }
-                }else{
-               
+                }
+                else
+                {               
                     if(printSize == 1 )
                     {
                         cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
@@ -45,15 +46,15 @@
                     }
                 }
             }
-            if(cost < 400)
+
+            if (cost < 400)
             {
                 cost = 400;
             }
-            cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
-       
+
+            cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });       
             document.getElementById("quotePrice").innerHTML = cost;
         }
-
     </script>
 
     <h2><b>Get an Instant Quote!</b></h2>
@@ -75,8 +76,6 @@
                 @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })<br /><br />
             </div>
         </div>
-
-
        
         <div class="row">
             <div class="form-group" id="NeedsPrintCheckBox" onclick="setQuotePrice();">
@@ -103,6 +102,7 @@
                 @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
             </div>
         </div><br />
+
         <div class="row">
             <div class="col-md-4">
                 <label>Your quote price: </label>
@@ -112,30 +112,28 @@
             </div>
         </div>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
          
-            function checkandChange()
-            {
-                var checkbox =   document.getElementById('HomePageQuoteViewModel_NeedsPrint');
-                var dependent =  $('#PrintSize');
-                var dependent2 =   $('#PrintFormat');
-                if (checkbox.checked){                   
-                    dependent.show();
-                    dependent2.show();
-                } else {                    
-                    dependent.hide();
-                    dependent2.hide();
-                }
+        function checkandChange()
+        {
+            var checkbox =   document.getElementById('HomePageQuoteViewModel_NeedsPrint');
+            var dependent =  $('#PrintSize');
+            var dependent2 =   $('#PrintFormat');
+            if (checkbox.checked){                   
+                dependent.show();
+                dependent2.show();
+            } else {                    
+                dependent.hide();
+                dependent2.hide();
             }
+        }
 
-            $(document).ready(function () {                
-                checkandChange();             
-            });
-            
-        </script>
-        
-            }
+        $(document).ready(function () {                
+            checkandChange();             
+        });            
+    </script>        
+}
 
-            @section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
-            }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

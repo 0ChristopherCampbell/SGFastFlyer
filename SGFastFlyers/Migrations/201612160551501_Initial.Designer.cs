@@ -13,7 +13,7 @@ namespace SGFastFlyers.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201612090705160_Initial"; }
+            get { return "201612160551501_Initial"; }
         }
         
         string IMigrationMetadata.Source

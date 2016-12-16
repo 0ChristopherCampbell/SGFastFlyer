@@ -16,6 +16,13 @@ namespace SGFastFlyers.Models
     public class Quote
     {
         public int ID { get; set; }
+
+        /// <summary>
+        /// Once an order is made the quote will have reference to the order it was used in
+        /// </summary>
+        [ForeignKey("Order")]
+        public int OrderID { get; set; }
+
         [Required, Range(5000, int.MaxValue)]
         public int Quantity { get; set; }
         
@@ -30,12 +37,7 @@ namespace SGFastFlyers.Models
         {
             get { return DateTime.Now.AddMonths(1); }
         }
-
-        /// <summary>
-        /// Once an order is made the quote will have reference to the order it was used in
-        /// </summary>
-        public int? OrderID { get; set; }
-
+        
         public virtual Order Order { get; set; }
     }
 }

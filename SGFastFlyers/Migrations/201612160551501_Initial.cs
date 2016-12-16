@@ -52,25 +52,24 @@ namespace SGFastFlyers.Migrations
                 "dbo.Quote",
                 c => new
                     {
-                        ID = c.Int(nullable: false, identity: true),
+                        OrderID = c.Int(nullable: false),
+                        ID = c.Int(nullable: false),
                         Quantity = c.Int(nullable: false),
                         IsMetro = c.Boolean(nullable: false),
                         Cost = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        OrderID = c.Int(),
-                        Order_ID = c.Int(),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Order", t => t.Order_ID)
-                .Index(t => t.Order_ID);
+                .PrimaryKey(t => t.OrderID)
+                .ForeignKey("dbo.Order", t => t.OrderID)
+                .Index(t => t.OrderID);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Quote", "Order_ID", "dbo.Order");
+            DropForeignKey("dbo.Quote", "OrderID", "dbo.Order");
             DropForeignKey("dbo.PrintDetail", "OrderID", "dbo.Order");
             DropForeignKey("dbo.DeliveryDetail", "OrderID", "dbo.Order");
-            DropIndex("dbo.Quote", new[] { "Order_ID" });
+            DropIndex("dbo.Quote", new[] { "OrderID" });
             DropIndex("dbo.PrintDetail", new[] { "OrderID" });
             DropIndex("dbo.DeliveryDetail", new[] { "OrderID" });
             DropTable("dbo.Quote");

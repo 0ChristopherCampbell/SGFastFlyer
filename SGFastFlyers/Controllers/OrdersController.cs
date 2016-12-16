@@ -13,28 +13,42 @@ namespace SGFastFlyers.Controllers
     using System.Web.Mvc;
 
     using DataAccessLayer;
-    using Models;
-    using ViewModels;
-    using Utility;
 
     using eWAY.Rapid;
-    using eWAY.Rapid.Models;
     using eWAY.Rapid.Enums;
+    using eWAY.Rapid.Models;
 
+    using Models;
+    using Utility;
+    using ViewModels;    
+
+    /// <summary>
+    /// The order controller. Order creation and payment is handled here.
+    /// </summary>
     [RequireHttps]
     public class OrdersController : Controller
     {
+        /// <summary>
+        /// The database context
+        /// </summary>
         private SGDbContext db = new SGDbContext();
-        
-        // GET: Orders
+
+        /// <summary>
+        /// GET: Orders
+        /// </summary>
+        /// <returns>Default (usually List) view of orders</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(o => o.DeliveryDetail).Include(o => o.PrintDetail);
-            return View(orders.ToList());
+            var orders = this.db.Orders.Include(o => o.DeliveryDetail).Include(o => o.PrintDetail);
+            return this.View(orders.ToList());
         }
 
-        // GET: Orders/Details/5
+        /// <summary>
+        /// GET: Orders/Details/5
+        /// </summary>
+        /// <param name="id">the orders id</param>
+        /// <returns>The order detail view</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
@@ -42,24 +56,34 @@ namespace SGFastFlyers.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+
+            Order order = this.db.Orders.Find(id);
             if (order == null)
             {
-                return HttpNotFound();
+                return this.HttpNotFound();
             }
-            return View(order);
+
+            return this.View(order);
         }
 
-        // GET: Orders/Create
+        /// <summary>
+        /// GET: Orders/Create
+        /// </summary>
+        /// <returns>The create order form</returns>
         public ActionResult Create()
         {
-            return View();
+            return this.View();
         }
+
+        /// <summary>
+        /// Gets the soonest date for delivery following a specified date
+        /// </summary>
+        /// <param name="date">The specified date</param>
+        /// <returns>The next saturday's date</returns>
         public DateTime GetNextSaturday(DateTime date)
         {
             switch (date.DayOfWeek)
-            {
-               
+            {               
                 case DayOfWeek.Sunday:
                     return date.AddDays(+13);
                 case DayOfWeek.Monday:
@@ -74,11 +98,14 @@ namespace SGFastFlyers.Controllers
                     return date.AddDays(+8);
                 default:
                     return date.AddDays(+14);
-
             }
         }
 
-        // GET: Orders/Create?prepopulated=bool
+        /// <summary>
+        /// <c>GET: Orders/Create?prepopulated=bool</c>
+        /// </summary>
+        /// <param name="prepopulated">whether or not the data has been prepopulated on the instant-quote tool</param>
+        /// <returns>The create order page</returns>
         [HttpGet]
         public ActionResult Create(bool prepopulated = false)
         {            
@@ -96,75 +123,37 @@ namespace SGFastFlyers.Controllers
                     DeliveryDate = DateTime.Now.AddDays(8)
                 };
 
-                return View(orderModel);
+                return this.View(orderModel);
             }            
 
-            return View();
+            return this.View();
         }
 
-        // POST: Orders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: Orders/Create
+        /// TODO: - Paypal integration
+        ///         - Eventual on-site payment
+        /// </summary>
+        /// <param name="createOrderViewModel">The order in view model form to be bound to models.</param>
+        /// <returns>A redirect to payment and eventual payment complete page.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,DeliveryArea,NeedsPrint,PrintSize,IsDoubleSided")] CreateOrderViewModel createOrderViewModel)
+        public ActionResult Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided")] CreateOrderViewModel createOrderViewModel)
         {
             if (ModelState.IsValid)
             {
-                Order order = new Order
-                {
-                    FirstName = createOrderViewModel.FirstName,
-                    LastName = createOrderViewModel.LastName,
-                    EmailAddress = createOrderViewModel.EmailAddress,
-                    PhoneNumber = createOrderViewModel.PhoneNumber,
-                    Quantity = createOrderViewModel.Quantity
-                };
-
-                db.Orders.Add(order);
-                db.SaveChanges();
-
-                DeliveryDetail deliveryDetail = new DeliveryDetail
-                {
-                    OrderID = order.ID,
-                    DeliveryArea = createOrderViewModel.DeliveryArea,
-                    DeliveryDate = createOrderViewModel.DeliveryDate
-                };
-
-                db.DeliveryDetails.Add(deliveryDetail);
-
-                PrintDetail printDetail = new PrintDetail
-                {
-                    OrderID = order.ID,
-                    NeedsPrint = createOrderViewModel.NeedsPrint,
-                    PrintFormat = createOrderViewModel.PrintFormat,
-                    PrintSize = createOrderViewModel.PrintSize
-                };
-
-                db.PrintDetails.Add(printDetail);
-
-                Quote quote = new Quote
-                {
-                    OrderID = order.ID,
-                    Cost = createOrderViewModel.Cost,
-                    IsMetro = createOrderViewModel.IsMetro,
-                    Quantity = createOrderViewModel.Quantity                    
-                };
-
-                db.Quotes.Add(quote);
-                db.SaveChanges();
+                Order order = this.ProcessOrder(createOrderViewModel);
 
                 // Add the order to session for use when the customer returns from payment
                 HttpContext.Session["orderInformation"] = order;
 
-                #region Payment Processing
-
+                // Start Payment Processing:
                 IRapidClient ewayClient = RapidClientFactory.NewRapidClient(Config.apiPaymentKey, Config.apiPaymentPassword, Config.apiRapidEndpoint);
 
                 PaymentDetails paymentDetails = new PaymentDetails();
-                paymentDetails.TotalAmount = (int)(quote.Cost * 100);
+                paymentDetails.TotalAmount = (int)(order.Quote.Cost * 100);
                 paymentDetails.CurrencyCode = "AUD";
-                paymentDetails.InvoiceNumber = "I" + quote.OrderID;
-
+                paymentDetails.InvoiceNumber = "I" + order.ID;
 
                 Customer customerDetails = new Customer();
                 customerDetails.FirstName = order.FirstName;
@@ -172,16 +161,12 @@ namespace SGFastFlyers.Controllers
                 customerDetails.Phone = order.PhoneNumber;
                 customerDetails.Email = order.EmailAddress;
 
-
-
                 Transaction transaction = new Transaction();
                 transaction.PaymentDetails = paymentDetails;
                 transaction.Customer = customerDetails;
                 transaction.RedirectURL = "https://localhost:44300/Orders/PaymentComplete"; // Needs to be changed for live
                 transaction.CancelURL = "http://www.eway.com.au";
                 transaction.TransactionType = TransactionTypes.Purchase;
-                
-
 
                 CreateTransactionResponse response = ewayClient.Create(PaymentMethod.ResponsiveShared, transaction);
 
@@ -193,25 +178,23 @@ namespace SGFastFlyers.Controllers
                     }
                 }
 
-                return Redirect(response.SharedPaymentUrl);
-                #endregion
-
-                //return RedirectToAction("Index", "Orders");
+                // End Payment Processing -> Redirecting.
+                return this.Redirect(response.SharedPaymentUrl);                
             }
 
-            return View(createOrderViewModel);
+            return this.View(createOrderViewModel);
         }
         
         /// <summary>
         /// Handles completed payment processing.
         /// </summary>
-        /// <param name="AccessCode">The access code returned by the payment gateway, used to get payment details</param>
+        /// <param name="accessCode">The access code returned by the payment gateway, used to get payment details</param>
         /// <returns>Complete page view</returns>
-        public ActionResult PaymentComplete(string AccessCode)
+        public ActionResult PaymentComplete(string accessCode)
         {
             IRapidClient ewayClient = RapidClientFactory.NewRapidClient(Config.apiPaymentKey, Config.apiPaymentPassword, Config.apiRapidEndpoint);
             bool paymentSuccess = false;
-            QueryTransactionResponse response = ewayClient.QueryTransaction(AccessCode);
+            QueryTransactionResponse response = ewayClient.QueryTransaction(accessCode);
             if ((bool)response.TransactionStatus.Status)
             {
                 paymentSuccess = true;
@@ -228,16 +211,20 @@ namespace SGFastFlyers.Controllers
 
             if (HttpContext.Session["orderInformation"] != null)
             {
-                Order completedOrder = db.Orders.Find(((Order)HttpContext.Session["orderInformation"]).ID);
+                Order completedOrder = this.db.Orders.Find(((Order)HttpContext.Session["orderInformation"]).ID);
                 completedOrder.IsPaid = paymentSuccess;
-                db.SaveChanges();
-                return View(completedOrder);
+                this.db.SaveChanges();
+                return this.View(completedOrder);
             }
 
-            return View();
+            return this.View();
         }
 
-        // GET: Orders/Edit/5
+        /// <summary>
+        /// GET: Orders/Edit/5
+        /// </summary>
+        /// <param name="id">the id to edit</param>
+        /// <returns>The edit page for an order</returns>
         [Authorize(Roles = "Admin")] // TODO: This will have to be changed when users are allowed to edit their orders
         public ActionResult Edit(int? id)
         {
@@ -245,19 +232,23 @@ namespace SGFastFlyers.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+
+            Order order = this.db.Orders.Find(id);
             if (order == null)
             {
-                return HttpNotFound();
+                return this.HttpNotFound();
             }
-            ViewBag.ID = new SelectList(db.DeliveryDetails, "ID", "DeliveryArea", order.ID);
-            ViewBag.ID = new SelectList(db.PrintDetails, "ID", "ID", order.ID);
-            return View(order);
+
+            ViewBag.ID = new SelectList(this.db.DeliveryDetails, "ID", "DeliveryArea", order.ID);
+            ViewBag.ID = new SelectList(this.db.PrintDetails, "ID", "ID", order.ID);
+            return this.View(order);
         }
 
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST: Orders/Edit/5
+        /// </summary>
+        /// <param name="order">The order being edited</param>
+        /// <returns>View of the order</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")] // TODO: This will have to be changed when users are allowed to edit their orders
@@ -265,16 +256,21 @@ namespace SGFastFlyers.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                this.db.Entry(order).State = EntityState.Modified;
+                this.db.SaveChanges();
+                return this.RedirectToAction("Index");
             }
-            ViewBag.ID = new SelectList(db.DeliveryDetails, "ID", "DeliveryArea", order.ID);
-            ViewBag.ID = new SelectList(db.PrintDetails, "ID", "ID", order.ID);
-            return View(order);
+
+            ViewBag.ID = new SelectList(this.db.DeliveryDetails, "ID", "DeliveryArea", order.ID);
+            ViewBag.ID = new SelectList(this.db.PrintDetails, "ID", "ID", order.ID);
+            return this.View(order);
         }
 
-        // GET: Orders/Delete/5
+        /// <summary>
+        /// GET: Orders/Delete/5
+        /// </summary>
+        /// <param name="id">the id of the order</param>
+        /// <returns>The get view for deleting an order</returns>
         [Authorize(Roles = "Admin")] // TODO: This will have to be changed when users are allowed to edit their orders
         public ActionResult Delete(int? id)
         {
@@ -282,33 +278,96 @@ namespace SGFastFlyers.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
+
+            Order order = this.db.Orders.Find(id);
             if (order == null)
             {
-                return HttpNotFound();
+                return this.HttpNotFound();
             }
-            return View(order);
-        }
 
-        // POST: Orders/Delete/5 // TODO: This will have to be changed when users are allowed to edit their orders
+            return this.View(order);
+        }
+        
+        /// <summary>
+        /// Deletes an order
+        /// </summary>
+        /// <param name="id">the id to delete</param>
+        /// <returns>A redirect to the index page</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")] // TODO: This will have to be changed when users are allowed to edit their orders
         public ActionResult DeleteConfirmed(int id)
         {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            Order order = this.db.Orders.Find(id);
+            this.db.Orders.Remove(order);
+            this.db.SaveChanges();
+            return this.RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Disposes the thing
+        /// </summary>
+        /// <param name="disposing">whether it is disposing</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                this.db.Dispose();
             }
+
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Creates the order and associated details, print, delivery quote.
+        /// </summary>
+        /// <param name="createOrderViewModel">The new order in view model form</param>
+        /// <returns>The created order</returns>
+        private Order ProcessOrder(CreateOrderViewModel createOrderViewModel)
+        {
+            Order order = new Order
+            {
+                FirstName = createOrderViewModel.FirstName,
+                LastName = createOrderViewModel.LastName,
+                EmailAddress = createOrderViewModel.EmailAddress,
+                PhoneNumber = createOrderViewModel.PhoneNumber,
+                Quantity = createOrderViewModel.Quantity
+            };
+
+            this.db.Orders.Add(order);
+            this.db.SaveChanges();
+
+            DeliveryDetail deliveryDetail = new DeliveryDetail
+            {
+                OrderID = order.ID,
+                DeliveryArea = createOrderViewModel.DeliveryArea,
+                DeliveryDate = createOrderViewModel.DeliveryDate
+            };
+
+            this.db.DeliveryDetails.Add(deliveryDetail);
+
+            PrintDetail printDetail = new PrintDetail
+            {
+                OrderID = order.ID,
+                NeedsPrint = createOrderViewModel.NeedsPrint,
+                PrintFormat = createOrderViewModel.PrintFormat,
+                PrintSize = createOrderViewModel.PrintSize
+            };
+
+            this.db.PrintDetails.Add(printDetail);
+            
+            Quote quote = new Quote
+            {
+                OrderID = order.ID,
+                Cost = createOrderViewModel.Cost,
+                IsMetro = createOrderViewModel.IsMetro,
+                Quantity = createOrderViewModel.Quantity
+            };
+
+            this.db.Quotes.Add(quote);
+            this.db.SaveChanges();
+
+            return order;
         }
     }
 }
