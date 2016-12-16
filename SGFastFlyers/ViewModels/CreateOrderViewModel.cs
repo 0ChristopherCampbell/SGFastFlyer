@@ -102,6 +102,10 @@ namespace SGFastFlyers.ViewModels
                     return Enums.PrintFormat.Standard;
                 }
             }
+
+            set
+            {
+            }
         }
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace SGFastFlyers.ViewModels
         ///         -Won't have to update it across both views and controllers when the logic changes
         /// </para>
         /// </summary>
-        public decimal? Cost
+        public decimal Cost
         {
             get
             {
