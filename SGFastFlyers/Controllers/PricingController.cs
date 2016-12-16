@@ -24,7 +24,7 @@ namespace SGFastFlyers.Controllers
             get
             {
                 
-                decimal cost = (decimal)Quantity / 1000 * Config.CostPer1000() ?? -1;
+                decimal cost = (decimal)Quantity / 1000 * Config.BaseCostPer1000() ?? -1;
                 decimal dlSingleSided = (Quantity / 1000 * (decimal)Config.DLSingleSidedPer1000());
                 decimal dlDoubleSided = (Quantity / 1000 * (decimal)Config.DLDoubleSidedPer1000());
                 decimal A5SingleSided = (Quantity / 1000 * (decimal)Config.A5SingleSidedPer1000());
