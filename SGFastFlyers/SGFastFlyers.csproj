@@ -211,6 +211,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PolicyDocumentsController.cs" />
+    <Compile Include="Controllers\PricingController.cs" />
     <Compile Include="Controllers\PrintDetailsController.cs" />
     <Compile Include="Controllers\QuotesController.cs" />
     <Compile Include="DataAccessLayer\SGDbContext.cs" />
@@ -328,6 +329,7 @@
     <Folder Include="Content\Video\" />
     <Folder Include="Standards\Views\" />
     <Folder Include="Views\Example\" />
+    <Folder Include="Views\Pricing\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
