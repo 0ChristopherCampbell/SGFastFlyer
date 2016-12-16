@@ -21,29 +21,11 @@ namespace SGFastFlyers.Models
         
         [Required]
         public bool IsMetro {get; set; }
+            [Required]
+        public decimal Cost { get; set; }
 
-        [Required]
-        public decimal? Cost
-        {
-            
-            // TODO: Does this need to be a property somewhere
-            // TODO: Metro/Country Prices
-            get
-            {
-                decimal cost = decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["CostPer1000"]) * (Quantity / 1000);
-                if (IsMetro)
-                {
-                    return cost;
-                }
-                else
-                {
-                    return cost + decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["NonMetroAddition"]);
-                }
-            }
-            set { }         
-        }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+      
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd-Mmm-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ExpiryDate
         {
             get { return DateTime.Now.AddMonths(1); }

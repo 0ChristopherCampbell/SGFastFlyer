@@ -35,37 +35,10 @@ namespace SGFastFlyers.ViewModels
         public Enums.PrintSize PrintSize { get; set; }
 
         [Required, Display(Name = "Do you require double sided printing?")]
-        public Enums.PrintFormat PrintFormat
-        {
-            get
-            {
-                if (IsDoubleSided)
-                    {
-                    return Enums.PrintFormat.DoubleSided;
-                }
-                else
-                {
-                    return Enums.PrintFormat.Standard;
-                }                
-            }
-        }
+        public Enums.PrintFormat PrintFormat { get; set; }
 
-        public decimal? Cost
-        {
-            get
-            {
-                decimal cost = Config.CostPer1000() * 1000 ?? -1;
-                if (this.IsMetro)
-                {
-                    return cost;
-                }
-                else
-                {
-                    return cost + Config.NonMetroAddition();
-                }
-            }
-            set { }
-        }
+
+        public decimal Cost { get; set; }
 
         [Display(Name = "Your Instant Quote:")]
         public string FormattedCost

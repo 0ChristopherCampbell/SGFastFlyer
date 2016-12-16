@@ -35,7 +35,9 @@ namespace SGFastFlyers.ViewModels
         public DateTime DeliveryDate { get; set; }
 
         [Display(Name = "Is this delivery classified as metro?")]
+ 
         public bool IsMetro { get; set; }
+
 
         public string DeliveryArea { get; set; }
 
@@ -46,22 +48,10 @@ namespace SGFastFlyers.ViewModels
         public Enums.PrintSize? PrintSize { get; set; }
 
         [Required, Display(Name = "Do you require double sided printing?")]
-        public Enums.PrintFormat PrintFormat
-        {
-            get
-            {
-                if (IsDoubleSided)
-                {
-                    return Enums.PrintFormat.DoubleSided;
-                }
-                else
-                {
-                    return Enums.PrintFormat.Standard;
-                }
-            }
-        }
+        public Enums.PrintFormat PrintFormat { get; set; }
 
-        public decimal? Cost
+
+        public decimal Cost
         {
             get
             {
@@ -69,9 +59,9 @@ namespace SGFastFlyers.ViewModels
 
 
                   
-                if (!IsMetro)
+                if (!IsMetro == false)
                 {
-                    cost = cost + (decimal)SGFastFlyers.Utility.Config.NonMetroAddition();
+                    cost = cost + (decimal)Config.NonMetroAddition();
                 }
 
 
@@ -87,11 +77,11 @@ namespace SGFastFlyers.ViewModels
                         if (PrintSize ==  Enums.PrintSize.DL)
 
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
+                            cost = cost + (Quantity / 1000 * (decimal)Config.DLDoubleSidedPer1000());
                         }
                         if (PrintSize == Enums.PrintSize.A5)
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.A5DoubleSidedPer1000());
+                            cost = cost + (Quantity / 1000 * (decimal)Config.A5DoubleSidedPer1000());
                         }
                     }
                     else
@@ -99,12 +89,12 @@ namespace SGFastFlyers.ViewModels
 
                         if (PrintSize == Enums.PrintSize.DL)
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.DLSingleSidedPer1000());
+                            cost = cost + (Quantity / 1000 * (decimal)Config.DLSingleSidedPer1000());
                         }
 
                         if (PrintSize ==  Enums.PrintSize.A5)
                         {
-                            cost = cost + (Quantity / 1000 * (decimal)SGFastFlyers.Utility.Config.A5SingleSidedPer1000());
+                            cost = cost + (Quantity / 1000 * (decimal)Config.A5SingleSidedPer1000());
                         }
                     }
                 }

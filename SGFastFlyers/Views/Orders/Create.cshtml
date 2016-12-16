@@ -12,13 +12,9 @@
     @Html.AntiForgeryToken()
     <style>
         div.absolute {
-    position: absolute;
-   
-    bottom:10px;
-   
-   
-    
-}
+            position: absolute;
+            bottom: 10px;
+        }
     </style>
     <div class="row">
         <div class="col-md-8">
@@ -96,7 +92,7 @@
                     <div class="form-group" onclick="setQuotePrice();">
                         @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()" })
+                            @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @checked = true, @class = "form-control", @onchange = "checkandChange()", @value = "true" })
                             @Html.ValidationMessageFor(model => model.IsMetro, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -135,18 +131,18 @@
                 <div class="col-md-2">
                     <label>Your quote price: </label>
                 </div>
-                    <div class="col-md-10">
-                        <label id="quotePrice" title="Minimum Order of $400"></label>
-                    </div>
-               
+                <div class="col-md-10">
+                    <label id="quotePrice" title="Minimum Order of $400"></label>
+                </div>
+
                 <br /><br />
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00" />
-                        </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00" />
                     </div>
                 </div>
             </div>
+        </div>
         <div class="col-md-4" style="height:600px; ">
             <div class="absolute">
                 <p class="full-circle"></p><br />
@@ -154,7 +150,7 @@
                 <p class="full-circle-sm"></p>
             </div>
         </div>
-        </div>
+    </div>
         <script type="text/javascript">
 
             function checkandChange()
@@ -187,7 +183,7 @@
                 var needsPrint = document.getElementById("NeedsPrint").checked;
                 var isDoubleSided = document.getElementById("IsDoubleSided").checked;
                 var printSize = document.getElementById('PrintSize').value;
-               
+
 
                 var cost = quantity / 1000 *  @SGFastFlyers.Utility.Config.CostPer1000();
                 if (!metro)
@@ -195,18 +191,18 @@
                     cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
                 }
 
-             
 
-                if(needsPrint) 
-                    
+
+                if(needsPrint)
+
 
                 {
                     if(isDoubleSided)
 
                     {
-                        
+
                         if( printSize == "1")
-                            
+
                         {
                             cost = cost + (quantity/1000 * @SGFastFlyers.Utility.Config.DLDoubleSidedPer1000());
                         }
@@ -236,18 +232,18 @@
                 cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
 
                 document.getElementById("quotePrice").innerHTML = cost;
-               
+
             }
             window.onload = setQuotePrice();
 
 
 
-          
+
         </script>
-      
+
 
 }
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
