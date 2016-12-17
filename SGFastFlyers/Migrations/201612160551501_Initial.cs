@@ -7,7 +7,7 @@ namespace SGFastFlyers.Migrations
     {
         public override void Up()
         {
-            CreateTable(
+          CreateTable(
                 "dbo.DeliveryDetail",
                 c => new
                     {
@@ -19,7 +19,7 @@ namespace SGFastFlyers.Migrations
                 .PrimaryKey(t => t.OrderID)
                 .ForeignKey("dbo.Order", t => t.OrderID)
                 .Index(t => t.OrderID);
-            
+          
             CreateTable(
                 "dbo.Order",
                 c => new

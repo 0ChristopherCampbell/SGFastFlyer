@@ -12,6 +12,8 @@ namespace SGFastFlyers.Controllers
     using System.Net.Mail;
     using System.Threading.Tasks;
     using System.Web;
+    using System;
+
 
     public class HomeController : Controller
     {
@@ -106,41 +108,45 @@ namespace SGFastFlyers.Controllers
                 return View();
             
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Contact(ContactModels model, HttpPostedFileBase Attachment)
         {
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} {1} ({2})><p>Subject: {3}</p><p>Message:</p><p>{4}</p>";
+                var body = "<p>Email From: {0} {1} ({2})><p>Message:</p><p>{3}</p>";
+                string yourEncodedHtml = "Email Sent Successfully.<br/>Feel free to send another one if you like.<br/><p>Have a great day.<p/>";
+                var html = new MvcHtmlString(yourEncodedHtml);
                 var message = new MailMessage();
-                message.To.Add(new MailAddress("cruzinbud@hotmail.com"));  // replace with valid value 
-                message.From = new MailAddress("cruzinbud@hotmail.com");  // replace with valid value
-                message.Subject = "Your email subject";
-                message.Body = string.Format(body, model.FirstName, model.LastName, model.Email, model.Subject, model.Comment);
+                message.To.Add(new MailAddress("contact_us@sgfastflyers.com.au"));  // replace with valid value 
+                message.From = new MailAddress(model.Email);  // replace with valid value
+                message.Subject = model.Subject;
+                message.Body = string.Format(body, model.FirstName, model.LastName, model.Email, model.Comment);
                 message.IsBodyHtml = true;
-                if (Request.Files.Count > 0)
+                if (Attachment != null)
                 {
                     var attachment = new Attachment(Request.Files[0].FileName);
                     message.Attachments.Add(attachment);
-                }                
-
-                using (SmtpClient smtp = new SmtpClient())
-                {
-                 
-                    await smtp.SendMailAsync(message);
-                    return RedirectToAction("Sent");
                 }
+                try
+                {
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        await smtp.SendMailAsync(message);
+
+                    }
+                    ViewBag.Status = html;
+                    ModelState.Clear();
+                }
+                catch (Exception )
+                {
+                    ViewBag.Status = "Problem while sending email, Please check details.";
+                   
+                }  
             }
-
-            return View(model);
+            return View(); 
         }
-        public ActionResult Sent()
-        {
-            return View();
-        }
-
     }
 }
 

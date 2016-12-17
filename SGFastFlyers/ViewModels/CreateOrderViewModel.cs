@@ -58,7 +58,7 @@ namespace SGFastFlyers.ViewModels
         /// Gets or sets the delivery date
         /// </summary>
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DeliveryDate { get; set; }
 
         /// <summary>

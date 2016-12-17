@@ -1711,6 +1711,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .form-control:-ms-input-placeholder {
   color: #999999;
+  
 }
 
 .form-control::-webkit-input-placeholder {
@@ -6816,21 +6817,35 @@ td.visible-print {
     display: none !important;
   }
 }
+input[type=text]::-ms-clear {
+ display:none;
+ }
 #rcorners1 {
+
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
     border-radius: 4px;
     border:#E1FF19;
     background: #E1FF19;
     padding: 20px; 
-    width: 300px;
-    height: 26px; 
+    width: 280px;
+    height:15px; 
+ -moz-box-sizing: content-box;
+ -webkit-box-sizing: content-box;
+   box-sizing: content-box;
 }
 #rcorners2 {
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
     border-radius: 4px;
     border:#E1FF19;
     background:#E1FF19;
     padding: 20px; 
     width: 300px;
-    height: 150px; 
+    height: 150px;
+   -moz-box-sizing: content-box;
+ -webkit-box-sizing: content-box;
+   box-sizing: content-box;
 }
 #circle1 {
     left: 353px;
