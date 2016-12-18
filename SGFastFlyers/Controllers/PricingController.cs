@@ -23,14 +23,14 @@ namespace SGFastFlyers.Controllers
         {
             get
             {
-                
-                decimal cost = (decimal)Quantity / 1000 * Config.BaseCostPer1000() ?? -1;
-                decimal dlSingleSided = (Quantity / 1000 * (decimal)Config.DLSingleSidedPer1000());
-                decimal dlDoubleSided = (Quantity / 1000 * (decimal)Config.DLDoubleSidedPer1000());
-                decimal A5SingleSided = (Quantity / 1000 * (decimal)Config.A5SingleSidedPer1000());
-                decimal A5DoubleSided = (Quantity / 1000 * (decimal)Config.DLSingleSidedPer1000());
+                decimal quantity = Quantity / 1000;
+                decimal cost = 0;
+                decimal dlSingleSided = 0;
+                decimal dlDoubleSided = 0;
+                decimal A5SingleSided = 0;
+                decimal A5DoubleSided = 0;
 
-                if(Quantity >= 1 && Quantity <= 19999)
+                if(quantity >= 1 && quantity < 20)
                 {
                     cost = 50;
                     dlSingleSided = 40;
@@ -38,7 +38,7 @@ namespace SGFastFlyers.Controllers
                     A5SingleSided = 52;
                     A5DoubleSided = 55.9m;
                 }
-                if (Quantity >= 20000 && Quantity <= 49999)
+                if (quantity >= 20 && quantity < 50)
                 {
                     cost = 49;
                     dlSingleSided = 38;
@@ -46,7 +46,7 @@ namespace SGFastFlyers.Controllers
                     A5SingleSided = 49.4m;
                     A5DoubleSided = 53.3m;
                 }
-                if (Quantity >= 50000 && Quantity <= 74999)
+                if (quantity >= 50 && quantity < 75)
                 {
                     cost = 48;
                     dlSingleSided = 36;
@@ -54,7 +54,7 @@ namespace SGFastFlyers.Controllers
                     A5SingleSided = 46.8m;
                     A5DoubleSided = 53.3m;
                 }
-                if (Quantity >= 75000 && Quantity <= 99999)
+                if (quantity >= 75 && quantity <= 100)
                 {
                     cost = 47;
                     dlSingleSided = 36;
@@ -62,7 +62,7 @@ namespace SGFastFlyers.Controllers
                     A5SingleSided = 46.8m;
                     A5DoubleSided = 53.3m;
                 }
-                if (Quantity >= 100000 && Quantity <= 199999)
+                if (quantity >= 100 && quantity <= 200)
                 {
                     cost = 46;
                     dlSingleSided = 34;
@@ -70,7 +70,7 @@ namespace SGFastFlyers.Controllers
                     A5SingleSided = 44.2m;
                     A5DoubleSided = 49.4m;
                 }
-                if (Quantity >= 200000 && Quantity <= 299999)
+                if (quantity >= 200 && quantity < 300)
                 {
                     cost = 45;
                     dlSingleSided = 34;
@@ -78,7 +78,7 @@ namespace SGFastFlyers.Controllers
                     A5SingleSided = 44.2m;
                     A5DoubleSided = 49.4m;
                 }
-                if (Quantity >= 1 && Quantity <= 19999)
+                if (quantity >= 300)
                 {
                     cost = 42;
                     dlSingleSided = 32;
@@ -86,7 +86,7 @@ namespace SGFastFlyers.Controllers
                     A5SingleSided = 41.6m;
                     A5DoubleSided = 46.8m;
                 }
-
+                cost = cost * quantity;
                 if (!IsMetro == false)
                 {
                     cost = cost + (decimal)Config.NonMetroAddition();
@@ -105,11 +105,11 @@ namespace SGFastFlyers.Controllers
                         if (PrintSize == Enums.PrintSize.DL)
 
                         {
-                            cost = cost + dlDoubleSided;
+                            cost = cost + dlDoubleSided*quantity;
                         }
                         if (PrintSize == Enums.PrintSize.A5)
                         {
-                            cost = cost + A5DoubleSided ;
+                            cost = cost + A5DoubleSided * quantity;
                         }
                     }
                     else
@@ -117,12 +117,12 @@ namespace SGFastFlyers.Controllers
 
                         if (PrintSize == Enums.PrintSize.DL)
                         {
-                            cost = cost + dlSingleSided;
+                            cost = cost + dlSingleSided * quantity;
                         }
 
                         if (PrintSize == Enums.PrintSize.A5)
                         {
-                            cost = cost + A5SingleSided;
+                            cost = cost + A5SingleSided * quantity;
                         }
                     }
                 }
