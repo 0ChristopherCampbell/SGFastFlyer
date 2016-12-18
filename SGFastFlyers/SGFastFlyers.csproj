@@ -325,6 +325,7 @@
     <Content Include="Views\PolicyDocuments\PrivacyPolicy.cshtml" />
     <Content Include="Views\PolicyDocuments\ShippingandReturnsPolicy.cshtml" />
     <Content Include="Views\Home\Sent.cshtml" />
+    <Content Include="Views\Orders\PaymentGateway.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
