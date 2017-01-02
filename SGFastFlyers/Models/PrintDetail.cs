@@ -19,10 +19,10 @@ namespace SGFastFlyers.Models
         [Required, Display(Name = "Printing Required?")]
         public bool NeedsPrint { get; set; }
 
-        [Required, Display(Name = "Paper Size")]
+        [Display(Name = "Paper Size")]
         public Enums.PrintSize? PrintSize { get; set; }
 
-        [Required, Display(Name = "Double Sided")]
+        [Display(Name = "Double Sided")]
         public Enums.PrintFormat? PrintFormat { get; set; }
 
         public virtual Order Order { get; set; }

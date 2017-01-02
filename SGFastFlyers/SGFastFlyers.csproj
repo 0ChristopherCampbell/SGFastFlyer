@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201612160551501_Initial.Designer.cs">
       <DependentUpon>201612160551501_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612200707391_SmallChangePrintDetail.cs" />
+    <Compile Include="Migrations\201612200707391_SmallChangePrintDetail.Designer.cs">
+      <DependentUpon>201612200707391_SmallChangePrintDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ContactModels.cs" />
@@ -272,7 +276,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -325,7 +331,6 @@
     <Content Include="Views\PolicyDocuments\PrivacyPolicy.cshtml" />
     <Content Include="Views\PolicyDocuments\ShippingandReturnsPolicy.cshtml" />
     <Content Include="Views\Home\Sent.cshtml" />
-    <Content Include="Views\Orders\PaymentGateway.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,6 +352,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612160551501_Initial.resx">
       <DependentUpon>201612160551501_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612200707391_SmallChangePrintDetail.resx">
+      <DependentUpon>201612200707391_SmallChangePrintDetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

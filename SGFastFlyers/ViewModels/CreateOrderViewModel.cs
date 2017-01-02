@@ -128,6 +128,7 @@ namespace SGFastFlyers.ViewModels
                 decimal dlDoubleSided = 0;
                 decimal A5SingleSided = 0;
                 decimal A5DoubleSided = 0;
+                decimal gst = decimal.Divide(10, 100);
 
                 if (quantity >= 1 && quantity < 20)
                 {
@@ -230,7 +231,8 @@ namespace SGFastFlyers.ViewModels
                     cost = 400;
                 }
 
-
+                //GST
+                cost = decimal.Multiply(cost, gst) + cost;
                 return cost;
 
             }
