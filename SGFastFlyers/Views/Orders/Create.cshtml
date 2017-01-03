@@ -18,6 +18,7 @@
             bottom: 10px;
         }
     </style>
+
     <div class="row">
         <div class="col-md-8">
             <h4>Please fill in the details below to create an order. <br />Already have an account? Please logon via the top right hand corner.</h4>
@@ -130,44 +131,44 @@
                             @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
                         </div>
                     </div>
-                </div>
-            </div><br />
 
-            <div class="row ">
-                <div class="form-group" id="Attachment" style="display: none;" onclick="setQuotePrice();">
-                    @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2", @title = "Attach your file here. Please see file guidelines for requirements." })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.Attachment, htmlAttributes: new { @checked = true, @class = "form-control", @onchange = "checkandChange()", @title = "Attach your file here. Please see file guidelines for requirements.", type="file" })
-                        @Html.ValidationMessageFor(model => model.Attachment, "", new { @class = "text-danger" })<br /><br />
+                </div><br />
+
+                <div class="row ">
+                    <div class="form-group" id="Attachment" style="display: none;" onclick="setQuotePrice();">
+                        @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2", @title = "Attach your file here. Please see file guidelines for requirements." })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Attachment, htmlAttributes: new { @checked = true, @class = "form-control", @onchange = "checkandChange()", @title = "Attach your file here. Please see file guidelines for requirements.", type = "file" })
+                            @Html.ValidationMessageFor(model => model.Attachment, "Required for Printing", new { @class = "text-danger" })<br /><br />
+                        </div>
                     </div>
-                </div>
-            </div><br /><br />
-
-
-            <div class="row">
-                <div class="col-md-2">
-                    <label>Your quote price: </label>
-                </div>
-                <div class="col-md-10">
-                    <label id="quotePrice" title="Minimum Order of $400"></label><br /><p style="font-size:x-small">(All prices include GST)</p>
                 </div><br /><br />
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-                                data-amount="999"
-                                data-name="SGFastFlyers.com.au"
-                                data-description="Secure Payment Gateway"
-                                data-image="/Content/Images/logo.jpg"
-                                data-locale="auto"
-                                data-zip-code="true">
-                        </script>
-                        <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00" />
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Your quote price: </label>
                     </div>
+                    <div class="col-md-10">
+                        <label id="quotePrice" title="Minimum Order of $400"></label><br /><p style="font-size:x-small">(All prices include GST)</p>
+                    </div><br /><br />
+                    <!--
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+                                    data-amount="999"
+                                    data-name="SGFastFlyers.com.au"
+                                    data-description="Secure Payment Gateway"
+                                    data-image="/Content/Images/logo.jpg"
+                                    data-locale="auto"
+                                    data-zip-code="true">
+                            </script>-->
+                    <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00" />
                 </div>
             </div>
         </div>
+
         <div class="col-md-4" style="height:600px; ">
             <div class="absolute">
                 <p class="full-circle"></p><br />

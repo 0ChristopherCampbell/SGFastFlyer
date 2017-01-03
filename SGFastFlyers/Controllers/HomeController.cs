@@ -115,7 +115,7 @@ namespace SGFastFlyers.Controllers
         {
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} {1} ({2})><p>Message:</p><p>{3}</p>";
+                var body = "<p>Email From: {0} {1} ({2})<p>Message:</p><p>{3}</p>";
                 string yourEncodedHtml = "Email Sent Successfully.<br/>Feel free to send another one if you like.<br/><p>Have a great day.<p/>";
                 var html = new MvcHtmlString(yourEncodedHtml);
                 var message = new MailMessage();

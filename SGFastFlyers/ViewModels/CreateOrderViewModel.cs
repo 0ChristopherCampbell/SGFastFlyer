@@ -60,6 +60,7 @@ namespace SGFastFlyers.ViewModels
         /// </summary>
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Delivery Date")]
         public DateTime DeliveryDate { get; set; }
 
         /// <summary>
@@ -72,6 +73,7 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets or sets the delivery area
         /// </summary>
+        [Display(Name = "Delivery Area")]
         public string DeliveryArea { get; set; }
 
         /// <summary>
