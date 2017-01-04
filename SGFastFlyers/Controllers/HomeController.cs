@@ -27,7 +27,7 @@ namespace SGFastFlyers.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Index(HomePageViewModel model)
         {
-            if (ModelState.IsValid)
+            if (Request.Form["orderNow"] != null && ModelState.IsValid)
             {
                 // They're going ahead with the order, save their quote for reference?
                 /*Quote newQuote = new Quote
@@ -41,10 +41,52 @@ namespace SGFastFlyers.Controllers
                 HttpContext.Session["homePageModel"] = model.HomePageQuoteViewModel;
                 return RedirectToAction("Create", "Orders", new { prepopulated = true });
             }
-
+            if(Request.Form["emailQuote"] != null && ModelState.IsValid)
+            {
+                EmailQuotes model1 = new EmailQuotes();
+                ViewBag.Message = "The operation was cancelled!";
+                return View("EmailQuote", model1);
+            }
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EmailQuote(EmailQuotes model1)
+        {
+            if (ModelState.IsValid)
+            {
+                var url = @"\Home\Index";
+                var linkText = "Click here";
+                var body = "<p>Email From: {0} {1} ({2})<p>Message:</p><p>{3}</p>";
+               
+                string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
+                   string yourEncodedHtml = "Quote Sent Successfully.<br/>" + href  + " to send another one if you like.<br/><p>Have a great day.<p/>";
+                var html = new MvcHtmlString(yourEncodedHtml);
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(model1.Email));  // replace with valid value 
+                message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                message.Subject = model1.Subject;
+                message.Body = string.Format(body, model1.FirstName, model1.LastName, model1.Email, model1.Comment);
+                message.IsBodyHtml = true;
 
+                try
+                {
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        await smtp.SendMailAsync(message);
+
+                    }
+                    ViewBag.Status = html;
+                    ModelState.Clear();
+                }
+                catch (Exception)
+                {
+                    ViewBag.Status = "Problem while sending email, Please check details.";
+
+                }
+            }
+            return View();
+        }
         /* Old quote details view controller
         public ActionResult QuoteDetail()
         {
@@ -147,8 +189,11 @@ namespace SGFastFlyers.Controllers
             }
             return View(); 
         }
-    }
+    
+        
 }
+}
+
 
 
 

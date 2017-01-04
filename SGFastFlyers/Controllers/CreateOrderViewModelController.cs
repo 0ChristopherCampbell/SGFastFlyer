@@ -46,8 +46,9 @@ namespace SGFastFlyers.Controllers
         {
             // This shouldn't be being used at the moment..
             Exception exception = new Exception("This shouldn't be used directly");
-            throw (exception);
             return View(createOrderViewModel);
+            throw (exception);
+            
         }
 
         // GET: CreateOrderViewModel/Edit/5

@@ -25,4 +25,16 @@ namespace SGFastFlyers.Models
         public string Comment { get; set; }
         public HttpPostedFileBase Attachment { get; set; }
     }
+    public class EmailQuotes
+    {
+        
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email is required."), EmailAddress]
+        public string Email { get; set; }
+        public string Subject { get; set; }
+        public string Comment { get; set; }
+        
+    }
 }
