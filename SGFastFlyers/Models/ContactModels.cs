@@ -27,7 +27,8 @@ namespace SGFastFlyers.Models
     }
     public class EmailQuotes
     {
-        
+        internal decimal Cost;
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
@@ -35,6 +36,8 @@ namespace SGFastFlyers.Models
         public string Email { get; set; }
         public string Subject { get; set; }
         public string Comment { get; set; }
+        public int Quantity { get; set; }
+
         
     }
 }

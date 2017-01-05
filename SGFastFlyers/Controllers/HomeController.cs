@@ -44,7 +44,7 @@ namespace SGFastFlyers.Controllers
             if(Request.Form["emailQuote"] != null && ModelState.IsValid)
             {
                 EmailQuotes model1 = new EmailQuotes();
-                ViewBag.Message = "The operation was cancelled!";
+                HttpContext.Session["homePageModel1"] = model.HomePageQuoteViewModel;
                 return View("EmailQuote", model1);
             }
             return View();
@@ -53,39 +53,49 @@ namespace SGFastFlyers.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EmailQuote(EmailQuotes model1)
         {
-            if (ModelState.IsValid)
-            {
-                var url = @"\Home\Index";
-                var linkText = "Click here";
-                var body = "<p>Email From: {0} {1} ({2})<p>Message:</p><p>{3}</p>";
-               
-                string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
-                   string yourEncodedHtml = "Quote Sent Successfully.<br/>" + href  + " to send another one if you like.<br/><p>Have a great day.<p/>";
-                var html = new MvcHtmlString(yourEncodedHtml);
-                var message = new MailMessage();
-                message.To.Add(new MailAddress(model1.Email));  // replace with valid value 
-                message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
-                message.Subject = model1.Subject;
-                message.Body = string.Format(body, model1.FirstName, model1.LastName, model1.Email, model1.Comment);
-                message.IsBodyHtml = true;
 
-                try
+            {
+                InstantQuoteViewModel model = (InstantQuoteViewModel)HttpContext.Session["homePageModel1"];
+               
+                
+
+                if (ModelState.IsValid)
                 {
-                    using (SmtpClient smtp = new SmtpClient())
+                    var url = @"\Home\Index";
+                    var linkText = "Click here";
+                    var body = "Hi {6}, </br><p>Here is your quote: </p></br><p>Quantity: {0}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
+                        "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your interest. Please reply to this email to place an order.</p><p>Kind Regards,</p>SG Fast Flyers.";
+
+                    string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
+                    string yourEncodedHtml = "Quote Sent Successfully.<br/>" + href + " to send another one if you like.<br/><p>Have a great day.<p/>";
+                    var html = new MvcHtmlString(yourEncodedHtml);
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(model1.Email));  // replace with valid value
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au")); 
+                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Subject = "Your Quote";
+                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model1.FirstName);
+                    message.IsBodyHtml = true;
+
+
+                    try
                     {
-                        await smtp.SendMailAsync(message);
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            await smtp.SendMailAsync(message);
+
+                        }
+                        ViewBag.Status = html;
+                        ModelState.Clear();
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Status = "Problem while sending email, Please check details.";
 
                     }
-                    ViewBag.Status = html;
-                    ModelState.Clear();
                 }
-                catch (Exception)
-                {
-                    ViewBag.Status = "Problem while sending email, Please check details.";
-
-                }
+                return View();
             }
-            return View();
         }
         /* Old quote details view controller
         public ActionResult QuoteDetail()
