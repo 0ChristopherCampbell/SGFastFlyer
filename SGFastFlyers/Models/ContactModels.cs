@@ -27,8 +27,7 @@ namespace SGFastFlyers.Models
     }
     public class EmailQuotes
     {
-        internal decimal Cost;
-
+        [Required(ErrorMessage = "First Name is required.")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

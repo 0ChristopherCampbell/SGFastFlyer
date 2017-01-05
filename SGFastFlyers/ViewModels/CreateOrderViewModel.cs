@@ -113,8 +113,8 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets the attachment
         /// </summary>
-        [Required, Display(Name = "Please attach your file for printing.")]
-        public HttpPostedFileBase Attachment { get; set; }
+       // [Required, Display(Name = "Please attach your file for printing.")]
+       // public HttpPostedFileBase Attachment { get; set; }
 
         /// <summary>
         /// Gets or sets the cost of the new order.
