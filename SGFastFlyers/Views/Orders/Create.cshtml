@@ -5,7 +5,7 @@
 }
 
 <h2>Place an Order</h2>
-@using (Html.BeginForm("Create", "Orders",
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post,
                         new
                         {
                             enctype = "multipart/form-data"
@@ -138,7 +138,7 @@
                     <div class="form-group" id="Attachment" style="display: none;" >
                        @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2", @title = "Attach your file here. Please see file guidelines for requirements." })
                         <div class="col-md-10">
-                          @Html.TextBoxFor(model => model.Attachment, htmlAttributes: new { Placeholder = "Attach File", type = "file" })
+                          @Html.TextBoxFor(model => model.Attachment, new { type = "file", multiple = "true", Placeholder = "Attach Files" })
                            
                         </div>
                     </div>

@@ -232,6 +232,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AttachmentDetailsController.cs" />
     <Compile Include="Models\ContactModels.cs" />
     <Compile Include="Models\DeliveryDetail.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -338,6 +339,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Video\" />
     <Folder Include="Standards\Views\" />
+    <Folder Include="Views\AttachmentDetails\" />
     <Folder Include="Views\Example\" />
     <Folder Include="Views\Pricing\" />
   </ItemGroup>

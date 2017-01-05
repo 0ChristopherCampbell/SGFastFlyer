@@ -11,6 +11,7 @@ namespace SGFastFlyers.ViewModels
     using Models;
     using Utility;
     using System.Web;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Create order view model, used on the order page to bind properties required for <see cref="Order"/> 
@@ -263,6 +264,7 @@ namespace SGFastFlyers.ViewModels
         /// </summary>
         public bool IsDoubleSided { get; set; }
 
-        public HttpPostedFileBase Attachment { get; set; }
+       
+        public ICollection<HttpPostedFileBase> Attachment { get; set; }
     }
 }

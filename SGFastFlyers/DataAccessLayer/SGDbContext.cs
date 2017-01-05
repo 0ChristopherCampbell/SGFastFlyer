@@ -40,7 +40,11 @@ namespace SGFastFlyers.DataAccessLayer
                     .HasRequired(t => t.PrintDetail)
                     .WithRequiredPrincipal(t => t.Order);
 
-                modelBuilder.Entity<Order>()
+            modelBuilder.Entity<Order>()
+                    .HasRequired(t => t.AttachmentDetail)
+                    .WithRequiredPrincipal(t => t.Order);
+
+            modelBuilder.Entity<Order>()
                     .HasRequired(t => t.DeliveryDetail)
                     .WithRequiredPrincipal(t => t.Order);
 
