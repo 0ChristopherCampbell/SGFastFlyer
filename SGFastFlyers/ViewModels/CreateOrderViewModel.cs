@@ -262,5 +262,7 @@ namespace SGFastFlyers.ViewModels
         /// Gets or sets a value indicating whether the paper is double sided (to accommodate double sided checkboxes)
         /// </summary>
         public bool IsDoubleSided { get; set; }
+
+        public HttpPostedFileBase Attachment { get; set; }
     }
 }

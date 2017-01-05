@@ -5,7 +5,7 @@
 }
 
 <h2>Place an Order</h2>
-@using (Html.BeginForm("Create", "Orders", FormMethod.Post,
+@using (Html.BeginForm("Create", "Orders",
                         new
                         {
                             enctype = "multipart/form-data"
@@ -133,16 +133,16 @@
                     </div>
 
                 </div><br />
-                <!--
+              
                 <div class="row ">
-                    <div class="form-group" id="Attachment" style="display: none;" onclick="setQuotePrice();">
-                       Html.LabelFor(model => model.Attachment, htmlAttributes: new { class = "control-label col-md-2", title = "Attach your file here. Please see file guidelines for requirements." })
+                    <div class="form-group" id="Attachment" style="display: none;" >
+                       @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2", @title = "Attach your file here. Please see file guidelines for requirements." })
                         <div class="col-md-10">
-                           Html.TextBoxFor(model => model.Attachment, htmlAttributes: new { checked = true, class = "form-control", onchange = "checkandChange()", title = "Attach your file here. Please see file guidelines for requirements.", type = "file" })
-                           Html.ValidationMessageFor(model => model.Attachment, "Required for Printing", new { class = "text-danger" })<br /><br />
+                          @Html.TextBoxFor(model => model.Attachment, htmlAttributes: new { Placeholder = "Attach File", type = "file" })
+                           
                         </div>
                     </div>
-                </div><br /><br />-->
+                </div><br /><br />
 
 
                 <div class="row">
