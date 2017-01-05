@@ -205,6 +205,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\AttachmentDetail.cs" />
     <Compile Include="Controllers\CreateOrderViewModelController.cs" />
     <Compile Include="Controllers\DeliveryDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

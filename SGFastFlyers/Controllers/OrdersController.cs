@@ -351,13 +351,21 @@ namespace SGFastFlyers.Controllers
                 OrderID = order.ID,
                 NeedsPrint = createOrderViewModel.NeedsPrint,
                 PrintFormat = createOrderViewModel.PrintFormat,
-                PrintSize = createOrderViewModel.PrintSize,
-                Attachment = createOrderViewModel.Attachment
+                PrintSize = createOrderViewModel.PrintSize
+               
             };
 
             this.db.PrintDetails.Add(printDetail);
-            
-            
+
+            AttachmentDetail attachmentDetail = new AttachmentDetail
+            {
+                OrderID = order.ID,
+                FileName = createOrderViewModel.Attachment.FileName,
+                File = createOrderViewModel.Attachment
+
+            };
+            this.db.AttachmentDetails.Add(attachmentDetail);
+
             Quote quote = new Quote
             {
                 OrderID = order.ID,

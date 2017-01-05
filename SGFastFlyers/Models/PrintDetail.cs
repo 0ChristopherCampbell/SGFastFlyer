@@ -28,6 +28,6 @@ namespace SGFastFlyers.Models
 
         public virtual Order Order { get; set; }
         // Future: Print Design
-        public HttpPostedFileBase Attachment { get; set; }
+      
     }
 }
