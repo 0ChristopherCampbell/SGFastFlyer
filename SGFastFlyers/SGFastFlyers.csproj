@@ -334,9 +334,10 @@
     <Content Include="Views\PolicyDocuments\ShippingandReturnsPolicy.cshtml" />
     <Content Include="Views\Home\Sent.cshtml" />
     <None Include="Views\Home\EmailQuote.cshtml" />
+    <Content Include="Views\Orders\DirectDebitEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Attachments\" />
     <Folder Include="Content\Video\" />
     <Folder Include="Standards\Views\" />
     <Folder Include="Views\AttachmentDetails\" />

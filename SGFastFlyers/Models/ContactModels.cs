@@ -39,4 +39,18 @@ namespace SGFastFlyers.Models
 
         
     }
+    public class DirectDebitEmail
+    {
+        [Required(ErrorMessage = "First Name is required.")]
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Email is required."), EmailAddress]
+        public string Email { get; set; }
+        public string Subject { get; set; }
+        public string Comment { get; set; }
+        public int Quantity { get; set; }
+
+
+    }
 }

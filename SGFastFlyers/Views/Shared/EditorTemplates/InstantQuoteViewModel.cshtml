@@ -164,7 +164,7 @@
         <div class="row">
             <div class="form-group" id="PrintFormat" style="display: none;" onclick="setQuotePrice();">
                 @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-md-4", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
-                @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control col-md-3", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
+                @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new {@checked = true, @class = "form-control col-md-3", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
                 @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
                 
             </div>
@@ -187,12 +187,18 @@
             var checkbox =   document.getElementById('HomePageQuoteViewModel_NeedsPrint');
             var dependent =  $('#PrintSize');
             var dependent2 =   $('#PrintFormat');
+            
             if (checkbox.checked){                   
                 dependent.show();
                 dependent2.show();
+               
+                
             } else {                    
                 dependent.hide();
                 dependent2.hide();
+                dependent2.prop('checked', false);
+                
+
             }
         }
 

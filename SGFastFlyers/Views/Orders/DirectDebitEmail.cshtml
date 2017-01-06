@@ -1,0 +1,30 @@
+﻿ @{
+   ViewBag.Title = "Direct Debit Email";
+}
+@model SGFastFlyers.Models.DirectDebitEmail
+<h2>Direct Debit Confirmation</h2>
+<h2>@ViewBag.Message</h2>
+
+@using (Html.BeginForm("EmailQuote", "Orders", FormMethod.Post,
+                                    new
+                                    {
+                                        enctype = "multipart/form-data"
+                                    }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container col-md-4">
+
+
+
+                @ViewBag.Status
+            </div>
+      
+    <div class="col-md-offset-6" style="height:600px; ">
+        <div class="absolute">
+            <p class="full-circle"></p><br />
+            <p class="full-circle-med col-md-offset-2"></p><br />
+            <p class="full-circle-sm"></p>
+        </div>
+    </div>
+
+}

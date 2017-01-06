@@ -6,10 +6,10 @@
 
 <h2>Place an Order</h2>
 @using (Html.BeginForm("Create", "Orders", FormMethod.Post,
-                        new
-                        {
-                            enctype = "multipart/form-data"
-                        }))
+                                    new
+                                    {
+                                        enctype = "multipart/form-data"
+                                    }))
 {
     @Html.AntiForgeryToken()
     <style>
@@ -87,7 +87,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.DeliveryArea, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.DeliveryArea, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Suburbs or post codes for delivery." }  })
+                            @Html.EditorFor(model => model.DeliveryArea, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Suburbs or post codes for delivery." } })
                             @Html.ValidationMessageFor(model => model.DeliveryArea, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -133,18 +133,18 @@
                     </div>
 
                 </div><br />
-              
+
                 <div class="row ">
-                    <div class="form-group" id="Attachment" style="display: none;" >
-                       @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2", @title = "Attach your file here. Please see file guidelines for requirements." })
+                    <div class="form-group" id="Attachment" style="display: none;">
+                        @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2", @title = "Attach your file here. Please see file guidelines for requirements." })
                         <div class="col-md-10">
-                          @Html.TextBoxFor(model => model.Attachment, new { type = "file", multiple = "true", Placeholder = "Attach Files" })
-                           
+                            @Html.TextBoxFor(model => model.Attachment, new { type = "file", multiple = "true", Placeholder = "Attach Files" })
+
                         </div>
                     </div>
                 </div><br /><br />
 
-                           
+
                 <div class="row">
                     <div class="col-md-2">
                         <label>Your quote price: </label>
@@ -164,174 +164,176 @@
                                     data-locale="auto"
                                     data-zip-code="true">
                             </script>-->
-                    <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00" />
+
+                    <div class="col-md-offset-2">
+                        <input type="submit" name="placeOrder" value="Pay by Card" class="btn btn-default" style="background-color:#7FFF00" />
+                        <input type="submit" name="directDebitEmail" value="Pay by Direct Debit" class="btn btn-default" style="background-color:#7FFF00" />
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="height:600px; ">
+                <div class="absolute">
+                    <p class="full-circle"></p><br />
+                    <p class="full-circle-med col-md-offset-2"></p><br />
+                    <p class="full-circle-sm"></p>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4" style="height:600px; ">
-            <div class="absolute">
-                <p class="full-circle"></p><br />
-                <p class="full-circle-med col-md-offset-2"></p><br />
-                <p class="full-circle-sm"></p>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        function checkandChange()
-        {
-            var checkbox = document.getElementById('NeedsPrint');
-            var dependent =  $('#PrintSize1');
-            var dependent2 =   $('#PrintFormat');
-            var dependent3 = $('#Attachment')
-            if (checkbox.checked) {
-                dependent.show();
-                dependent2.show();
-                dependent3.show();
-            }
-            else {
-                dependent.hide();
-                dependent2.hide();
-                dependent3.hide();
-            }
-        }
-
-        $(document).ready(function () {
-            checkandChange();
-        });
-    </script>
-
-    <script type="text/javascript">
-        function setQuotePrice()
-        {
-            var quantity = 0;
-            quantity = (document.getElementById('Quantity').value)/1000;
-            var isMetro = document.getElementById('IsMetro').checked;
-            var needsPrint = document.getElementById("NeedsPrint").checked;
-            var isDoubleSided = document.getElementById("IsDoubleSided").checked;
-            var printSize = document.getElementById('PrintSize').value;
-
-
-
-
-            var cost = 0;
-            var dlSingleSided = 0;
-            var dlDoubleSided = 0;
-            var A5SingleSided = 0;
-            var A5DoubleSided = 0;
-
-            if(quantity >= 1 && quantity < 20)
+        <script type="text/javascript">
+            function checkandChange()
             {
-                cost = 50;
-                dlSingleSided = 40;
-                dlDoubleSided = 43;
-                A5SingleSided = 52;
-                A5DoubleSided = 55.9;
-            }
-            if (quantity >= 20 && quantity < 50)
-            {
-                cost = 49;
-                dlSingleSided = 38;
-                dlDoubleSided = 41;
-                A5SingleSided = 49.4;
-                A5DoubleSided = 53.3;
-            }
-            if (quantity >= 50 && quantity < 75)
-            {
-                cost = 48;
-                dlSingleSided = 36;
-                dlDoubleSided = 41;
-                A5SingleSided = 46.8;
-                A5DoubleSided = 53.3;
-            }
-            if (quantity >= 75 && quantity <= 100)
-            {
-                cost = 47;
-                dlSingleSided = 36;
-                dlDoubleSided = 41;
-                A5SingleSided = 46.8;
-                A5DoubleSided = 53.3;
-            }
-            if (quantity >= 100 && quantity <= 200)
-            {
-                cost = 46;
-                dlSingleSided = 34;
-                dlDoubleSided = 38;
-                A5SingleSided = 44.2;
-                A5DoubleSided = 49.4;
-            }
-            if (quantity >= 200 && quantity < 300)
-            {
-                cost = 45;
-                dlSingleSided = 34;
-                dlDoubleSided = 38;
-                A5SingleSided = 44.2;
-                A5DoubleSided = 49.4;
-            }
-            if (quantity >= 300)
-            {
-                cost = 42;
-                dlSingleSided = 32;
-                dlDoubleSided = 36;
-                A5SingleSided = 41.6;
-                A5DoubleSided = 46.8;
-            }
-            cost = cost * quantity;
-            if ( isMetro == false)
-            {
-                cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
-            }
-
-
-
-            if (needsPrint)
-
-
-            {
-                if (isDoubleSided)
-
-                {
-
-                    if (printSize == "1")
-
-                    {
-                        cost = cost + dlDoubleSided*quantity;
-                    }
-                    if (printSize == "5")
-                    {
-                        cost = cost + A5DoubleSided * quantity;
-                    }
+                var checkbox = document.getElementById('NeedsPrint');
+                var dependent =  $('#PrintSize1');
+                var dependent2 =   $('#PrintFormat');
+                var dependent3 = $('#Attachment')
+                if (checkbox.checked) {
+                    dependent.show();
+                    dependent2.show();
+                    dependent3.show();
                 }
-                else
-                {
-
-                    if (printSize == "1")
-                    {
-                        cost = cost + dlSingleSided * quantity;
-                    }
-
-                    if (printSize == "5")
-                    {
-                        cost = cost + A5SingleSided * quantity;
-                    }
+                else {
+                    dependent.hide();
+                    dependent2.hide();
+                    dependent3.hide();
                 }
             }
-            if (cost < 364)
+
+            $(document).ready(function () {
+                checkandChange();
+            });
+        </script>
+
+        <script type="text/javascript">
+            function setQuotePrice()
             {
-                cost = 364;
+                var quantity = 0;
+                quantity = (document.getElementById('Quantity').value)/1000;
+                var isMetro = document.getElementById('IsMetro').checked;
+                var needsPrint = document.getElementById("NeedsPrint").checked;
+                var isDoubleSided = document.getElementById("IsDoubleSided").checked;
+                var printSize = document.getElementById('PrintSize').value;
+
+
+
+
+                var cost = 0;
+                var dlSingleSided = 0;
+                var dlDoubleSided = 0;
+                var A5SingleSided = 0;
+                var A5DoubleSided = 0;
+
+                if(quantity >= 1 && quantity < 20)
+                {
+                    cost = 50;
+                    dlSingleSided = 40;
+                    dlDoubleSided = 43;
+                    A5SingleSided = 52;
+                    A5DoubleSided = 55.9;
+                }
+                if (quantity >= 20 && quantity < 50)
+                {
+                    cost = 49;
+                    dlSingleSided = 38;
+                    dlDoubleSided = 41;
+                    A5SingleSided = 49.4;
+                    A5DoubleSided = 53.3;
+                }
+                if (quantity >= 50 && quantity < 75)
+                {
+                    cost = 48;
+                    dlSingleSided = 36;
+                    dlDoubleSided = 41;
+                    A5SingleSided = 46.8;
+                    A5DoubleSided = 53.3;
+                }
+                if (quantity >= 75 && quantity <= 100)
+                {
+                    cost = 47;
+                    dlSingleSided = 36;
+                    dlDoubleSided = 41;
+                    A5SingleSided = 46.8;
+                    A5DoubleSided = 53.3;
+                }
+                if (quantity >= 100 && quantity <= 200)
+                {
+                    cost = 46;
+                    dlSingleSided = 34;
+                    dlDoubleSided = 38;
+                    A5SingleSided = 44.2;
+                    A5DoubleSided = 49.4;
+                }
+                if (quantity >= 200 && quantity < 300)
+                {
+                    cost = 45;
+                    dlSingleSided = 34;
+                    dlDoubleSided = 38;
+                    A5SingleSided = 44.2;
+                    A5DoubleSided = 49.4;
+                }
+                if (quantity >= 300)
+                {
+                    cost = 42;
+                    dlSingleSided = 32;
+                    dlDoubleSided = 36;
+                    A5SingleSided = 41.6;
+                    A5DoubleSided = 46.8;
+                }
+                cost = cost * quantity;
+                if ( isMetro == false)
+                {
+                    cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
+                }
+
+
+
+                if (needsPrint)
+
+
+                {
+                    if (isDoubleSided)
+
+                    {
+
+                        if (printSize == "1")
+
+                        {
+                            cost = cost + dlDoubleSided*quantity;
+                        }
+                        if (printSize == "5")
+                        {
+                            cost = cost + A5DoubleSided * quantity;
+                        }
+                    }
+                    else
+                    {
+
+                        if (printSize == "1")
+                        {
+                            cost = cost + dlSingleSided * quantity;
+                        }
+
+                        if (printSize == "5")
+                        {
+                            cost = cost + A5SingleSided * quantity;
+                        }
+                    }
+                }
+                if (cost < 364)
+                {
+                    cost = 364;
+                }
+                //GST
+                cost = (cost * 0.1) + cost;
+                cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
+                document.getElementById("quotePrice").innerHTML = cost;
             }
-            //GST
-            cost = (cost * 0.1) + cost;
-            cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
-            document.getElementById("quotePrice").innerHTML = cost;
+
+            window.onload = setQuotePrice();
+        </script>
         }
 
-        window.onload = setQuotePrice();
-    </script>
-
-
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

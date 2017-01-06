@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
+using System.Web;
+using System.IO;
 
 namespace SGFastFlyers.Models
 {
@@ -9,15 +11,34 @@ namespace SGFastFlyers.Models
     {
         // GET: AttachmentDetails
         private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
-
-        // GET: PrintDetails
+        [HttpPost]
+        public ActionResult Index(HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/App_Data/Attachments"), fileName);
+                    file.SaveAs(path);
+                }
+                ViewBag.Message = "Upload successful";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ViewBag.Message = "Upload failed";
+                return RedirectToAction("Uploads");
+            }
+        }
+        // GET: AttachmentDetails
         public ActionResult Index()
         {
             var attachmentDetails = db.AttachmentDetails.Include(p => p.Order);
             return View(attachmentDetails.ToList());
         }
 
-        // GET: PrintDetails/Details/5
+        // GET: AttachmentDetails/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -32,7 +53,7 @@ namespace SGFastFlyers.Models
             return View(attachmentDetail);
         }
 
-        // GET: PrintDetails/Edit/5
+        // GET: AttachmentDetails/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -48,7 +69,7 @@ namespace SGFastFlyers.Models
             return View(attachmentDetail);
         }
 
-        // POST: PrintDetails/Edit/5
+        // POST: AttachmentDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +86,7 @@ namespace SGFastFlyers.Models
             return View(attachmentDetail);
         }
 
-        // GET: PrintDetails/Delete/5
+        // GET: AttachmentDetails/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -80,7 +101,7 @@ namespace SGFastFlyers.Models
             return View(attachmentDetail);
         }
 
-        // POST: PrintDetails/Delete/5
+        // POST: AttachmentDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
