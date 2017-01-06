@@ -191,7 +191,7 @@ namespace SGFastFlyers.Controllers
             }
             
 
-            if (Request.Form["directDebitEmail"] != null && ModelState.IsValid)
+            if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && createOrderViewModel.NeedsPrint)
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
@@ -240,6 +240,54 @@ namespace SGFastFlyers.Controllers
                 return View("DirectDebitEmail", model1);
             }
 
+            if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && (createOrderViewModel.NeedsPrint==false))
+            {
+                HttpContext.Session["homePageModel1"] = createOrderViewModel;
+                CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
+                DirectDebitEmail model1 = new DirectDebitEmail();
+
+                Order order = this.ProcessOrder(createOrderViewModel);
+
+                {
+                    var url = @"\Home\Index";
+                    var linkText = "Click here";
+                    var body = "Hi {0}, </br><p>Here is your order: </p></br><p>Quantity: {1}</p><p>Delivery Date: {2:d}</p><p>Delivery Area: {3}</p><p>Metro Area: {4}</p>"+
+                        "<p>Price: {5}</p></br><p>Thank you for your order.</p><p> Our Direct Deposit Details are:</p><p>BSB: 014-289</p><p>" +
+                        "Account: 463-181-792</p><p>Please use your name as your reference.</p><p>Kind Regards,</p>SG Fast Flyers.";
+                    var firstName = model.FirstName;
+                    string fN = string.Format("Hi {0},", firstName);
+                    string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
+                    string yourEncodedHtml = fN + "</br><p>You have been emailed your order with details of how to pay via Direct Debit. </p></br><p> Please note, your order " +
+                        "will not be acted upon until payment has been recieved into our account.</p></br> <p>Thank you for your order.</p>" + href + " to begin another quote. <p>Have a great day.</p>";
+                    var html = new MvcHtmlString(yourEncodedHtml);
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(createOrderViewModel.EmailAddress));  // replace with valid value
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
+                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Subject = "Your Quote";
+                    message.Body = string.Format(body, model.FirstName, model.Quantity, model.DeliveryDate, model.DeliveryArea, model.IsMetro,   model.FormattedCost);
+                    message.IsBodyHtml = true;
+
+
+
+                    try
+                    {
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            await smtp.SendMailAsync(message);
+
+                        }
+                        ViewBag.Status = html;
+
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Status = "Problem while sending email, Please check details.";
+
+                    }
+                }
+                return View("DirectDebitEmail", model1);
+            }
 
             return this.View(createOrderViewModel);
         }
