@@ -19,6 +19,7 @@ namespace SGFastFlyers.Models
 
         [Required, Display(Name = "Printing Required?")]
         public bool NeedsPrint { get; set; }
+        
 
         [Display(Name = "Paper Size")]
         public Enums.PrintSize? PrintSize { get; set; }

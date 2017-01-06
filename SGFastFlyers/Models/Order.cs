@@ -45,7 +45,7 @@ namespace SGFastFlyers.Models
         /// <summary>
         /// Quantity of Flyers/Brochures/etc being delivered
         /// </summary>
-        [Required, Range(5000, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}")]
+        [Required, Range(1, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}")]
         public int Quantity { get; set; }
 
         /// <summary>
