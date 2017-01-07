@@ -23,6 +23,8 @@ namespace SGFastFlyers.Controllers
     using ViewModels;
     using System.Threading.Tasks;
     using System.Net.Mail;
+    using System.IO;
+    using System.Web;
 
     /// <summary>
     /// The order controller. Order creation and payment is handled here.
@@ -131,7 +133,7 @@ namespace SGFastFlyers.Controllers
 
             return this.View();
         }
-
+       
         /// <summary>
         /// POST: Orders/Create
         /// TODO: - Paypal integration
@@ -141,7 +143,7 @@ namespace SGFastFlyers.Controllers
         /// <returns>A redirect to payment and eventual payment complete page.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided")] CreateOrderViewModel createOrderViewModel)
+        public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
 
             if (Request.Form["placeOrder"] != null && ModelState.IsValid)
@@ -239,16 +241,19 @@ namespace SGFastFlyers.Controllers
                 }
                 return View("DirectDebitEmail", model1);
             }
-
+          
             if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && (createOrderViewModel.NeedsPrint==false))
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
                 DirectDebitEmail model1 = new DirectDebitEmail();
+                
 
                 Order order = this.ProcessOrder(createOrderViewModel);
+                
 
                 {
+
                     var url = @"\Home\Index";
                     var linkText = "Click here";
                     var body = "Hi {0}, </br><p>Here is your order: </p></br><p>Quantity: {1}</p><p>Delivery Date: {2:d}</p><p>Delivery Area: {3}</p><p>Metro Area: {4}</p>"+
@@ -425,7 +430,7 @@ namespace SGFastFlyers.Controllers
 
             base.Dispose(disposing);
         }
-
+      
         /// <summary>
         /// Creates the order and associated details, print, delivery quote.
         /// </summary>
@@ -467,9 +472,9 @@ namespace SGFastFlyers.Controllers
 
             AttachmentDetail attachmentDetail = new AttachmentDetail
             {
-                OrderID = order.ID,
-                //FileName = createOrderViewModel.Attachment.FileName,
-                File = createOrderViewModel.Attachment
+               OrderID = order.ID,
+               FileName = createOrderViewModel.Attachment.FileName,
+               File = createOrderViewModel.Attachment
 
             };
             this.db.AttachmentDetails.Add(attachmentDetail);

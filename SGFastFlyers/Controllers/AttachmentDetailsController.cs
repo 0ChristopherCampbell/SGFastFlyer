@@ -4,33 +4,19 @@ using System.Data.Entity;
 using System.Net;
 using System.Web;
 using System.IO;
+using SGFastFlyers.Models;
 
-namespace SGFastFlyers.Models
+namespace SGFastFlyers.Controllers
+
 {
     public class AttachmentDetailsController : Controller
     {
         // GET: AttachmentDetails
         private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
-        {
-            try
-            {
-                if (file.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/App_Data/Attachments"), fileName);
-                    file.SaveAs(path);
-                }
-                ViewBag.Message = "Upload successful";
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                ViewBag.Message = "Upload failed";
-                return RedirectToAction("Uploads");
-            }
-        }
+       
+          
+   
         // GET: AttachmentDetails
         public ActionResult Index()
         {

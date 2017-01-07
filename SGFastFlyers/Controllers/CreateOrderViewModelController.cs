@@ -8,6 +8,8 @@ namespace SGFastFlyers.Controllers
 {
     using System;
     using System.Data.Entity;
+    using System.IO;
+    using System.Web;
     using System.Web.Mvc;
 
     using ViewModels;
@@ -42,7 +44,7 @@ namespace SGFastFlyers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,DeliveryArea,NeedsPrint,PrintSize,IsDoubleSided")] CreateOrderViewModel createOrderViewModel)
+        public ActionResult Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,DeliveryArea,NeedsPrint,PrintSize,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
             // This shouldn't be being used at the moment..
             Exception exception = new Exception("This shouldn't be used directly");
@@ -71,7 +73,7 @@ namespace SGFastFlyers.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,DeliveryArea,NeedsPrint,PrintSize,IsDoubleSided")] CreateOrderViewModel createOrderViewModel)
+        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,DeliveryArea,NeedsPrint,PrintSize,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +84,7 @@ namespace SGFastFlyers.Controllers
 
             return View(createOrderViewModel);
         }
-
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)
