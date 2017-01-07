@@ -5,15 +5,20 @@
 }
 
 <h2>Place an Order</h2>
-@using (Html.BeginForm("Create", "Orders"))
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post,
+                                    new
+                                    {
+                                        enctype = "multipart/form-data"
+                                    }))
 {
     @Html.AntiForgeryToken()
     <style>
         div.absolute {
-            position: absolute;   
-            bottom:10px;    
+            position: absolute;
+            bottom: 10px;
         }
     </style>
+
     <div class="row">
         <div class="col-md-8">
             <h4>Please fill in the details below to create an order. <br />Already have an account? Please logon via the top right hand corner.</h4>
@@ -82,7 +87,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.DeliveryArea, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.DeliveryArea, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.DeliveryArea, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Suburbs or post codes for delivery." } })
                             @Html.ValidationMessageFor(model => model.DeliveryArea, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -126,55 +131,72 @@
                             @Html.ValidationMessageFor(model => model.IsDoubleSided, "", new { @class = "text-danger" })<br /><br />
                         </div>
                     </div>
-                </div>
-            </div><br /><br />
+
+                </div><br />
+
+                <div class="row ">
+                    <div class="form-group" id="Attachment" style="display: none;">
+                        @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2", @title = "Attach your file here. Please see file guidelines for requirements." })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Attachment, new { type = "file", multiple = "true", Placeholder = "Attach Files" })
+
+                        </div>
+                    </div>
+                </div><br /><br />
 
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label>Your quote price: </label>
-                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Your quote price: </label>
+                    </div>
                     <div class="col-md-10">
                         <label id="quotePrice" title="Minimum Order of $400"></label><br /><p style="font-size:x-small">(All prices include GST)</p>
                     </div><br /><br />
-
+                    <!--
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
                                     data-amount="999"
-                                    data-name="Stripe.com"
-                                    data-description="Widget"
-                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    data-name="SGFastFlyers.com.au"
+                                    data-description="Secure Payment Gateway"
+                                    data-image="/Content/Images/logo.jpg"
                                     data-locale="auto"
                                     data-zip-code="true">
-                            </script>
-                            <input type="submit" value="Place Order" class="btn btn-default" style="background-color:#7FFF00" />
-                        </div>
+                            </script>-->
+
+                    <div class="col-md-offset-2">
+                        <input type="submit" name="placeOrder" value="Pay by Card" class="btn btn-default" style="background-color:#7FFF00" />
+                        <input type="submit" name="directDebitEmail" value="Pay by Direct Debit" class="btn btn-default" style="background-color:#7FFF00" />
+                    </div>
                     </div>
                 </div>
             </div>
-        <div class="col-md-4" style="height:600px; ">
-            <div class="absolute">
-                <p class="full-circle"></p><br />
-                <p class="full-circle-med col-md-offset-2"></p><br />
-                <p class="full-circle-sm"></p>
+
+            <div class="col-md-4" style="height:600px; ">
+                <div class="absolute">
+                    <p class="full-circle"></p><br />
+                    <p class="full-circle-med col-md-offset-2"></p><br />
+                    <p class="full-circle-sm"></p>
+                </div>
             </div>
         </div>
-    </div>
         <script type="text/javascript">
             function checkandChange()
             {
                 var checkbox = document.getElementById('NeedsPrint');
                 var dependent =  $('#PrintSize1');
                 var dependent2 =   $('#PrintFormat');
+                var dependent3 = $('#Attachment')
                 if (checkbox.checked) {
                     dependent.show();
                     dependent2.show();
+                    dependent3.show();
                 }
                 else {
                     dependent.hide();
                     dependent2.hide();
+                    dependent3.hide();
                 }
             }
 
@@ -193,14 +215,14 @@
                 var isDoubleSided = document.getElementById("IsDoubleSided").checked;
                 var printSize = document.getElementById('PrintSize').value;
 
-           
 
 
-            var cost = 0;
-            var dlSingleSided = 0;
-            var dlDoubleSided = 0;
-            var A5SingleSided = 0;
-            var A5DoubleSided = 0;
+
+                var cost = 0;
+                var dlSingleSided = 0;
+                var dlDoubleSided = 0;
+                var A5SingleSided = 0;
+                var A5DoubleSided = 0;
 
                 if(quantity >= 1 && quantity < 20)
                 {
@@ -266,20 +288,20 @@
 
 
 
-            if (needsPrint)
+                if (needsPrint)
 
 
                 {
-                if (isDoubleSided)
+                    if (isDoubleSided)
 
                     {
 
-                    if (printSize == "1")
+                        if (printSize == "1")
 
                         {
                             cost = cost + dlDoubleSided*quantity;
                         }
-                if (printSize == "5")
+                        if (printSize == "5")
                         {
                             cost = cost + A5DoubleSided * quantity;
                         }
@@ -287,20 +309,20 @@
                     else
                     {
 
-                    if (printSize == "1")
+                        if (printSize == "1")
                         {
                             cost = cost + dlSingleSided * quantity;
                         }
 
-                    if (printSize == "5")
+                        if (printSize == "5")
                         {
                             cost = cost + A5SingleSided * quantity;
                         }
                     }
                 }
-                if (cost < 400)
+                if (cost < 364)
                 {
-                    cost = 400;
+                    cost = 364;
                 }
                 //GST
                 cost = (cost * 0.1) + cost;
@@ -310,10 +332,8 @@
 
             window.onload = setQuotePrice();
         </script>
+        }
 
-        
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

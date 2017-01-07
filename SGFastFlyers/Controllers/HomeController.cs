@@ -27,7 +27,7 @@ namespace SGFastFlyers.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Index(HomePageViewModel model)
         {
-            if (ModelState.IsValid)
+            if (Request.Form["orderNow"] != null && ModelState.IsValid)
             {
                 // They're going ahead with the order, save their quote for reference?
                 /*Quote newQuote = new Quote
@@ -41,10 +41,97 @@ namespace SGFastFlyers.Controllers
                 HttpContext.Session["homePageModel"] = model.HomePageQuoteViewModel;
                 return RedirectToAction("Create", "Orders", new { prepopulated = true });
             }
-
+            if(Request.Form["emailQuote"] != null && ModelState.IsValid )
+            {
+                EmailQuotes model1 = new EmailQuotes();
+                HttpContext.Session["homePageModel1"] = model.HomePageQuoteViewModel;
+                return View("EmailQuote", model1);
+            }
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EmailQuote(EmailQuotes model1)
+        {
 
+            {
+                InstantQuoteViewModel model = (InstantQuoteViewModel)HttpContext.Session["homePageModel1"];
+               
+                
+
+                if (ModelState.IsValid && (model.NeedsPrint == true))
+                {
+                    var url = @"\Home\Index";
+                    var linkText = "Click here";
+                    var body = "Hi {6}, </br><p>Here is your quote: </p></br><p>Quantity: {0}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
+                        "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your interest. Please reply to this email to place an order.</p><p>Kind Regards,</p>SG Fast Flyers.";
+
+                    string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
+                    string yourEncodedHtml = "Quote Sent Successfully.<br/>" + href + " to send another one if you like.<br/><p>Have a great day.<p/>";
+                    var html = new MvcHtmlString(yourEncodedHtml);
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(model1.Email));  // replace with valid value
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au")); 
+                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Subject = "Your Quote";
+                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model1.FirstName);
+                    message.IsBodyHtml = true;
+
+
+                    try
+                    {
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            await smtp.SendMailAsync(message);
+
+                        }
+                        ViewBag.Status = html;
+                        ModelState.Clear();
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Status = "Problem while sending email, Please check details.";
+
+                    }
+                }
+                if (ModelState.IsValid && (model.NeedsPrint == false))
+                {
+                    var url = @"\Home\Index";
+                    var linkText = "Click here";
+                    var body = "Hi {0}, </br><p>Here is your quote: </p></br><p>Quantity: {1}</p><p>Metro Area: {2}</p>"+
+                        "<p>Price: {3}</p></br><p>Thank you for your interest. Please reply to this email to place an order.</p><p>Kind Regards,</p>SG Fast Flyers.";
+
+                    string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
+                    string yourEncodedHtml = "Quote Sent Successfully.<br/>" + href + " to send another one if you like.<br/><p>Have a great day.<p/>";
+                    var html = new MvcHtmlString(yourEncodedHtml);
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(model1.Email));  // replace with valid value
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
+                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Subject = "Your Quote";
+                    message.Body = string.Format(body, model1.FirstName, model.Quantity, model.IsMetro, model.FormattedCost);
+                    message.IsBodyHtml = true;
+
+
+                    try
+                    {
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            await smtp.SendMailAsync(message);
+
+                        }
+                        ViewBag.Status = html;
+                        ModelState.Clear();
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Status = "Problem while sending email, Please check details.";
+
+                    }
+                }
+                return View();
+            }
+        }
         /* Old quote details view controller
         public ActionResult QuoteDetail()
         {
@@ -115,7 +202,7 @@ namespace SGFastFlyers.Controllers
         {
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} {1} ({2})><p>Message:</p><p>{3}</p>";
+                var body = "<p>Email From: {0} {1} ({2})<p>Message:</p><p>{3}</p>";
                 string yourEncodedHtml = "Email Sent Successfully.<br/>Feel free to send another one if you like.<br/><p>Have a great day.<p/>";
                 var html = new MvcHtmlString(yourEncodedHtml);
                 var message = new MailMessage();
@@ -147,8 +234,11 @@ namespace SGFastFlyers.Controllers
             }
             return View(); 
         }
-    }
+    
+        
 }
+}
+
 
 
 

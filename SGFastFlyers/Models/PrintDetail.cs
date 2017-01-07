@@ -8,6 +8,7 @@ namespace SGFastFlyers.Models
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web;
 
     public class PrintDetail
     {
@@ -18,6 +19,7 @@ namespace SGFastFlyers.Models
 
         [Required, Display(Name = "Printing Required?")]
         public bool NeedsPrint { get; set; }
+        
 
         [Display(Name = "Paper Size")]
         public Enums.PrintSize? PrintSize { get; set; }
@@ -27,5 +29,6 @@ namespace SGFastFlyers.Models
 
         public virtual Order Order { get; set; }
         // Future: Print Design
+      
     }
 }

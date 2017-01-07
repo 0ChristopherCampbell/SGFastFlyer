@@ -45,7 +45,7 @@ namespace SGFastFlyers.Models
         /// <summary>
         /// Quantity of Flyers/Brochures/etc being delivered
         /// </summary>
-        [Required, Range(5000, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}")]
+        [Required, Range(1, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}")]
         public int Quantity { get; set; }
 
         /// <summary>
@@ -67,6 +67,12 @@ namespace SGFastFlyers.Models
         ///     TODO: Mapping (Phase 2)
         /// </summary>
         public virtual DeliveryDetail DeliveryDetail { get; set; }
+
+
+        /// <summary>
+        /// Attachment...only one at this stage.
+        /// </summary>
+        public virtual AttachmentDetail AttachmentDetail { get; set; }
 
         /// <summary>
         /// Quote details:

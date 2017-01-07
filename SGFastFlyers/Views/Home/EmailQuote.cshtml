@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Email Quote";
+}
+@model SGFastFlyers.Models.EmailQuotes
+<h2>Email Quote</h2>
+<h2>@ViewBag.Message</h2>
+
+ @using (Html.BeginForm("EmailQuote", "Home", FormMethod.Post,
+                            new
+                            {
+                                enctype = "multipart/form-data"
+                            }))
+ {
+        @Html.AntiForgeryToken()
+        <div class="container col-md-4">
+
+   
+
+            <div class="form-group">
+       
+                @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { id = "rcorners1", Placeholder = "First Name*" })
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="form-group">
+        
+                @Html.TextBoxFor(model => model.LastName, htmlAttributes: new { id = "rcorners1", Placeholder = "Surname" })
+            </div>
+            <div class="form-group">
+        
+                @Html.TextBoxFor(model => model.Email, htmlAttributes: new { id = "rcorners1", Placeholder = "Email*" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+
+            <input type="submit" value="Send" /><span style="font-size:x-small"> (* Is Required)</span>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 text-success">
+                    @ViewBag.Status
+                </div>
+            </div>
+        </div>
+        <div class="col-md-offset-6" style="height:600px; ">
+            <div class="absolute">
+                <p class="full-circle"></p><br />
+                <p class="full-circle-med col-md-offset-2"></p><br />
+                <p class="full-circle-sm"></p>
+            </div>
+        </div>
+     }
+ 

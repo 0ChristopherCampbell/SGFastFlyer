@@ -15,6 +15,7 @@ namespace SGFastFlyers.ViewModels
         /// Gets or sets an InstantQuoteViewModel that can then be accessed in the controller
         /// </summary>
         public InstantQuoteViewModel HomePageQuoteViewModel { get; set; }
+
+
     }
-    
 }

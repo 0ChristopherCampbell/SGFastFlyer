@@ -23,7 +23,7 @@ namespace SGFastFlyers.Models
         [ForeignKey("Order")]
         public int OrderID { get; set; }
 
-        [Required, Range(5000, int.MaxValue)]
+        [Required, Range(1, int.MaxValue)]
         public int Quantity { get; set; }
         
         [Required]

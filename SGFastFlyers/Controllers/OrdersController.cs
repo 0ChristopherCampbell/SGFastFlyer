@@ -20,7 +20,11 @@ namespace SGFastFlyers.Controllers
 
     using Models;
     using Utility;
-    using ViewModels;    
+    using ViewModels;
+    using System.Threading.Tasks;
+    using System.Net.Mail;
+    using System.IO;
+    using System.Web;
 
     /// <summary>
     /// The order controller. Order creation and payment is handled here.
@@ -32,7 +36,8 @@ namespace SGFastFlyers.Controllers
         /// The database context
         /// </summary>
         private SGDbContext db = new SGDbContext();
-
+        
+        
         /// <summary>
         /// GET: Orders
         /// </summary>
@@ -128,7 +133,7 @@ namespace SGFastFlyers.Controllers
 
             return this.View();
         }
-
+       
         /// <summary>
         /// POST: Orders/Create
         /// TODO: - Paypal integration
@@ -138,10 +143,15 @@ namespace SGFastFlyers.Controllers
         /// <returns>A redirect to payment and eventual payment complete page.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided")] CreateOrderViewModel createOrderViewModel)
+        public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
-            if (ModelState.IsValid)
+
+            if (Request.Form["placeOrder"] != null && ModelState.IsValid)
             {
+                
+
+
+
                 Order order = this.ProcessOrder(createOrderViewModel);
 
                 // Add the order to session for use when the customer returns from payment
@@ -179,12 +189,115 @@ namespace SGFastFlyers.Controllers
                 }
 
                 // End Payment Processing -> Redirecting.
-                return this.Redirect(response.SharedPaymentUrl);                
+                return this.Redirect(response.SharedPaymentUrl);
+            }
+            
+
+            if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && createOrderViewModel.NeedsPrint)
+            {
+                HttpContext.Session["homePageModel1"] = createOrderViewModel;
+                CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
+                DirectDebitEmail model1 = new DirectDebitEmail();
+
+                Order order = this.ProcessOrder(createOrderViewModel);
+
+                {
+                    var url = @"\Home\Index";
+                    var linkText = "Click here";
+                    var body = "Hi {6}, </br><p>Here is your order: </p></br><p>Quantity: {0}</p><p>Delivery Date: {8}</p><p>Delivery Area: {7}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
+                        "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your order.</p><p> Our Direct Deposit Details are:</p><p>BSB: 014-289</p><p>" +
+                        "Account: 463-181-792</p><p>Please use your name as your reference.</p><p>Kind Regards,</p>SG Fast Flyers.";
+                    var firstName = model.FirstName;
+                    string fN = string.Format("Hi {0},", firstName);
+                    string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
+                    string yourEncodedHtml = fN+"</br><p>You have been emailed your order with details of how to pay via Direct Debit. </p></br><p> Please note, your order "+
+                        "will not be acted upon until payment has been recieved into our account.</p></br> <p>Thank you for your order.</p>" + href + " to begin another quote. <p>Have a great day.</p>";
+                    var html = new MvcHtmlString(yourEncodedHtml);
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(createOrderViewModel.EmailAddress));  // replace with valid value
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
+                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Subject = "Your Quote";
+                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate);
+                    message.IsBodyHtml = true;
+                   
+
+
+                    try
+                    {
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            await smtp.SendMailAsync(message);
+
+                        }
+                        ViewBag.Status = html;
+                        
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Status = "Problem while sending email, Please check details.";
+
+                    }
+                }
+                return View("DirectDebitEmail", model1);
+            }
+          
+            if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && (createOrderViewModel.NeedsPrint==false))
+            {
+                HttpContext.Session["homePageModel1"] = createOrderViewModel;
+                CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
+                DirectDebitEmail model1 = new DirectDebitEmail();
+                
+
+                Order order = this.ProcessOrder(createOrderViewModel);
+                
+
+                {
+
+                    var url = @"\Home\Index";
+                    var linkText = "Click here";
+                    var body = "Hi {0}, </br><p>Here is your order: </p></br><p>Quantity: {1}</p><p>Delivery Date: {2:d}</p><p>Delivery Area: {3}</p><p>Metro Area: {4}</p>"+
+                        "<p>Price: {5}</p></br><p>Thank you for your order.</p><p> Our Direct Deposit Details are:</p><p>BSB: 014-289</p><p>" +
+                        "Account: 463-181-792</p><p>Please use your name as your reference.</p><p>Kind Regards,</p>SG Fast Flyers.";
+                    var firstName = model.FirstName;
+                    string fN = string.Format("Hi {0},", firstName);
+                    string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
+                    string yourEncodedHtml = fN + "</br><p>You have been emailed your order with details of how to pay via Direct Debit. </p></br><p> Please note, your order " +
+                        "will not be acted upon until payment has been recieved into our account.</p></br> <p>Thank you for your order.</p>" + href + " to begin another quote. <p>Have a great day.</p>";
+                    var html = new MvcHtmlString(yourEncodedHtml);
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(createOrderViewModel.EmailAddress));  // replace with valid value
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
+                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Subject = "Your Quote";
+                    message.Body = string.Format(body, model.FirstName, model.Quantity, model.DeliveryDate, model.DeliveryArea, model.IsMetro,   model.FormattedCost);
+                    message.IsBodyHtml = true;
+
+
+
+                    try
+                    {
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            await smtp.SendMailAsync(message);
+
+                        }
+                        ViewBag.Status = html;
+
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Status = "Problem while sending email, Please check details.";
+
+                    }
+                }
+                return View("DirectDebitEmail", model1);
             }
 
             return this.View(createOrderViewModel);
         }
-        
+
+
         /// <summary>
         /// Handles completed payment processing.
         /// </summary>
@@ -317,7 +430,7 @@ namespace SGFastFlyers.Controllers
 
             base.Dispose(disposing);
         }
-
+      
         /// <summary>
         /// Creates the order and associated details, print, delivery quote.
         /// </summary>
@@ -348,14 +461,24 @@ namespace SGFastFlyers.Controllers
 
             PrintDetail printDetail = new PrintDetail
             {
-                OrderID = order.ID,
+                OrderID = order.ID, 
                 NeedsPrint = createOrderViewModel.NeedsPrint,
                 PrintFormat = createOrderViewModel.PrintFormat,
                 PrintSize = createOrderViewModel.PrintSize
+               
             };
 
             this.db.PrintDetails.Add(printDetail);
-            
+
+            AttachmentDetail attachmentDetail = new AttachmentDetail
+            {
+               OrderID = order.ID,
+               FileName = createOrderViewModel.Attachment.FileName,
+               File = createOrderViewModel.Attachment
+
+            };
+            this.db.AttachmentDetails.Add(attachmentDetail);
+
             Quote quote = new Quote
             {
                 OrderID = order.ID,

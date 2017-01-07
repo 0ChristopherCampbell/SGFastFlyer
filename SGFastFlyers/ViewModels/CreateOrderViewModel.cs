@@ -10,6 +10,7 @@ namespace SGFastFlyers.ViewModels
     using System.ComponentModel.DataAnnotations;
     using Models;
     using Utility;
+    using System.Web;
 
     /// <summary>
     /// Create order view model, used on the order page to bind properties required for <see cref="Order"/> 
@@ -59,6 +60,7 @@ namespace SGFastFlyers.ViewModels
         /// </summary>
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Delivery Date")]
         public DateTime DeliveryDate { get; set; }
 
         /// <summary>
@@ -71,6 +73,7 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets or sets the delivery area
         /// </summary>
+        [Display(Name = "Delivery Area")]
         public string DeliveryArea { get; set; }
 
         /// <summary>
@@ -107,6 +110,11 @@ namespace SGFastFlyers.ViewModels
             {
             }
         }
+        /// <summary>
+        /// Gets the attachment
+        /// </summary>
+       // [Required, Display(Name = "Please attach your file for printing.")]
+       // public HttpPostedFileBase Attachment { get; set; }
 
         /// <summary>
         /// Gets or sets the cost of the new order.
@@ -129,7 +137,6 @@ namespace SGFastFlyers.ViewModels
                 decimal A5SingleSided = 0;
                 decimal A5DoubleSided = 0;
                 decimal gst = decimal.Divide(10, 100);
-
                 if (quantity >= 1 && quantity < 20)
                 {
                     cost = 50;
@@ -226,9 +233,9 @@ namespace SGFastFlyers.ViewModels
                         }
                     }
                 }
-                if (cost < 400)
+                if (cost < 364)
                 {
-                    cost = 400;
+                    cost = 364;
                 }
 
                 //GST
@@ -255,5 +262,8 @@ namespace SGFastFlyers.ViewModels
         /// Gets or sets a value indicating whether the paper is double sided (to accommodate double sided checkboxes)
         /// </summary>
         public bool IsDoubleSided { get; set; }
+
+        public HttpPostedFileBase Attachment { get; set; }
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 using SGFastFlyers.Models;
+using SGFastFlyers.Controllers;
 
 namespace SGFastFlyers.DataAccessLayer
 {
@@ -15,6 +16,7 @@ namespace SGFastFlyers.DataAccessLayer
         public DbSet<DeliveryDetail> DeliveryDetails { get; set; }
         public DbSet<PrintDetail> PrintDetails { get; set; }
         public DbSet<Quote> Quotes { get; set; }
+        public DbSet<AttachmentDetail> AttachmentDetails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,7 +27,10 @@ namespace SGFastFlyers.DataAccessLayer
                 modelBuilder.Entity<PrintDetail>()
                     .HasKey(t => t.OrderID);
 
-                modelBuilder.Entity<DeliveryDetail>()
+            modelBuilder.Entity<AttachmentDetail>()
+                   .HasKey(t => t.OrderID);
+
+            modelBuilder.Entity<DeliveryDetail>()
                     .HasKey(t => t.OrderID);
 
                 modelBuilder.Entity<Quote>()
@@ -35,7 +40,11 @@ namespace SGFastFlyers.DataAccessLayer
                     .HasRequired(t => t.PrintDetail)
                     .WithRequiredPrincipal(t => t.Order);
 
-                modelBuilder.Entity<Order>()
+            modelBuilder.Entity<Order>()
+                    .HasRequired(t => t.AttachmentDetail)
+                    .WithRequiredPrincipal(t => t.Order);
+
+            modelBuilder.Entity<Order>()
                     .HasRequired(t => t.DeliveryDetail)
                     .WithRequiredPrincipal(t => t.Order);
 
