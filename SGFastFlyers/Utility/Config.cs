@@ -48,5 +48,11 @@ namespace SGFastFlyers.Utility
         /// Defines whether or not payments made will go to the sandbox or to the real payment system
         /// </summary>
         public static string apiRapidEndpoint = "Sandbox"; // Use "Production" when live..
+
+      /// <summary>
+      /// Web path to object data e.g /ObjectData
+      /// </summary>
+        public static string objectDataPath = "/ObjectData";   
+
     }
 }

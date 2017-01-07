@@ -470,15 +470,10 @@ namespace SGFastFlyers.Controllers
 
             this.db.PrintDetails.Add(printDetail);
             if (createOrderViewModel.Attachment != null)
-            {
-                AttachmentDetail attachmentDetail = new AttachmentDetail
-                {
-                    OrderID = order.ID,
-                    FileName = createOrderViewModel.Attachment.FileName,
-                    File = createOrderViewModel.Attachment
-
-                };
-                this.db.AttachmentDetails.Add(attachmentDetail);
+            {               
+                string pathToSave = Server.MapPath(Config.objectDataPath) + "\\Order\\" + order.ID.ToString() + "\\";
+                IO.CreateFolder(pathToSave);
+                createOrderViewModel.Attachment.SaveAs(pathToSave + Path.GetFileName(createOrderViewModel.Attachment.FileName));               
             }
 
 

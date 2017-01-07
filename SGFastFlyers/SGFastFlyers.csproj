@@ -250,6 +250,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utility\Config.cs" />
     <Compile Include="Utility\Enums.cs" />
+    <Compile Include="Utility\IO.cs" />
     <Compile Include="ViewModels\CreateOrderViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\InstantQuoteViewModel.cs" />
@@ -342,7 +343,7 @@
     <Content Include="Views\Orders\DirectDebitEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\uploads\" />
+    <Folder Include="App_Data\" />
     <Folder Include="Content\Video\" />
     <Folder Include="Standards\Views\" />
     <Folder Include="Views\AttachmentDetails\" />
