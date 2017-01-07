@@ -147,7 +147,7 @@ namespace SGFastFlyers.Controllers
         public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
 
-            if (Request.Form["placeOrder"] != null && ModelState.IsValid)
+           if (Request.Form["placeOrder"] != null && ModelState.IsValid)
             {
                 
 
