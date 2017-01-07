@@ -469,15 +469,18 @@ namespace SGFastFlyers.Controllers
             };
 
             this.db.PrintDetails.Add(printDetail);
-
-            AttachmentDetail attachmentDetail = new AttachmentDetail
+            if (createOrderViewModel.Attachment != null)
             {
-               OrderID = order.ID,
-               FileName = createOrderViewModel.Attachment.FileName,
-               File = createOrderViewModel.Attachment
+                AttachmentDetail attachmentDetail = new AttachmentDetail
+                {
+                    OrderID = order.ID,
+                    FileName = createOrderViewModel.Attachment.FileName,
+                    File = createOrderViewModel.Attachment
 
-            };
-            this.db.AttachmentDetails.Add(attachmentDetail);
+                };
+                this.db.AttachmentDetails.Add(attachmentDetail);
+            }
+
 
             Quote quote = new Quote
             {
