@@ -156,8 +156,8 @@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-                                    data-amount="999"
+                                    data-key="pk_test_u6SbThe1QxYZHaYUHjCid6og"
+                                    data-amount=document.getElementById("quotePrice").innerHTML
                                     data-name="SGFastFlyers.com.au"
                                     data-description="Secure Payment Gateway"
                                     data-image="/Content/Images/logo.jpg"
@@ -166,7 +166,54 @@
                             </script>-->
 
                     <div class="col-md-offset-2">
-                        <input type="submit" name="placeOrder" value="Pay by Card" class="btn btn-default" style="background-color:#7FFF00" />
+                        <script src="https://checkout.stripe.com/checkout.js"></script>
+                         
+                        <input type="submit" name="customButton" id="customButton" value="Pay by Card" class="btn btn-default" style="background-color:#7FFF00" />
+
+                        <script>
+                var handler = StripeCheckout.configure({
+                  key: '@SGFastFlyers.Utility.Config.stripeKey',
+                  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+                  locale: 'auto',
+                  token: function(token) {
+                      document.getElementById("tocken1").value = token.id;
+                     // alert(token.id);
+                      document.forms[0].submit();
+                      return true;
+
+                    // You can access the token ID with `token.id`.
+                      // Get the token ID to your server-side code for use.
+
+                  }
+                });
+
+                document.getElementById('customButton').addEventListener('click', function(e) {
+                    // Open Checkout with further options:
+                    var thisEmail = document.getElementById("EmailAddress");
+                    var amounbt = setQuotePrice();
+                    amounbt = amounbt.replace(/\./gi, "");
+                    amounbt = amounbt.replace(/\$/gi, "");
+                    amounbt = amounbt.replace(/\,/gi, "");
+                   // alert(thisEmail.value);
+                  handler.open({
+                    name: 'Smooth Glass Pty Ltd',
+                    description: 'Secure Payment Gateway',
+                    zipCode: true,
+                    currency: 'aud',
+                    email:thisEmail.value,
+                    image:"/Content/Images/logo.jpg",
+                    amount: amounbt
+                  });
+                  e.preventDefault();
+                },false);
+
+                // Close Checkout on page navigation:
+                window.addEventListener('popstate', function() {
+                    handler.close();
+                });
+                        </script>
+                        <input type="hidden" value="" name="tocken1" id="tocken1" />
+
                         <input type="submit" name="directDebitEmail" value="Pay by Direct Debit" class="btn btn-default" style="background-color:#7FFF00" />
                     </div>
                     </div>
@@ -214,10 +261,6 @@
                 var needsPrint = document.getElementById("NeedsPrint").checked;
                 var isDoubleSided = document.getElementById("IsDoubleSided").checked;
                 var printSize = document.getElementById('PrintSize').value;
-
-
-
-
                 var cost = 0;
                 var dlSingleSided = 0;
                 var dlDoubleSided = 0;
@@ -328,6 +371,7 @@
                 cost = (cost * 0.1) + cost;
                 cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
                 document.getElementById("quotePrice").innerHTML = cost;
+                return cost;
             }
 
             window.onload = setQuotePrice();

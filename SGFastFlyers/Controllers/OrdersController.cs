@@ -25,6 +25,7 @@ namespace SGFastFlyers.Controllers
     using System.Net.Mail;
     using System.IO;
     using System.Web;
+    using Stripe;
 
     /// <summary>
     /// The order controller. Order creation and payment is handled here.
@@ -191,7 +192,42 @@ namespace SGFastFlyers.Controllers
                 // End Payment Processing -> Redirecting.
                 return this.Redirect(response.SharedPaymentUrl);
             }
-            
+
+            if (Request["tocken1"] != null && ModelState.IsValid)
+            {
+                
+                Order order = this.ProcessOrder(createOrderViewModel);
+
+                // Add the order to session for use when the customer returns from payment
+                HttpContext.Session["orderInformation"] = order;
+
+                var myCharge = new StripeChargeCreateOptions
+                {
+                    // convert the amount of $12.50 to cents i.e. 1250
+                    Amount = (int)(order.Quote.Cost * 100),
+                    Currency = "aud",
+                    Description = "SgFastFlyer order number:" + order.ID.ToString(),
+                    SourceTokenOrExistingSourceId = Request["tocken1"]                   
+
+                };
+
+
+
+                var chargeService = new StripeChargeService(Config.privateStripeKey);
+
+                var stripeCharge = chargeService.Create(myCharge);
+
+                if(stripeCharge!=null && !String.IsNullOrEmpty(stripeCharge.FailureMessage) ) //// Failed.. 
+                {
+                    throw new Exception("ERROR:" + stripeCharge.FailureMessage);
+                }
+                else  //// All good
+                {
+                    return this.Redirect("/Orders/PaymentComplete");
+                }
+
+            }
+
 
             if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && createOrderViewModel.NeedsPrint)
             {
@@ -305,22 +341,7 @@ namespace SGFastFlyers.Controllers
         /// <returns>Complete page view</returns>
         public ActionResult PaymentComplete(string accessCode)
         {
-            IRapidClient ewayClient = RapidClientFactory.NewRapidClient(Config.apiPaymentKey, Config.apiPaymentPassword, Config.apiRapidEndpoint);
-            bool paymentSuccess = false;
-            QueryTransactionResponse response = ewayClient.QueryTransaction(accessCode);
-            if ((bool)response.TransactionStatus.Status)
-            {
-                paymentSuccess = true;
-                Console.WriteLine("Payment successful! ID: " + response.TransactionStatus.TransactionID);
-            }
-            else
-            {
-                string[] errorCodes = response.TransactionStatus.ProcessingDetails.ResponseMessage.Split(new[] { ", " }, StringSplitOptions.None);
-                foreach (string errorCode in errorCodes)
-                {
-                    Console.WriteLine("Error Message: " + RapidClientFactory.UserDisplayMessage(errorCode, "EN"));
-                }
-            }
+             bool paymentSuccess = true;          
 
             if (HttpContext.Session["orderInformation"] != null)
             {

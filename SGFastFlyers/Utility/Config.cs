@@ -52,7 +52,10 @@ namespace SGFastFlyers.Utility
       /// <summary>
       /// Web path to object data e.g /ObjectData
       /// </summary>
-        public static string objectDataPath = "/ObjectData";   
+        public static string objectDataPath = "/ObjectData";
+
+        public static string stripeKey = System.Configuration.ConfigurationManager.AppSettings["stripeKey"];
+        public static string privateStripeKey = System.Configuration.ConfigurationManager.AppSettings["privateStripeKey"];
 
     }
 }
