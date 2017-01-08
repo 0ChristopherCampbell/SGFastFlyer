@@ -187,7 +187,13 @@
                   }
                 });
 
-                document.getElementById('customButton').addEventListener('click', function(e) {
+                            document.getElementById('customButton').addEventListener('click', function(e) {
+                                var $form = $('form');
+                                if($form.valid()) {
+                       
+                                }else{
+                                    return false;
+                                }
                     // Open Checkout with further options:
                     var thisEmail = document.getElementById("EmailAddress");
                     var amounbt = setQuotePrice();
