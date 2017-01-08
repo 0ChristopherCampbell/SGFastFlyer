@@ -229,6 +229,17 @@
             </div>
         </div>
         <script type="text/javascript">
+
+        $(function(){
+            $('input').keydown(function(e){
+                if (e.keyCode == 13) {
+                    $("input[value='emailQuote']").focus();
+                    return false;
+                }
+            });
+        });
+        </script>
+        <script type="text/javascript">
             function checkandChange()
             {
                 var checkbox = document.getElementById('NeedsPrint');
