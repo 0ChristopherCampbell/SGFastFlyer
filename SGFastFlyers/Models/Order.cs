@@ -72,6 +72,7 @@ namespace SGFastFlyers.Models
         /// <summary>
         /// Attachment...only one at this stage.
         /// </summary>
+       [Display(Name = "Attachment Details")]
         public virtual AttachmentDetail AttachmentDetail { get; set; }
 
         /// <summary>

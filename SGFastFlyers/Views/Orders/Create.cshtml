@@ -115,9 +115,9 @@
 
                 <div class="row">
                     <div class="form-group" id="PrintSize1" style="display: none;" onclick="setQuotePrice();">
-                        @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-md-2", @title = "Choose DL (99mm × 210mm, 1/3 A4) or A5 (148mm X 210mm, 1/2 A4). For other sizes please contact us for a quote." })
                         <div class="col-md-10">
-                            @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()" })
+                            @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()", @title = "Choose DL (99mm × 210mm, 1/3 A4) or A5 (148mm X 210mm, 1/2 A4). For other sizes please contact us for a quote." })
                             @Html.ValidationMessageFor(model => model.PrintSize, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -231,8 +231,12 @@
                     <p class="full-circle"></p><br />
                     <p class="full-circle-med col-md-offset-2"></p><br />
                     <p class="full-circle-sm"></p>
+                    <img class="img-responsive" style="height:300px" src="~/Content/Images/Flyers.jpg" alt="logo" />
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
+            
         </div>
         <script type="text/javascript">
 
