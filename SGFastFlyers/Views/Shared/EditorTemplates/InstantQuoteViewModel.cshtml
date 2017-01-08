@@ -122,12 +122,23 @@
             document.getElementById("quotePrice").innerHTML = cost;
         }
     </script>
+    <script type="text/javascript">
+
+        $(function(){
+            $('input').keydown(function(e){
+                if (e.keyCode == 13) {
+                    $("input[value='emailQuote']").focus();
+                    return false;
+                }
+            });
+        });
+   </script>
 
     <h2><b>Get an Instant Quote!</b></h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="row">
-            <div class="form-group" oninput="setQuotePrice();">
+            <div class="form-group" oninput="setQuotePrice();" >
                 @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-4" , @title = "Enter the amount of flyers you would like delivered." })
                 @Html.TextBoxFor(model => model.Quantity, htmlAttributes: new { @class = "form-control col-md-3", Placeholder = "Enter Quantity Here, Minimum 5000", @title = "Enter the amount of flyers you would like delivered." })
                 <!-- //~~ATSYMBOL~~Html.DropDownListFor(model => model.Quantity, SGFastFlyers.ViewModels.InstantQuoteViewModel.QuantityList, "-Please select-", new { htmlAttributes = new { ~~ATSYMBOL~~class = "form-control" } })-->
