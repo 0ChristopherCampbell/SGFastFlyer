@@ -193,7 +193,7 @@ namespace SGFastFlyers.Controllers
                 return this.Redirect(response.SharedPaymentUrl);
             }
 
-            if (Request["tocken1"] != null && ModelState.IsValid)
+            if (!string.IsNullOrEmpty(Request["tocken1"]) && ModelState.IsValid)
             {
                 
                 Order order = this.ProcessOrder(createOrderViewModel);
