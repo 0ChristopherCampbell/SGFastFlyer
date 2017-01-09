@@ -147,7 +147,7 @@ namespace SGFastFlyers.Controllers
         public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
 
-           if (Request.Form["placeOrder"] != null && ModelState.IsValid)
+           if (!string.IsNullOrEmpty(Request.Form["placeOrder"]) && ModelState.IsValid)
             {
                 
 
@@ -229,7 +229,7 @@ namespace SGFastFlyers.Controllers
             }
 
 
-            if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && createOrderViewModel.NeedsPrint)
+            if (!string.IsNullOrEmpty(Request.Form["directDebitEmail"]) && ModelState.IsValid && createOrderViewModel.NeedsPrint)
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
@@ -278,7 +278,7 @@ namespace SGFastFlyers.Controllers
                 return View("DirectDebitEmail", model1);
             }
           
-            if (Request.Form["directDebitEmail"] != null && ModelState.IsValid && (createOrderViewModel.NeedsPrint==false))
+            if (!string.IsNullOrEmpty(Request.Form["directDebitEmail"]) && ModelState.IsValid && (createOrderViewModel.NeedsPrint==false))
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
