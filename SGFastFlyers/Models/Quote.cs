@@ -15,6 +15,12 @@ namespace SGFastFlyers.Models
     /// </summary>
     public class Quote
     {
+        public string FormattedCost
+        {
+            get { return string.Format("{0:C}", this.Cost); }
+        }
+
+
         public int ID { get; set; }
 
         /// <summary>

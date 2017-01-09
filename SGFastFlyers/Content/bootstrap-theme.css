@@ -6959,3 +6959,4 @@ button.close {
     -moz-border-radius:75px;
     border-radius:75px;
 }
+.data a, .data span, .data tr, .data p { white-space: pre; }

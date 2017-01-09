@@ -5,100 +5,73 @@
 }
 
 <h2>Payment Complete</h2>
+<div class="container">
+    <div class="row" style="text-align:left">
+        <div>
+            <h4>Here are your order details.</h4>
+            <hr />
+            <div class="col-md-4">
+                <table class="table table-striped table-hover ">
+                  
+                    <tbody>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.FirstName)</td>
+                            <td>@Html.DisplayFor(model => model.FirstName)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.LastName)</td>
+                            <td>@Html.DisplayFor(model => model.LastName)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.EmailAddress)</td>
+                            <td>@Html.DisplayFor(model => model.EmailAddress)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.PhoneNumber)</td>
+                            <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.Quantity)</td>
+                            <td>@Html.DisplayFor(model => model.Quantity)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.PrintDetail.NeedsPrint)</td>
+                            <td>@Html.DisplayFor(model => model.PrintDetail.NeedsPrint)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.PrintDetail.PrintSize)</td>
+                            <td>@Html.DisplayFor(model => model.PrintDetail.PrintSize)</td>
+                        </tr>
+                       
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.DeliveryDetail.DeliveryDate)</td>
+                            <td>@Html.DisplayFor(model => model.DeliveryDetail.DeliveryDate)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.DeliveryDetail.DeliveryArea)</td>
+                            <td>@Html.DisplayFor(model => model.DeliveryDetail.DeliveryArea)</td>
+                        </tr>
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.Quote.Cost)</td>
+                            <td>@Html.DisplayFor(model => model.Quote.FormattedCost)</td>
+                        </tr>
+                    </tbody>
+                  
+                    </table>
+            </div>
+           
+            <div class="col-md-4">
+                <h2>Delivery</h2>
+                <h5>If you are getting delivery only, we will email you with your job ID that needs to be on the boxes, along with the delivery address of where to send your flyers for distribution.</h5>
+                <h2>Delivery and Printing</h2>
+                <h5>If you have printing included, provided you sent through the file, there is nothing else to do. We will send you an invoice within 24 hours.</h5><br /><br />
+            </div>
+            <div class="col-md-4">
 
-<div>
-    <h4>Here are your order details.</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmailAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrintDetail.NeedsPrint)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrintDetail.NeedsPrint)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrintDetail.PrintSize)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrintDetail.PrintSize)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrintDetail.PrintSize)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrintDetail.PrintSize)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeliveryDetail.DeliveryDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeliveryDetail.DeliveryDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeliveryDetail.DeliveryArea)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeliveryDetail.DeliveryArea)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Quote.Cost)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Quote.Cost)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            </div>
+        </div>
+      </div>
+        <p>
+            <h4 style="color: #468847">Thank you for your order. If you have any questions please use our @Html.ActionLink("Contact Us", "Contact", "Home") page using your Order ID as the subject.</h4>
+        </p>
+    </div>
