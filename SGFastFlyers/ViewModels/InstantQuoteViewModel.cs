@@ -67,7 +67,7 @@ namespace SGFastFlyers.ViewModels
                 decimal gst = decimal.Divide(10, 100);
                 if (quantity >= 1 && quantity < 20)
                 {
-                    cost = 50;
+                    cost = 55;
                     dlSingleSided = 40;
                     dlDoubleSided = 43;
                     A5SingleSided = 52;
@@ -75,7 +75,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (quantity >= 20 && quantity < 50)
                 {
-                    cost = 49;
+                    cost = 54;
                     dlSingleSided = 38;
                     dlDoubleSided = 41;
                     A5SingleSided = 49.4m;
@@ -83,7 +83,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (quantity >= 50 && quantity < 75)
                 {
-                    cost = 48;
+                    cost = 53;
                     dlSingleSided = 36;
                     dlDoubleSided = 41;
                     A5SingleSided = 46.8m;
@@ -91,7 +91,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (quantity >= 75 && quantity <= 100)
                 {
-                    cost = 47;
+                    cost = 52;
                     dlSingleSided = 36;
                     dlDoubleSided = 41;
                     A5SingleSided = 46.8m;
@@ -99,7 +99,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (quantity >= 100 && quantity <= 200)
                 {
-                    cost = 46;
+                    cost = 51;
                     dlSingleSided = 34;
                     dlDoubleSided = 38;
                     A5SingleSided = 44.2m;
@@ -107,7 +107,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (quantity >= 200 && quantity < 300)
                 {
-                    cost = 45;
+                    cost = 50;
                     dlSingleSided = 34;
                     dlDoubleSided = 38;
                     A5SingleSided = 44.2m;
@@ -115,7 +115,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (quantity >= 300)
                 {
-                    cost = 42;
+                    cost = 48;
                     dlSingleSided = 32;
                     dlDoubleSided = 36;
                     A5SingleSided = 41.6m;
@@ -163,7 +163,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (cost < 364)
                 {
-                    cost = 364;
+                    cost = 363.6363m;
                 }
 
                 //GST
