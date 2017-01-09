@@ -20,7 +20,7 @@ namespace SGFastFlyers.Models
             get { return string.Format("{0:C}", this.Cost); }
         }
 
-
+        [Display(Name = "Order ID")]
         public int ID { get; set; }
 
         /// <summary>

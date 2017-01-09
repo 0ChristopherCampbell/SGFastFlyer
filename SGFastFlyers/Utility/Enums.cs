@@ -31,7 +31,7 @@ namespace SGFastFlyers.Enums
         /// <summary>
         /// Single sided leaflet
         /// </summary>
-        Standard = 100,
+        SingleSided = 100,
 
         /// <summary>
         /// Double sided leaflet

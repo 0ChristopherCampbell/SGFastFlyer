@@ -16,6 +16,7 @@ namespace SGFastFlyers.Models
         /// <summary>
         /// Primary Key
         /// </summary>
+        [Display(Name = "Order ID")]
         public int ID { get; set; }
 
         /// <summary>

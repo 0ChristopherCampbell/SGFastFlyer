@@ -23,6 +23,8 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets or sets the ID
         /// </summary>
+        /// 
+        [Display(Name = "Order ID")]
         public int ID { get; set; }
 
         /// <summary>
@@ -102,7 +104,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 else
                 {
-                    return Enums.PrintFormat.Standard;
+                    return Enums.PrintFormat.SingleSided;
                 }
             }
 

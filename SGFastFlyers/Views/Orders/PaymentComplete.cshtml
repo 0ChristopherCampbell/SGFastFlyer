@@ -15,6 +15,10 @@
                   
                     <tbody>
                         <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.ID)</td>
+                            <td>@Html.DisplayFor(model => model.ID)</td>
+                        </tr>
+                        <tr class="info">
                             <td> @Html.DisplayNameFor(model => model.FirstName)</td>
                             <td>@Html.DisplayFor(model => model.FirstName)</td>
                         </tr>
@@ -42,7 +46,10 @@
                             <td> @Html.DisplayNameFor(model => model.PrintDetail.PrintSize)</td>
                             <td>@Html.DisplayFor(model => model.PrintDetail.PrintSize)</td>
                         </tr>
-                       
+                        <tr class="info">
+                            <td> @Html.DisplayNameFor(model => model.PrintDetail.PrintFormat)</td>
+                            <td>@Html.DisplayFor(model => model.PrintDetail.PrintFormat)</td>
+                        </tr>
                         <tr class="info">
                             <td> @Html.DisplayNameFor(model => model.DeliveryDetail.DeliveryDate)</td>
                             <td>@Html.DisplayFor(model => model.DeliveryDetail.DeliveryDate)</td>

@@ -59,10 +59,10 @@ namespace SGFastFlyers.DataAccessLayer
             {
             new PrintDetail{OrderID=1, PrintFormat=Enums.PrintFormat.DoubleSided, NeedsPrint=true, PrintSize=Enums.PrintSize.DL},
             new PrintDetail{OrderID=2, PrintFormat=Enums.PrintFormat.DoubleSided, NeedsPrint=true, PrintSize=Enums.PrintSize.DL},
-            new PrintDetail{OrderID=3, PrintFormat=Enums.PrintFormat.Standard, NeedsPrint=true, PrintSize=Enums.PrintSize.A5},
+            new PrintDetail{OrderID=3, PrintFormat=Enums.PrintFormat.SingleSided, NeedsPrint=true, PrintSize=Enums.PrintSize.A5},
             new PrintDetail{OrderID=4, PrintFormat=Enums.PrintFormat.DoubleSided, NeedsPrint=false, PrintSize=Enums.PrintSize.A5},
-            new PrintDetail{OrderID=5, PrintFormat=Enums.PrintFormat.Standard, NeedsPrint=true, PrintSize=Enums.PrintSize.A5},
-            new PrintDetail{OrderID=6, PrintFormat=Enums.PrintFormat.Standard, NeedsPrint=true, PrintSize=Enums.PrintSize.A5},
+            new PrintDetail{OrderID=5, PrintFormat=Enums.PrintFormat.SingleSided, NeedsPrint=true, PrintSize=Enums.PrintSize.A5},
+            new PrintDetail{OrderID=6, PrintFormat=Enums.PrintFormat.SingleSided, NeedsPrint=true, PrintSize=Enums.PrintSize.A5},
             new PrintDetail{OrderID=7, NeedsPrint=false, PrintFormat = null, PrintSize = null},
             new PrintDetail{OrderID=8, NeedsPrint=false, PrintFormat = null, PrintSize = null}
             };
