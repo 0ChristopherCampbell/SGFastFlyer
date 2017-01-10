@@ -223,6 +223,32 @@ namespace SGFastFlyers.Controllers
                 }
                 else  //// All good
                 {
+                   
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress("contact_us@sgfastflyers.com.au"));  // replace with valid value
+                    message.CC.Add(new MailAddress("adam@sgfastflyers.com.au"));
+                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Subject = "Order ID " + order.ID.ToString();
+                    message.IsBodyHtml = true;
+                    
+
+
+
+                    try
+                    {
+                        using (SmtpClient smtp = new SmtpClient())
+                        {
+                            await smtp.SendMailAsync(message);
+
+                        }
+                        
+
+                    }
+                    catch (Exception)
+                    {
+                        
+
+                    }
                     return this.Redirect("/Orders/PaymentComplete");
                 }
 

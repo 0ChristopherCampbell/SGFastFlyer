@@ -237,7 +237,7 @@ namespace SGFastFlyers.ViewModels
                 }
                 if (cost < 364)
                 {
-                    cost = 363.6363m;
+                    cost = 363.63636364m;
                 }
 
                 //GST
