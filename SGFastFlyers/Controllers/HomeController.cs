@@ -13,7 +13,8 @@ namespace SGFastFlyers.Controllers
     using System.Threading.Tasks;
     using System.Web;
     using System;
-
+    using Utility;
+    using System.IO;
 
     public class HomeController : Controller
     {
@@ -213,7 +214,12 @@ namespace SGFastFlyers.Controllers
                 message.IsBodyHtml = true;
                 if (Attachment != null)
                 {
-                    var attachment = new Attachment(Request.Files[0].FileName);
+                    string pathToSave = Server.MapPath(Config.objectDataPath) + "\\Temp\\" + model.Email.Replace("@","_").Replace(".","_").ToString() + "\\";
+                    IO.CreateFolder(pathToSave);
+                    IO.DeleteFilesInFolder(pathToSave);
+                    Attachment.SaveAs(pathToSave + Path.GetFileName(Attachment.FileName));
+
+                    var attachment = new Attachment(pathToSave + Path.GetFileName(Attachment.FileName));
                     message.Attachments.Add(attachment);
                 }
                 try
