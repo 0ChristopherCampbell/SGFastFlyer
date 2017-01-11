@@ -195,7 +195,8 @@ namespace SGFastFlyers.Controllers
 
             if (!string.IsNullOrEmpty(Request["tocken1"]) && ModelState.IsValid)
             {
-                
+                HttpContext.Session["homePageModel1"] = createOrderViewModel;
+                CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
                 Order order = this.ProcessOrder(createOrderViewModel);
 
                 // Add the order to session for use when the customer returns from payment
@@ -224,13 +225,15 @@ namespace SGFastFlyers.Controllers
                 else  //// All good
                 {
                    
+                    var body = "Hi {6}, </br><p>Here is your order: </p></br><p>Order ID: {9}</p></br><p>Quantity: {0}</p><p>Delivery Date: {8}</p><p>Delivery Area: {7}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
+                        "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your order.</p><p>Kind Regards,</p>SG Fast Flyers.";
                     var message = new MailMessage();
-                    message.To.Add(new MailAddress("contact_us@sgfastflyers.com.au"));  // replace with valid value
-                    message.CC.Add(new MailAddress("adam@sgfastflyers.com.au"));
+                    message.To.Add(new MailAddress(model.EmailAddress));  // replace with valid value
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
                     message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
-                    message.Subject = "Order ID " + order.ID.ToString();
+                    message.Subject = "Order ID " + order.ID.ToString(); ;
+                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
                     message.IsBodyHtml = true;
-                    
 
 
 
@@ -279,7 +282,7 @@ namespace SGFastFlyers.Controllers
                     message.To.Add(new MailAddress(createOrderViewModel.EmailAddress));  // replace with valid value
                     message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
                     message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
-                    message.Subject = "Your Quote";
+                    message.Subject = "Order ID " + order.ID.ToString();
                     message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID );
                     message.IsBodyHtml = true;
                    
