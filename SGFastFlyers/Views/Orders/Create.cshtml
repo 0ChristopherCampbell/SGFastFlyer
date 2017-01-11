@@ -383,8 +383,9 @@
                 }
                 //GST
                 cost = (cost * 0.1) + cost;
-                cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
-                document.getElementById("quotePrice").innerHTML = cost;
+                // cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
+                cost = cost.toFixed(2).toLocaleString(); 
+                document.getElementById("quotePrice").innerHTML = "$" + cost  ;
                 return cost;
             }
 
