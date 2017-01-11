@@ -48,12 +48,7 @@ namespace SGFastFlyers.ViewModels
 
         public bool IsDoubleSided { get; set; }
 
-        public static SelectList QuantityList
-        {
-            get { return new SelectList(dropDownQuantity); }
-        }
-
-        public static IEnumerable<int> dropDownQuantity = Enumerable.Range(1, 10).Select(x => x * 5000);
+     
         public decimal Cost
         {
             get
