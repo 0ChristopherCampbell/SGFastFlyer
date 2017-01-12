@@ -132,7 +132,7 @@ namespace SGFastFlyers.ViewModels
         {
             get
             {
-                decimal quantity = Quantity / 1000;
+                decimal quantity = decimal.Divide(Quantity, 1000);
                 decimal cost = 0;
                 decimal dlSingleSided = 0;
                 decimal dlDoubleSided = 0;
