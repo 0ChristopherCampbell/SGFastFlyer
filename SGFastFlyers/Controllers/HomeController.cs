@@ -103,7 +103,7 @@ namespace SGFastFlyers.Controllers
                     var linkText = "Click here";
                     var body = "Hi {0}, </br><p>Here is your quote: </p></br><p>Quantity: {1}</p><p>Metro Area: {2}</p>"+
                         "<p>Price: {3}</p></br><p>Thank you for your interest. Please reply to this email to place an order.</p><p>Kind Regards,</p>SG Fast Flyers.";
-                    string attach = @"C:\Users\Adam Campbell\Source\Repos\SGFastFlyer1\SGFastFlyers\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf";
+                    string attach = Server.MapPath(@"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
                     string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
                     string yourEncodedHtml = "Quote Sent Successfully.<br/>" + href + " to send another one if you like.<br/><p>Have a great day.<p/>";
                     var html = new MvcHtmlString(yourEncodedHtml);

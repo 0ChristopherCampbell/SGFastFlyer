@@ -224,7 +224,7 @@ namespace SGFastFlyers.Controllers
                 }
                 else  //// All good
                 {
-                    string attach = @"C:\Users\Adam Campbell\Source\Repos\SGFastFlyer1\SGFastFlyers\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf";
+                    string attach = Server.MapPath( @"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
                     var body = "Hi {6}, </br><p>Here is your order: </p></br><p>Order ID: {9}</p></br><p>Quantity: {0}</p><p>Delivery Date: {8}</p><p>Delivery Area: {7}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
                         "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your order.</p><p>Kind Regards,</p>SG Fast Flyers.";
                     var message = new MailMessage();
@@ -276,7 +276,7 @@ namespace SGFastFlyers.Controllers
                     var firstName = model.FirstName;
                     string fN = string.Format("Hi {0},", firstName);
                     string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
-                    string attach = @"C:\Users\Adam Campbell\Source\Repos\SGFastFlyer1\SGFastFlyers\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf";
+                    string attach = Server.MapPath(@"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
                     string yourEncodedHtml = fN+"</br><p>You have been emailed your order with details of how to pay via Direct Debit. </p></br><p> Please note, your order "+
                         "will not be acted upon until payment has been recieved into our account.</p></br> <p>Thank you for your order.</p>" + href + " to begin another quote. <p>Have a great day.</p>";
                     var html = new MvcHtmlString(yourEncodedHtml);
@@ -330,7 +330,7 @@ namespace SGFastFlyers.Controllers
                     var firstName = model.FirstName;
                     string fN = string.Format("Hi {0},", firstName);
                     string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
-                    string attach = @"C:\Users\Adam Campbell\Source\Repos\SGFastFlyer1\SGFastFlyers\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf";
+                    string attach = Server.MapPath(@"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
                     string yourEncodedHtml = fN + "</br><p>You have been emailed your order with details of how to pay via Direct Debit. </p></br><p> Please note, your order " +
                         "will not be acted upon until payment has been recieved into our account.</p></br> <p>Thank you for your order.</p>" + href + " to begin another quote. <p>Have a great day.</p>";
                     var html = new MvcHtmlString(yourEncodedHtml);
