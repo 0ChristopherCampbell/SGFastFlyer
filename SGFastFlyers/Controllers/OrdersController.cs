@@ -30,7 +30,7 @@ namespace SGFastFlyers.Controllers
     /// <summary>
     /// The order controller. Order creation and payment is handled here.
     /// </summary>
-    [RequireHttps]
+    
     public class OrdersController : Controller
     {
         /// <summary>
