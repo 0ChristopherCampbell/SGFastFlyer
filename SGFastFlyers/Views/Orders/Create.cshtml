@@ -74,7 +74,7 @@
                 </div><br />
                 <div class="alert alert-dismissible alert-info">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Heads up!</strong>Please use the following format when entering your delivery date.<p>Firefox & Safari- yyyy/mm/dd<br>All others - dd/mm/yyyy</p>Thanks.
+                    <strong>Heads up! </strong>Please use the following format when entering your delivery date.<p>Firefox & Safari- yyyy/mm/dd<br>All others - dd/mm/yyyy</p>Thank you.
                 </div>
                 <div class="row">
                     <div class="row">
@@ -116,6 +116,11 @@
                             </div>
                         </div>
                     </div><br />
+
+                    <div class="alert alert-dismissible alert-info" id="PrintInformation">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Heads up! </strong>We accept print files in PDF. The full details will follow in your order email. <p>Thank you.</p>
+                    </div>
 
                     <div class="row">
                         <div class="form-group" id="PrintSize1" style="display: none;" onclick="setQuotePrice();">
@@ -214,7 +219,8 @@
                             <input type="hidden" value="" name="tocken1" id="tocken1" />
 
                             <input type="submit" name="directDebitEmail" value="Pay by Direct Debit" class="btn btn-success" style="background-color:#7FFF00" />
-                        </div>
+                       
+                         </div>
                     </div>
                 </div>
             </div>
@@ -248,16 +254,19 @@
                 var checkbox = document.getElementById('NeedsPrint');
                 var dependent =  $('#PrintSize1');
                 var dependent2 =   $('#PrintFormat');
-                var dependent3 = $('#Attachment')
+                var dependent3 = $('#Attachment');
+                var printInformation = $('#PrintInformation')
                 if (checkbox.checked) {
                     dependent.show();
                     dependent2.show();
                     dependent3.show();
+                    printInformation.show();
                 }
                 else {
                     dependent.hide();
                     dependent2.hide();
                     dependent3.hide();
+                    printInformation.hide();
                 }
             }
 
