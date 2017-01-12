@@ -40,7 +40,7 @@
 
             <h1>Contact Us</h1>
 
-            <div class="form-group">
+            <div class="form-group" onfocus="Viewbag.Clear">
 
                 @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { id = "rcorners1", Placeholder = "First Name" })
                 @Html.ValidationMessageFor(model => model.FirstName)
@@ -51,6 +51,10 @@
             <div class="form-group">
                 @Html.TextBoxFor(model => model.Email, htmlAttributes: new { id = "rcorners1", Placeholder = "Email" })
                 @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="form-group">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { id = "rcorners1", Placeholder = "Phone" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber)
             </div>
             <div class="form-group">
                 @Html.TextBoxFor(model => model.Subject, htmlAttributes: new { id = "rcorners1", Placeholder = "Subject" })
