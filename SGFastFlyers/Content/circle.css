@@ -35,7 +35,13 @@
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
-
+.text{
+    width: 100%;
+    max-width: 180px;
+    float: none;
+ 
+ 
+}
 .c100 {
   position: relative;
   font-size: 180px;

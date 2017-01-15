@@ -5,38 +5,53 @@
 @using (Html.BeginForm())
 {
     <div class="jumbotron" style="background-color:transparent">
-        <h1>
-            <img src="~/Content/Images/logo.jpg" width="200" height="200" /><span style="color:#F9E141" /><span style="padding:10px"></span>SG
-            <span style="color: black" />Fast Flyers<br />
-        </h1>
-        <h1 style="text-align:center; color:black">
-            Organise your flyer printing and distribution in under <span style="color:red">10 minutes!</span>
-
-        </h1>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            @Html.EditorForModel("InstantQuoteViewModel", "HomePageQuoteViewModel")
-            <div class="col-md-offset-4">
-                <input type="submit" name="emailQuote" value="Email your quote" class="btn btn-primary"  />
-                <input type="submit" name="orderNow" value="Order Now" class="btn btn-success"  style="background-color:#7FFF00"/>
+        <div class="row-start">
+            
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-left">
+                        <h1>
+                            <img class="img-responsive" src="~/Content/Images/logo.jpg" />
+                        </h1>
+                    </div>
             </div>
+           
+            <div class="col-sm-8 col-md-8 col-lg-8" style="vertical-align:middle">
+                <h1>
+                    <span class="text-nowrap"><text style="color:#F9E141">SG</text><text style="color:black"> Fast Flyers</text></span><br />
+                </h1>
+            </div>
+               
         </div>
+                <h1 style="text-align:center; color:black">
+                    Organise your flyer printing and distribution in under <span style="color:red">10 minutes!</span>
 
-        <link href="~/Content/circle.css" rel="stylesheet" />
-        <div class="row">
-            <!--This section is copied from http://ldn.net.au/home I would rather the wagon wheel effect going around...but either way...as long as it looks good.-->
-            <div class="col-md-6">
-                <div class="container">
+                </h1>
+          
+        </div>
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    @Html.EditorForModel("InstantQuoteViewModel", "HomePageQuoteViewModel")
+                    <div class="col-md-offset-4">
+                        <input type="submit" name="emailQuote" value="Email your quote" class="btn btn-primary" />
+                        <input type="submit" name="orderNow" value="Order Now" class="btn btn-success" style="background-color:#7FFF00" />
+                    </div>
+                </div>
+
+                <link href="~/Content/circle.css" rel="stylesheet" />
+
+                <!--This section is copied from http://ldn.net.au/home I would rather the wagon wheel effect going around...but either way...as long as it looks good.-->
+                <div class="col-sm-6 col-md-6 col-lg-6">
+
                     <h2>Why letterbox advertising?</h2>
 
                     <p class="sub-header">Letterbox advertising is a great way for SMEs to reach their target audience. &nbsp;</p>
 
                     <p class="sub-header">&nbsp;</p>
 
-
-                    <ul class="statistic-list list-inline row">
-                        <li class="item col-md-2">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="">
                                 <div class="clearfix">
                                     <div class="c100 p62">
@@ -44,17 +59,15 @@
                                         <div class="slice">
                                             <div class="bar"></div>
                                             <div class="fill"></div>
-
                                         </div>
                                     </div>
                                 </div>
-                                <span></span>
+                                <div class="text" style="font-weight:bold">62% of Australians think catalogues and flyers are the most effective advertising channel.</div>
                             </div>
-                            <div class="statistic-description" style="font-weight:bold">62% of Australians think catalogues and flyers are the most effective advertising channel.</div>
+                        </div>
 
-                        </li>
-                        <li class="item col-md-2">
 
+                        <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="">
                                 <div class="dark-area clearfix">
                                     <div class="c100 p100 dark">
@@ -62,37 +75,30 @@
                                         <div class="slice">
                                             <div class="bar"></div>
                                             <div class="fill"></div>
-
                                         </div>
                                     </div>
                                 </div>
-                                <span></span>
+                                <div class="text" style="font-weight:bold">3.7 million more people read letterbox media than a daily newspaper Monday to Friday.</div>
                             </div>
-                            <div class="statistic-description" style="font-weight:bold">3.7 million more people read letterbox media than a daily newspaper Monday to Friday.</div>
+                        </div>
 
-                        </li>
-                        <li class="item col-md-2">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
                             <div class="">
-                                <div class="">
-                                    <div class="dark-area clearfix">
-                                        <div class="c100 p88 green">
-                                            <span>88%</span>
-                                            <div class="slice">
-                                                <div class="bar"></div>
-                                                <div class="fill"></div>
-
-                                            </div>
+                                <div class="dark-area clearfix">
+                                    <div class="c100 p88 green">
+                                        <span>88%</span>
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
                                         </div>
                                     </div>
-                                    <span></span>
                                 </div>
-                                <div class="statistic-description" style="font-weight:bold">88% people that receive letterbox advertising read or look into it.</div>
+                                <div class="text" style="font-weight:bold">88% people that receive letterbox advertising read or look into it.</div>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
-    </div>
-}
+
+        }

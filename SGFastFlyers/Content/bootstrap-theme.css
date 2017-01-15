@@ -15,6 +15,53 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.table{
+  display: table;
+ 
+}
+
+.column {
+  float:none; /* remove bootstrap default */
+  display: table-cell;
+  vertical-align: middle;  
+  border:1px solid grey;
+  justify-content: center;
+}
+
+.button {
+  display: block;
+  margin: .5em auto;
+  width: 25%;
+}
+
+.col-left, .col-right {
+    width: 50%;
+    display: table-cell;
+    vertical-align: middle;
+}
+.col-right{
+    text-align:center;
+
+}
+.row-start {
+    width: 100%;
+    height: 100%;
+    display: table-row;
+   
+}
+.col-left{
+    width:100%
+
 }
 body {
   margin: 0;
@@ -1585,8 +1632,8 @@ pre code {
   overflow-y: scroll;
 }
 .container {
-  margin-right: auto;
-  margin-left: auto;
+  margin-right: 10%;
+  margin-left: 10%;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -6904,8 +6951,8 @@ button.close {
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
     border-radius: 4px;
-    border:#E1FF19;
-    background: #E1FF19;
+    border:#F9E141;
+    background: #F9E141;
     padding: 20px; 
     width: 280px;
     height:15px; 
@@ -6917,8 +6964,8 @@ button.close {
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
     border-radius: 4px;
-    border:#E1FF19;
-    background:#E1FF19;
+    border:#F9E141;
+    background:#F9E141;
     padding: 20px; 
     width: 300px;
     height: 150px;
@@ -6935,7 +6982,7 @@ button.close {
 }
 .full-circle {
   
-    background-color:#E1FF19;
+    background-color:#F9E141;
     height:130px;
     width:130px;
     -webkit-border-radius:75px;
@@ -6944,7 +6991,7 @@ button.close {
    
 }
 .full-circle-med {
-    background-color:#E1FF19;
+    background-color:#F9E141;
     height:80px;
     width:80px;
     -webkit-border-radius:75px;
@@ -6952,7 +6999,7 @@ button.close {
     border-radius:75px
 }
 .full-circle-sm {
-    background-color:#E1FF19;
+    background-color:#F9E141;
     height:50px;
     width:50px;
     -webkit-border-radius:75px;

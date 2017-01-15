@@ -30,7 +30,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Make an Order", "Create", "Orders")</li>
+                    <li>@Html.ActionLink("Place an Order", "Create", "Orders")</li>
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("View Orders", "", "Orders")</li>

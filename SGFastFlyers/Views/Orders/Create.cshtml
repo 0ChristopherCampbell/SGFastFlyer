@@ -6,10 +6,10 @@
 
 <h2>Place an Order</h2>
 @using (Html.BeginForm("Create", "Orders", FormMethod.Post,
-                                    new
-                                    {
-                                        enctype = "multipart/form-data"
-                                    }))
+                                                new
+                                                {
+                                                    enctype = "multipart/form-data"
+                                                }))
 {
     @Html.AntiForgeryToken()
     <style>
@@ -20,7 +20,7 @@
     </style>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-sm-8 col-md-8 col-lg-8">
             <h4>Please fill in the details below to create an order. <br />Already have an account? Please logon via the top right hand corner.</h4>
             <hr />
             <div class="row">
@@ -86,7 +86,10 @@
                             </div>
                         </div>
                     </div><br />
-
+                    <div class="alert alert-dismissible alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Heads up! </strong>For a list of Metro Area's please <a href="~/Content/Documents/SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf" target="_top">Click Here.</a> Thank you.
+                    </div>
                     <div class="row">
                         <div class="form-group">
                             @Html.LabelFor(model => model.DeliveryArea, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -120,11 +123,11 @@
                     <div class="alert alert-dismissible alert-info" id="PrintInformation">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <strong>Heads up! </strong>We accept print files in PDF.<ul>
-                            <li><strong>Accepted File Types</strong>: <a href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html">PDF </a>(version 1.4 or higher)</li>
+                            <li><strong>Accepted File Types</strong>: <a href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html"  target="_blank">PDF </a>(version 1.4 or higher)</li>
                             <li>Artwork must be Print Ready</li>
                             <li>2mm Bleed on all sides of the flyer</li>
                             <li>3mm Safe Zone on all sides is recommended</li>
-                            <li>300 dpi resolution for all images in&nbsp;<a href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html">PDF</a>files</li>
+                            <li>300 dpi resolution for all images in&nbsp;<a href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html" target="_blank">PDF</a> files</li>
                             <li>CMYK or Grey Scale colours only</li>
                             <li>Fonts need to be embedded or converted to curves</li>
                         </ul>
@@ -238,28 +241,26 @@
         </div>
 
 
-        <div class="col-md-4" style="height:600px; ">
-            <div class="absolute">
-                <p class="full-circle"></p><br />
-                <p class="full-circle-med col-md-offset-2"></p><br />
-                <p class="full-circle-sm"></p>
-                <img class="img-responsive" style="height:300px" src="~/Content/Images/Flyers.jpg" alt="logo" />
-            </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <p></p><p></p>
+            <p class="full-circle"></p><br />
+            <p class="full-circle-med col-sm-offset-4 col-md-offset-4 col-lg-offset-4"></p><br />
+            <p class="full-circle-sm"></p>
+            <img class="img-responsive" style="max-height:300px" src="~/Content/Images/Flyers.jpg" alt="logo" />
         </div>
     </div>
-        <div class="col-md-4">
-            
-        </div>
+
+
         <script type="text/javascript">
 
-        $(function(){
-            $('input').keydown(function(e){
-                if (e.keyCode == 13) {
-                    $("input[value='emailQuote']").focus();
-                    return false;
-                }
+            $(function(){
+                $('input').keydown(function(e){
+                    if (e.keyCode == 13) {
+                        $("input[value='emailQuote']").focus();
+                        return false;
+                    }
+                });
             });
-        });
         </script>
         <script type="text/javascript">
             function checkandChange()
@@ -406,15 +407,15 @@
                 //GST
                 cost = (cost * 0.1) + cost;
                 // cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
-                cost = cost.toFixed(2).toLocaleString(); 
+                cost = cost.toFixed(2).toLocaleString();
                 document.getElementById("quotePrice").innerHTML = "$" + cost  ;
                 return cost;
             }
 
             window.onload = setQuotePrice();
         </script>
-    
+
 }
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
