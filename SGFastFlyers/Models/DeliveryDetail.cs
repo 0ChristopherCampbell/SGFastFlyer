@@ -9,6 +9,8 @@ namespace SGFastFlyers.Models
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Utility;
+    using System.Web;
 
     public class DeliveryDetail
     {
@@ -17,8 +19,9 @@ namespace SGFastFlyers.Models
         [ForeignKey("Order")]
         public int OrderID { get; set; }
 
-        [Display(Name = "Delivery Date"), DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]    
+        [DataType(DataType.Date)]
+        [Display(Name = "Delivery Date")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd")]    
         public DateTime DeliveryDate { get; set; }
 
         [Display(Name = "Delivery Area")]

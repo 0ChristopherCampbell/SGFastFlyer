@@ -81,31 +81,7 @@ namespace SGFastFlyers.Controllers
             return this.View();
         }
 
-        /// <summary>
-        /// Gets the soonest date for delivery following a specified date
-        /// </summary>
-        /// <param name="date">The specified date</param>
-        /// <returns>The next saturday's date</returns>
-        public DateTime GetNextSaturday(DateTime date)
-        {
-            switch (date.DayOfWeek)
-            {               
-                case DayOfWeek.Sunday:
-                    return date.AddDays(+13);
-                case DayOfWeek.Monday:
-                    return date.AddDays(+12);
-                case DayOfWeek.Tuesday:
-                    return date.AddDays(+11);
-                case DayOfWeek.Wednesday:
-                    return date.AddDays(+10);
-                case DayOfWeek.Thursday:
-                    return date.AddDays(+9);
-                case DayOfWeek.Friday:
-                    return date.AddDays(+8);
-                default:
-                    return date.AddDays(+14);
-            }
-        }
+        
 
         /// <summary>
         /// <c>GET: Orders/Create?prepopulated=bool</c>
@@ -126,7 +102,7 @@ namespace SGFastFlyers.Controllers
                     IsMetro = model.IsMetro,
                     Quantity = model.Quantity,
                     PrintSize = model.PrintSize,
-                    
+                   
                 };
 
                 return this.View(orderModel);

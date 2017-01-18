@@ -37,8 +37,8 @@ namespace SGFastFlyers.Models
             [Required]
         public decimal Cost { get; set; }
 
-      
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd-Mmm-yyyy}", ApplyFormatInEditMode = true)]
+        //[DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd}")]
         public DateTime ExpiryDate
         {
             get { return DateTime.Now.AddMonths(1); }
