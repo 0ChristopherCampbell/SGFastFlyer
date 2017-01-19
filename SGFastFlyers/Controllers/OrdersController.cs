@@ -26,19 +26,21 @@ namespace SGFastFlyers.Controllers
     using System.IO;
     using System.Web;
     using Stripe;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// The order controller. Order creation and payment is handled here.
     /// </summary>
-    
+
     public class OrdersController : Controller
     {
         /// <summary>
         /// The database context
         /// </summary>
         private SGDbContext db = new SGDbContext();
-        
-        
+        private string today;
+
+
         /// <summary>
         /// GET: Orders
         /// </summary>
@@ -89,10 +91,12 @@ namespace SGFastFlyers.Controllers
         /// <param name="prepopulated">whether or not the data has been prepopulated on the instant-quote tool</param>
         /// <returns>The create order page</returns>
         [HttpGet]
+        [DataType(DataType.Date)]
         public ActionResult Create(bool prepopulated = false)
         {            
             if (HttpContext.Session["homePageModel"] != null && prepopulated)
             {
+                DateTime dateTime = DateTime.UtcNow.Date;
                 InstantQuoteViewModel model = (InstantQuoteViewModel)HttpContext.Session["homePageModel"];
                 CreateOrderViewModel orderModel = new CreateOrderViewModel
                 {
@@ -102,6 +106,9 @@ namespace SGFastFlyers.Controllers
                     IsMetro = model.IsMetro,
                     Quantity = model.Quantity,
                     PrintSize = model.PrintSize,
+                    DeliveryDate = dateTime,
+                    
+                    
                    
                 };
 

@@ -12,11 +12,13 @@
             <div class="col-md-4">
                 <table class="table table-striped table-hover ">
                   
-                    <tbody>
+                    <thead>
                         <tr class="info">
-                            <td> @Html.DisplayNameFor(model => model.ID)</td>
-                            <td>@Html.DisplayFor(model => model.ID)</td>
+                            <th> @Html.DisplayNameFor(model => model.ID)</th>
+                            <th>@Html.DisplayFor(model => model.ID)</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         <tr class="info">
                             <td> @Html.DisplayNameFor(model => model.FirstName)</td>
                             <td>@Html.DisplayFor(model => model.FirstName)</td>
@@ -57,7 +59,7 @@
                             <td> @Html.DisplayNameFor(model => model.DeliveryDetail.DeliveryArea)</td>
                             <td>@Html.DisplayFor(model => model.DeliveryDetail.DeliveryArea)</td>
                         </tr>
-                        <tr class="info">
+                        <tr class="info" style="font-weight:bolder">
                             <td> @Html.DisplayNameFor(model => model.Quote.Cost)</td>
                             <td>@Html.DisplayFor(model => model.Quote.FormattedCost)</td>
                         </tr>

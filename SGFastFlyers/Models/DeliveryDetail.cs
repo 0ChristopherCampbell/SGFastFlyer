@@ -21,7 +21,7 @@ namespace SGFastFlyers.Models
 
         [DataType(DataType.Date)]
         [Display(Name = "Delivery Date")]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd")]    
+       // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd")]    
         public DateTime DeliveryDate { get; set; }
 
         [Display(Name = "Delivery Area")]

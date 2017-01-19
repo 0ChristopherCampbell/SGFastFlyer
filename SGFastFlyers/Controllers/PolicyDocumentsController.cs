@@ -32,5 +32,9 @@ namespace SGFastFlyers.Controllers
         {
             return View();
         }
+        public ActionResult MetroAreas()
+        {
+            return View();
+        }
     }
 }
