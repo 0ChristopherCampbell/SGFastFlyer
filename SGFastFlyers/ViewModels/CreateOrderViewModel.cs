@@ -54,7 +54,7 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets or sets the quantity.
         /// </summary>
-        [Required]
+        [Required, Range(1, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}")]
         public int Quantity { get; set; }
 
         /// <summary>

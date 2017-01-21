@@ -3,79 +3,100 @@
     ViewBag.Title = "Let's Talk";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    
+
 }
 
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
+@using (Html.BeginForm("Contact", "Home", FormMethod.Post,                                                                                        }))
+{
+    <br /><br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4">
 
-<br /><br />
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4">
 
-
-            <span style="color: #F9E141; font-size:36px"> SG </span> <span style="font-size:36px">Fast Flyers</span>
-            <br />
-            <address style="font-size:24px">
-                29/52 Daw Rd<br />
-                Runcorn, Qld. 4113<br />
-                <abbr title="Phone">Ph:</abbr>
-                (07) 3841 6742<br />
-                ABN: 72 611 139 845
-            </address>
-        </div>
-        <div class="col-md-4 bottom-left" style="height:435px;">
-            <p class="full-circle"></p>
-            <p class="full-circle-med col-md-offset-2"></p>
-            <p class="full-circle-sm"></p>
-        </div>
-        @using (Html.BeginForm("Contact", "Home", FormMethod.Post,
-                            new
-                            {
-                                enctype = "multipart/form-data"
-                            }))
-        {
-            @Html.AntiForgeryToken()
-            <div class="col-md-4">
+                <span style="color: #F9E141; font-size:36px"> SG </span> <span style="font-size:36px">Fast Flyers</span>
+                <br />
+                <address style="font-size:24px">
+                    29/52 Daw Rd<br />
+                    Runcorn, Qld. 4113<br />
+                    <abbr title="Phone">Ph:</abbr>
+                    (07) 3841 6742<br />
+                    ABN: 72 611 139 845
+                </address>
+            </div>
+ @Html.AntiForgeryToken()
+            <div class="col-sm-4 col-md-4 col-lg-4">
 
                 <h1>Contact Us</h1>
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12" onfocus="Viewbag.Clear">
 
-                <div class="form-group" onfocus="Viewbag.Clear">
-
-                    @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { id = "rcorners1", Placeholder = "First Name" })
-                    @Html.ValidationMessageFor(model => model.FirstName)
+                        @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { id = "rcorners1", Placeholder = "First Name" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(model => model.LastName, htmlAttributes: new { id = "rcorners1", Placeholder = "Surname" })
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        @Html.TextBoxFor(model => model.LastName, htmlAttributes: new { id = "rcorners1", Placeholder = "Surname" })
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(model => model.Email, htmlAttributes: new { id = "rcorners1", Placeholder = "Email" })
-                    @Html.ValidationMessageFor(model => model.Email)
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        @Html.TextBoxFor(model => model.Email, htmlAttributes: new { id = "rcorners1", Placeholder = "Email" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { id = "rcorners1", Placeholder = "Phone" } })
-                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { id = "rcorners1", Placeholder = "Phone" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(model => model.Subject, htmlAttributes: new { id = "rcorners1", Placeholder = "Subject" })
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        @Html.TextBoxFor(model => model.Subject, htmlAttributes: new { id = "rcorners1", Placeholder = "Subject" })
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(model => model.Attachment, htmlAttributes: new { Placeholder = "Attach File", type = "file" })
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        @Html.TextBoxFor(model => model.Attachment, htmlAttributes: new { Placeholder = "Attach File", type = "file" })
+                    </div>
                 </div>
-                <div class="form-group">
-                    @Html.TextAreaFor(model => model.Comment, htmlAttributes: new { id = "rcorners2", Placeholder = "Comments" })
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12 col-lg-12">
+                        @Html.TextAreaFor(model => model.Comment, htmlAttributes: new { id = "rcorners2", Placeholder = "Comments" })
+                    </div>
                 </div>
                 <input type="submit" value="Send" class="btn btn-primary" />
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10 text-success">
+                <div class="form-group" id="focus">
+                    <div class="col-sm-10 col-md-10 col-lg-10 text-success focus">
                         @ViewBag.Status
+
                     </div>
                 </div>
             </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 bottom-left" style="height:435px;">
+                <p class="full-circle"></p>
+                <p class="full-circle-med col-sm-offset-2 col-md-offset-2 col-lg-offset-2"></p>
+                <p class="full-circle-sm"></p>
 
-        }
+            </div>
 
+        </div>
     </div>
-</div>
+
+    <script>
+        $(function () {
+            $('.focus :input').focus();
+        });</script>
+
+}
+
+
+
+
+
+
 
