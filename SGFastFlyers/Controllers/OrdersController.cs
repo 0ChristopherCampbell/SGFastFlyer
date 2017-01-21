@@ -96,7 +96,7 @@ namespace SGFastFlyers.Controllers
         {            
             if (HttpContext.Session["homePageModel"] != null && prepopulated)
             {
-                DateTime dateTime = DateTime.UtcNow.Date;
+                //DateTime dateTime = DateTime.UtcNow.Date;
                 InstantQuoteViewModel model = (InstantQuoteViewModel)HttpContext.Session["homePageModel"];
                 CreateOrderViewModel orderModel = new CreateOrderViewModel
                 {
@@ -106,7 +106,7 @@ namespace SGFastFlyers.Controllers
                     IsMetro = model.IsMetro,
                     Quantity = model.Quantity,
                     PrintSize = model.PrintSize,
-                    DeliveryDate = dateTime,
+                    //DeliveryDate = dateTime,
                     
                     
                    
