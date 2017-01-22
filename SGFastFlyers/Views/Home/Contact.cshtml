@@ -1,4 +1,8 @@
-﻿@model SGFastFlyers.Models.ContactModels
+﻿<meta name="keywords" content="fast,quick,speedy,flyer distribution,flyers marketing,flyer distribution companies,flyers distributor,flyer delivery,flyer distributors,flyer delivery companies,flyer advertisement,cheap flyer delivery." />
+<meta name="description" content="Flyer Distribution is one of the best way to market your business. Reach your customers the door step and make them always engage with your product." />
+
+
+@model SGFastFlyers.Models.ContactModels
 @{
     ViewBag.Title = "Let's Talk";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +12,12 @@
 
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
-@using (Html.BeginForm("Contact", "Home", FormMethod.Post,                                                                                        }))
+@using (Html.BeginForm("Contact", "Home", FormMethod.Post,
+                                        new
+                                        {
+                                            enctype = "multipart/form-data"
+                                        }))
+
 {
     <br /><br />
     <div class="container-fluid">
