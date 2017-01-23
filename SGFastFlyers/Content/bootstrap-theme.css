@@ -6954,8 +6954,9 @@ button.close {
     border:#F9E141;
     background: #F9E141;
     padding: 20px; 
-    width: 280px;
-    height:15px; 
+    width: 100%;
+    
+    height:auto; 
  -moz-box-sizing: content-box;
  -webkit-box-sizing: content-box;
    box-sizing: content-box;
@@ -6967,8 +6968,8 @@ button.close {
     border:#F9E141;
     background:#F9E141;
     padding: 20px; 
-    width: 300px;
-    height: 150px;
+    width: 100%;
+    height: auto;
    -moz-box-sizing: content-box;
  -webkit-box-sizing: content-box;
    box-sizing: content-box;

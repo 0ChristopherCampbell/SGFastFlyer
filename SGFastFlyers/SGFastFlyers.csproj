@@ -389,7 +389,7 @@
     <Content Include="Views\PolicyDocuments\PrivacyPolicy.cshtml" />
     <Content Include="Views\PolicyDocuments\ShippingandReturnsPolicy.cshtml" />
     <Content Include="Views\Home\Sent.cshtml" />
-    <None Include="Views\Home\EmailQuote.cshtml" />
+    <Content Include="Views\Home\EmailQuote.cshtml" />
     <Content Include="Views\Orders\DirectDebitEmail.cshtml" />
     <Content Include="Views\PolicyDocuments\MetroAreas.cshtml" />
   </ItemGroup>
