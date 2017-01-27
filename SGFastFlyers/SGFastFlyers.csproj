@@ -399,6 +399,7 @@
     <None Include="SecuritySwitch-v4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

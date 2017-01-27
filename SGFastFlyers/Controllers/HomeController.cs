@@ -20,6 +20,11 @@ namespace SGFastFlyers.Controllers
     {
         private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
 
+        public ActionResult Home()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -42,7 +47,7 @@ namespace SGFastFlyers.Controllers
                 HttpContext.Session["homePageModel"] = model.HomePageQuoteViewModel;
                 return RedirectToAction("Create", "Orders", new { prepopulated = true });
             }
-            if(Request.Form["emailQuote"] != null && ModelState.IsValid )
+            if (Request.Form["emailQuote"] != null && ModelState.IsValid)
             {
                 EmailQuotes model1 = new EmailQuotes();
                 HttpContext.Session["homePageModel1"] = model.HomePageQuoteViewModel;
@@ -57,12 +62,12 @@ namespace SGFastFlyers.Controllers
 
             {
                 InstantQuoteViewModel model = (InstantQuoteViewModel)HttpContext.Session["homePageModel1"];
-               
-                
+
+
 
                 if (ModelState.IsValid && (model.NeedsPrint == true))
                 {
-                    var url = @"\Home\Index";
+                    var url = @"\home\index";
                     var linkText = "Click here";
                     var body = "Hi {6}, </br><p>Here is your quote: </p></br><p>Quantity: {0}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
                         "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your interest. Please reply to this email to place an order.</p><p>Kind Regards,</p>SG Fast Flyers.";
@@ -72,7 +77,7 @@ namespace SGFastFlyers.Controllers
                     var html = new MvcHtmlString(yourEncodedHtml);
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(model1.Email));  // replace with valid value
-                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au")); 
+                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
                     message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
                     message.Subject = "Your Quote";
                     message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model1.FirstName);
@@ -99,9 +104,9 @@ namespace SGFastFlyers.Controllers
                 }
                 if (ModelState.IsValid && (model.NeedsPrint == false))
                 {
-                    var url = @"\Home\Index";
+                    var url = @"\home\index";
                     var linkText = "Click here";
-                    var body = "Hi {0}, </br><p>Here is your quote: </p></br><p>Quantity: {1}</p><p>Metro Area: {2}</p>"+
+                    var body = "Hi {0}, </br><p>Here is your quote: </p></br><p>Quantity: {1}</p><p>Metro Area: {2}</p>" +
                         "<p>Price: {3}</p></br><p>Thank you for your interest. Please reply to this email to place an order.</p><p>Kind Regards,</p>SG Fast Flyers.";
                     string attach = Server.MapPath(@"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
                     string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
@@ -191,13 +196,13 @@ namespace SGFastFlyers.Controllers
             return View();
         }
 
-      
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Feel like a chat? Feel free to give us a bell. I'll put the kettle on!";
- 
-                return View();
-            
+
+            return View();
+
         }
 
         [HttpPost]
@@ -217,7 +222,7 @@ namespace SGFastFlyers.Controllers
                 message.IsBodyHtml = true;
                 if (Attachment != null)
                 {
-                    string pathToSave = Server.MapPath(Config.objectDataPath) + "\\Temp\\" + model.Email.Replace("@","_").Replace(".","_").ToString() + "\\";
+                    string pathToSave = Server.MapPath(Config.objectDataPath) + "\\Temp\\" + model.Email.Replace("@", "_").Replace(".", "_").ToString() + "\\";
                     IO.CreateFolder(pathToSave);
                     IO.DeleteFilesInFolder(pathToSave);
                     Attachment.SaveAs(pathToSave + Path.GetFileName(Attachment.FileName));
@@ -235,17 +240,17 @@ namespace SGFastFlyers.Controllers
                     ViewBag.Status = html;
                     ModelState.Clear();
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     ViewBag.Status = "Problem while sending email, Please check details.";
-                   
-                }  
+
+                }
             }
-            return View(); 
+            return View();
         }
-    
-        
-}
+
+
+    }
 }
 
 

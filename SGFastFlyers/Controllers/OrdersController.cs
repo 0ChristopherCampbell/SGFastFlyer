@@ -83,7 +83,7 @@ namespace SGFastFlyers.Controllers
             return this.View();
         }
 
-        
+
 
         /// <summary>
         /// <c>GET: Orders/Create?prepopulated=bool</c>
@@ -93,7 +93,7 @@ namespace SGFastFlyers.Controllers
         [HttpGet]
         [DataType(DataType.Date)]
         public ActionResult Create(bool prepopulated = false)
-        {            
+        {
             if (HttpContext.Session["homePageModel"] != null && prepopulated)
             {
                 //DateTime dateTime = DateTime.UtcNow.Date;
@@ -107,17 +107,17 @@ namespace SGFastFlyers.Controllers
                     Quantity = model.Quantity,
                     PrintSize = model.PrintSize,
                     //DeliveryDate = dateTime,
-                    
-                    
-                   
+
+
+
                 };
 
                 return this.View(orderModel);
-            }            
+            }
 
             return this.View();
         }
-       
+
         /// <summary>
         /// POST: Orders/Create
         /// TODO: - Paypal integration
@@ -130,9 +130,9 @@ namespace SGFastFlyers.Controllers
         public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
 
-           if (!string.IsNullOrEmpty(Request.Form["placeOrder"]) && ModelState.IsValid)
+            if (!string.IsNullOrEmpty(Request.Form["placeOrder"]) && ModelState.IsValid)
             {
-                
+
 
 
 
@@ -191,7 +191,7 @@ namespace SGFastFlyers.Controllers
                     Amount = (int)(order.Quote.Cost * 100),
                     Currency = "aud",
                     Description = "SgFastFlyer order number:" + order.ID.ToString(),
-                    SourceTokenOrExistingSourceId = Request["tocken1"]                   
+                    SourceTokenOrExistingSourceId = Request["tocken1"]
 
                 };
 
@@ -201,13 +201,13 @@ namespace SGFastFlyers.Controllers
 
                 var stripeCharge = chargeService.Create(myCharge);
 
-                if(stripeCharge!=null && !String.IsNullOrEmpty(stripeCharge.FailureMessage) ) //// Failed.. 
+                if (stripeCharge != null && !String.IsNullOrEmpty(stripeCharge.FailureMessage)) //// Failed.. 
                 {
                     throw new Exception("ERROR:" + stripeCharge.FailureMessage);
                 }
                 else  //// All good
                 {
-                    string attach = Server.MapPath( @"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
+                    string attach = Server.MapPath(@"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
                     var body = "Hi {6}, </br><p>Here is your order: </p></br><p>Order ID: {9}</p></br><p>Quantity: {0}</p><p>Delivery Date: {8}</p><p>Delivery Area: {7}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
                         "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your order.</p><p>Kind Regards,</p>SG Fast Flyers.";
                     var message = new MailMessage();
@@ -228,12 +228,12 @@ namespace SGFastFlyers.Controllers
                             await smtp.SendMailAsync(message);
 
                         }
-                        
+
 
                     }
                     catch (Exception)
                     {
-                        
+
 
                     }
                     return this.Redirect("/Orders/PaymentComplete");
@@ -251,7 +251,7 @@ namespace SGFastFlyers.Controllers
                 Order order = this.ProcessOrder(createOrderViewModel);
 
                 {
-                    var url = @"\Home\Index";
+                    var url = @"\home\index";
                     var linkText = "Click here";
                     var body = "Hi {6}, </br><p>Here is your order: </p></br><p>Order ID: {9}</p></br><p>Quantity: {0}</p><p>Delivery Date: {8}</p><p>Delivery Area: {7}</p><p>Metro Area: {1}</p><p>Is printing required: {2}" +
                         "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your order.</p><p> Our Direct Deposit Details are:</p><p>BSB: 014-289</p><p>" +
@@ -260,7 +260,7 @@ namespace SGFastFlyers.Controllers
                     string fN = string.Format("Hi {0},", firstName);
                     string href = String.Format("<a href='{0}'>{1}</a>", url, linkText);
                     string attach = Server.MapPath(@"\Content\Documents\SGFastFlyers_Letterbox_Printing_&_Delivery_Details.pdf");
-                    string yourEncodedHtml = fN+"</br><p>You have been emailed your order with details of how to pay via Direct Debit. </p></br><p> Please note, your order "+
+                    string yourEncodedHtml = fN + "</br><p>You have been emailed your order with details of how to pay via Direct Debit. </p></br><p> Please note, your order " +
                         "will not be acted upon until payment has been recieved into our account.</p></br> <p>Thank you for your order.</p>" + href + " to begin another quote. <p>Have a great day.</p>";
                     var html = new MvcHtmlString(yourEncodedHtml);
                     var message = new MailMessage();
@@ -268,7 +268,7 @@ namespace SGFastFlyers.Controllers
                     message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
                     message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
                     message.Subject = "Order ID " + order.ID.ToString();
-                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID );
+                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
 
@@ -282,7 +282,7 @@ namespace SGFastFlyers.Controllers
 
                         }
                         ViewBag.Status = html;
-                        
+
                     }
                     catch (Exception)
                     {
@@ -292,20 +292,20 @@ namespace SGFastFlyers.Controllers
                 }
                 return View("DirectDebitEmail", model1);
             }
-          
-            if (!string.IsNullOrEmpty(Request.Form["directDebitEmail"]) && ModelState.IsValid && (createOrderViewModel.NeedsPrint==false))
+
+            if (!string.IsNullOrEmpty(Request.Form["directDebitEmail"]) && ModelState.IsValid && (createOrderViewModel.NeedsPrint == false))
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
                 DirectDebitEmail model1 = new DirectDebitEmail();
-                
+
 
                 Order order = this.ProcessOrder(createOrderViewModel);
-                
+
 
                 {
 
-                    var url = @"\Home\Index";
+                    var url = @"\home\index";
                     var linkText = "Click here";
                     var body = "Hi {0}, </br><p>Here is your order: </p></br><p>Order ID: {6}</p></br><p>Quantity: {1}</p><p>Delivery Date: {2:d}</p><p>Delivery Area: {3}</p><p>Metro Area: {4}</p>" +
                         "<p>Price: {5}</p></br><p>Thank you for your order.</p><p> Our Direct Deposit Details are:</p><p>BSB: 014-289</p><p>" +
@@ -358,7 +358,7 @@ namespace SGFastFlyers.Controllers
         /// <returns>Complete page view</returns>
         public ActionResult PaymentComplete(string accessCode)
         {
-             bool paymentSuccess = true;          
+            bool paymentSuccess = true;
 
             if (HttpContext.Session["orderInformation"] != null)
             {
@@ -438,7 +438,7 @@ namespace SGFastFlyers.Controllers
 
             return this.View(order);
         }
-        
+
         /// <summary>
         /// Deletes an order
         /// </summary>
@@ -468,7 +468,7 @@ namespace SGFastFlyers.Controllers
 
             base.Dispose(disposing);
         }
-      
+
         /// <summary>
         /// Creates the order and associated details, print, delivery quote.
         /// </summary>
@@ -499,19 +499,19 @@ namespace SGFastFlyers.Controllers
 
             PrintDetail printDetail = new PrintDetail
             {
-                OrderID = order.ID, 
+                OrderID = order.ID,
                 NeedsPrint = createOrderViewModel.NeedsPrint,
                 PrintFormat = createOrderViewModel.PrintFormat,
                 PrintSize = createOrderViewModel.PrintSize
-               
+
             };
 
             this.db.PrintDetails.Add(printDetail);
             if (createOrderViewModel.Attachment != null)
-            {               
+            {
                 string pathToSave = Server.MapPath(Config.objectDataPath) + "\\Order\\" + order.ID.ToString() + "\\";
                 IO.CreateFolder(pathToSave);
-                createOrderViewModel.Attachment.SaveAs(pathToSave + Path.GetFileName(createOrderViewModel.Attachment.FileName));               
+                createOrderViewModel.Attachment.SaveAs(pathToSave + Path.GetFileName(createOrderViewModel.Attachment.FileName));
             }
 
 

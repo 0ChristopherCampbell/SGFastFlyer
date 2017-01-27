@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="sgfastflyers,fast,quick,speedy,flyer distribution,flyers marketing,flyer distribution companies,flyers distributor,flyer delivery,flyer distributors,flyer delivery companies,flyer advertisement,cheap flyer delivery." />
     <meta name="description" content="Flyer Distribution is one of the best way to market your business. Reach your customers the door step and make them always engage with your product." />
-    
+
     <title>@ViewBag.Title - SG Fast Flyers</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -14,25 +14,25 @@
 
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top" >
-       
+    <div class="navbar navbar-default navbar-fixed-top">
+
         <div class="container">
-            <a class="navbar-brand" href="/Home/Index">
+            <a class="navbar-brand" href="/home/index">
                 <img class="img-responsive" style="display:inline-block; height:30px; margin-top:-5px" src="~/Content/Images/Logo.jpg" alt="logo" />
                 SG Fast Flyers
             </a>
             <div>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("home", "index", "home")</li>
                     <li>@Html.ActionLink("Place an Order", "Create", "Orders")</li>
                     @if (User.IsInRole("Admin"))
                     {
@@ -50,38 +50,39 @@
         <hr />
         <footer>
             <!--This area will be for the Terms and Conditions, Privacy Policy, Refund/Cancellation policy, Shipping & Delivery policy -->
-                <div class="navbar-nav">
-                    <div class="container">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        
-                       
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <a class="navbar-brand" href="/Home/Index">
-                      <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=nS6F31ZAOu9RthubxBdFHuZN0KLt9WWuduLL9xmJPPGQYzC22OCqk78WdpSJ"></script></span>
-                           
-                        </a>
-                        
-                        <ul class="nav navbar-nav">
-                            <!--This area will be for the Terms and Conditions, Privacy Policy, Shipping & Delivery policy -->
-                           
-                            <li>@Html.ActionLink("Terms & Conditions", "TermsandConditions", "PolicyDocuments")</li>
-                            <li>@Html.ActionLink("Privacy Policy", "PrivacyPolicy", "PolicyDocuments")</li>
-                            <li>@Html.ActionLink("Shipping & Delivery Policy", "ShippingandReturnsPolicy", "PolicyDocuments")</li>
-                            <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
-                            
-                        </ul>
-                        <a class="navbar-brand" href="/Home/Index">
-                            <img class="img-responsive" style="display:inline-block; height:30px; margin-bottom:-5px;" src="~/Content/Images/Logo.jpg" alt="logo"/>
-                            &copy; 2016 - SG Fast Flyer
-                        </a>
-                            
-                     </div>
+            <div class="navbar-nav">
+                <div class="container">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+
                 </div>
+                <div class="navbar-collapse collapse">
+                    <a class="navbar-brand" href="/home/index">
+                        <span id="siteseal">
+                        <script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=nS6F31ZAOu9RthubxBdFHuZN0KLt9WWuduLL9xmJPPGQYzC22OCqk78WdpSJ"></script></span>
+
+                    </a>
+
+                    <ul class="nav navbar-nav">
+                        <!--This area will be for the Terms and Conditions, Privacy Policy, Shipping & Delivery policy -->
+
+                        <li>@Html.ActionLink("Terms & Conditions", "TermsandConditions", "PolicyDocuments")</li>
+                        <li>@Html.ActionLink("Privacy Policy", "PrivacyPolicy", "PolicyDocuments")</li>
+                        <li>@Html.ActionLink("Shipping & Delivery Policy", "ShippingandReturnsPolicy", "PolicyDocuments")</li>
+                        <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+
+                    </ul>
+                    <a class="navbar-brand" href="/home/index">
+                        <img class="img-responsive" style="display:inline-block; height:30px; margin-bottom:-5px;" src="~/Content/Images/Logo.jpg" alt="logo" />
+                        &copy; 2016 - SG Fast Flyer
+                    </a>
+
+                </div>
+            </div>
         </footer>
     </div>
 
