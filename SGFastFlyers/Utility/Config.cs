@@ -56,6 +56,7 @@ namespace SGFastFlyers.Utility
 
         public static string stripeKey = System.Configuration.ConfigurationManager.AppSettings["stripeKey"];
         public static string privateStripeKey = System.Configuration.ConfigurationManager.AppSettings["privateStripeKey"];
+        public static string sgEmail = System.Configuration.ConfigurationManager.AppSettings["sgEmail"];
 
     }
 }

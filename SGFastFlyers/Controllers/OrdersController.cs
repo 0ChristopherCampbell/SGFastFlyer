@@ -11,13 +11,7 @@ namespace SGFastFlyers.Controllers
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
-
     using DataAccessLayer;
-
-    using eWAY.Rapid;
-    using eWAY.Rapid.Enums;
-    using eWAY.Rapid.Models;
-
     using Models;
     using Utility;
     using ViewModels;
@@ -107,9 +101,6 @@ namespace SGFastFlyers.Controllers
                     Quantity = model.Quantity,
                     PrintSize = model.PrintSize,
                     //DeliveryDate = dateTime,
-
-
-
                 };
 
                 return this.View(orderModel);
@@ -129,53 +120,6 @@ namespace SGFastFlyers.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
-
-            if (!string.IsNullOrEmpty(Request.Form["placeOrder"]) && ModelState.IsValid)
-            {
-
-
-
-
-                Order order = this.ProcessOrder(createOrderViewModel);
-
-                // Add the order to session for use when the customer returns from payment
-                HttpContext.Session["orderInformation"] = order;
-
-                // Start Payment Processing:
-                IRapidClient ewayClient = RapidClientFactory.NewRapidClient(Config.apiPaymentKey, Config.apiPaymentPassword, Config.apiRapidEndpoint);
-
-                PaymentDetails paymentDetails = new PaymentDetails();
-                paymentDetails.TotalAmount = (int)(order.Quote.Cost * 100);
-                paymentDetails.CurrencyCode = "AUD";
-                paymentDetails.InvoiceNumber = "I" + order.ID;
-
-                Customer customerDetails = new Customer();
-                customerDetails.FirstName = order.FirstName;
-                customerDetails.LastName = order.LastName;
-                customerDetails.Phone = order.PhoneNumber;
-                customerDetails.Email = order.EmailAddress;
-
-                Transaction transaction = new Transaction();
-                transaction.PaymentDetails = paymentDetails;
-                transaction.Customer = customerDetails;
-                transaction.RedirectURL = "https://localhost:44300/Orders/PaymentComplete"; // Needs to be changed for live
-                transaction.CancelURL = "http://www.eway.com.au";
-                transaction.TransactionType = TransactionTypes.Purchase;
-
-                CreateTransactionResponse response = ewayClient.Create(PaymentMethod.ResponsiveShared, transaction);
-
-                if (response.Errors != null)
-                {
-                    foreach (string errorCode in response.Errors)
-                    {
-                        Console.WriteLine("Error Message: " + RapidClientFactory.UserDisplayMessage(errorCode, "EN"));
-                    }
-                }
-
-                // End Payment Processing -> Redirecting.
-                return this.Redirect(response.SharedPaymentUrl);
-            }
-
             if (!string.IsNullOrEmpty(Request["tocken1"]) && ModelState.IsValid)
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
@@ -190,11 +134,10 @@ namespace SGFastFlyers.Controllers
                     // convert the amount of $12.50 to cents i.e. 1250
                     Amount = (int)(order.Quote.Cost * 100),
                     Currency = "aud",
-                    Description = "SgFastFlyer order number:" + order.ID.ToString(),
+                    Description = "SG Fast Flyers Order Number:" + order.ID.ToString(),
                     SourceTokenOrExistingSourceId = Request["tocken1"]
 
                 };
-
 
 
                 var chargeService = new StripeChargeService(Config.privateStripeKey);
@@ -212,14 +155,12 @@ namespace SGFastFlyers.Controllers
                         "</p><p>Print Size: {3}</p><p>Double Sided: {4}</p><p>Price: {5}</p></br><p>Thank you for your order.</p><p>Kind Regards,</p>SG Fast Flyers.";
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(model.EmailAddress));  // replace with valid value
-                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
-                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Bcc.Add(new MailAddress(Config.sgEmail));
+                    message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Order ID " + order.ID.ToString(); ;
                     message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
-
-
 
                     try
                     {
@@ -228,21 +169,16 @@ namespace SGFastFlyers.Controllers
                             await smtp.SendMailAsync(message);
 
                         }
-
-
                     }
                     catch (Exception)
                     {
-
-
                     }
                     return this.Redirect("/Orders/PaymentComplete");
                 }
-
             }
 
 
-            if (!string.IsNullOrEmpty(Request.Form["directDebitEmail"]) && ModelState.IsValid && createOrderViewModel.NeedsPrint)
+            if (!string.IsNullOrEmpty(Request.Form["hdndirectDebitEmail"]) && ModelState.IsValid && createOrderViewModel.NeedsPrint)
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
@@ -265,14 +201,12 @@ namespace SGFastFlyers.Controllers
                     var html = new MvcHtmlString(yourEncodedHtml);
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(createOrderViewModel.EmailAddress));  // replace with valid value
-                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
-                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Bcc.Add(new MailAddress(Config.sgEmail));
+                    message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Order ID " + order.ID.ToString();
                     message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
-
-
 
                     try
                     {
@@ -287,13 +221,12 @@ namespace SGFastFlyers.Controllers
                     catch (Exception)
                     {
                         ViewBag.Status = "Problem while sending email, Please check details.";
-
                     }
                 }
                 return View("DirectDebitEmail", model1);
             }
 
-            if (!string.IsNullOrEmpty(Request.Form["directDebitEmail"]) && ModelState.IsValid && (createOrderViewModel.NeedsPrint == false))
+            if (!string.IsNullOrEmpty(Request.Form["hdndirectDebitEmail"]) && ModelState.IsValid && (createOrderViewModel.NeedsPrint == false))
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
@@ -301,8 +234,6 @@ namespace SGFastFlyers.Controllers
 
 
                 Order order = this.ProcessOrder(createOrderViewModel);
-
-
                 {
 
                     var url = @"\home\index";
@@ -319,14 +250,12 @@ namespace SGFastFlyers.Controllers
                     var html = new MvcHtmlString(yourEncodedHtml);
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(createOrderViewModel.EmailAddress));  // replace with valid value
-                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
-                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Bcc.Add(new MailAddress(Config.sgEmail));
+                    message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Your Quote";
                     message.Body = string.Format(body, model.FirstName, model.Quantity, model.DeliveryDate, model.DeliveryArea, model.IsMetro, model.FormattedCost, order.ID);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
-
-
 
                     try
                     {
@@ -341,7 +270,6 @@ namespace SGFastFlyers.Controllers
                     catch (Exception)
                     {
                         ViewBag.Status = "Problem while sending email, Please check details.";
-
                     }
                 }
                 return View("DirectDebitEmail", model1);

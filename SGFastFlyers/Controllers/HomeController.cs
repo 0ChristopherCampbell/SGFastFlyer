@@ -20,11 +20,6 @@ namespace SGFastFlyers.Controllers
     {
         private DataAccessLayer.SGDbContext db = new DataAccessLayer.SGDbContext();
 
-        public ActionResult Home()
-        {
-            return View();
-        }
-
         public ActionResult Index()
         {
             return View();
@@ -33,7 +28,7 @@ namespace SGFastFlyers.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Index(HomePageViewModel model)
         {
-            if (Request.Form["orderNow"] != null && ModelState.IsValid)
+            if (!string.IsNullOrEmpty(Request.Form["hdnorderNow"]) && ModelState.IsValid)
             {
                 // They're going ahead with the order, save their quote for reference?
                 /*Quote newQuote = new Quote
@@ -47,7 +42,7 @@ namespace SGFastFlyers.Controllers
                 HttpContext.Session["homePageModel"] = model.HomePageQuoteViewModel;
                 return RedirectToAction("Create", "Orders", new { prepopulated = true });
             }
-            if (Request.Form["emailQuote"] != null && ModelState.IsValid)
+            if (!string.IsNullOrEmpty(Request.Form["hdnemailQuote"]) && ModelState.IsValid)
             {
                 EmailQuotes model1 = new EmailQuotes();
                 HttpContext.Session["homePageModel1"] = model.HomePageQuoteViewModel;
@@ -77,8 +72,8 @@ namespace SGFastFlyers.Controllers
                     var html = new MvcHtmlString(yourEncodedHtml);
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(model1.Email));  // replace with valid value
-                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
-                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Bcc.Add(new MailAddress(Config.sgEmail));
+                    message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Your Quote";
                     message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model1.FirstName);
                     message.IsBodyHtml = true;
@@ -90,6 +85,7 @@ namespace SGFastFlyers.Controllers
                     {
                         using (SmtpClient smtp = new SmtpClient())
                         {
+                            smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory;
                             await smtp.SendMailAsync(message);
 
                         }
@@ -114,8 +110,8 @@ namespace SGFastFlyers.Controllers
                     var html = new MvcHtmlString(yourEncodedHtml);
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(model1.Email));  // replace with valid value
-                    message.Bcc.Add(new MailAddress("contact_us@sgfastflyers.com.au"));
-                    message.From = new MailAddress("contact_us@sgfastflyers.com.au");  // replace with valid value
+                    message.Bcc.Add(new MailAddress(Config.sgEmail));
+                    message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Your Quote";
                     message.Body = string.Format(body, model1.FirstName, model.Quantity, model.IsMetro, model.FormattedCost);
                     message.IsBodyHtml = true;
@@ -215,7 +211,7 @@ namespace SGFastFlyers.Controllers
                 string yourEncodedHtml = "Email Sent Successfully.<br/>Feel free to send another one if you like.<br/><p>Have a great day.<p/>";
                 var html = new MvcHtmlString(yourEncodedHtml);
                 var message = new MailMessage();
-                message.To.Add(new MailAddress("contact_us@sgfastflyers.com.au"));  // replace with valid value 
+                message.To.Add(new MailAddress(Config.sgEmail));  // replace with valid value 
                 message.From = new MailAddress(model.Email);  // replace with valid value
                 message.Subject = model.Subject;
                 message.Body = string.Format(body, model.FirstName, model.LastName, model.Email, model.Comment, model.PhoneNumber);

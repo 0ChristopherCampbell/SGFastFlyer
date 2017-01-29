@@ -34,7 +34,7 @@ namespace SGFastFlyers.Models
         /// <summary>
         /// Email Address of the customer
         /// </summary>
-        [Required, Display(Name = "Email Address")]
+        [Required, Display(Name = "Email Address"), EmailAddress]
         public string EmailAddress { get; set; }
 
         /// <summary>
