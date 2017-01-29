@@ -42,7 +42,7 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets or sets the email address.
         /// </summary>
-        [Required, Display(Name = "Email Address")]
+        [Required, Display(Name = "Email Address"), EmailAddress]
         public string EmailAddress { get; set; }
 
         /// <summary>
