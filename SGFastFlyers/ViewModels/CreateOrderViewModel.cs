@@ -60,7 +60,7 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets or sets the delivery date
         /// </summary>
-        //[DataType(DataType.Date)]
+        //[DataType(DataType.Date, ErrorMessage = "Please enter a valid date.")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [Display(Name = "Delivery Date")]
         public DateTime DeliveryDate { get; set; }
@@ -69,13 +69,13 @@ namespace SGFastFlyers.ViewModels
         /// Gets or sets a value indicating whether this is classified as a metro area.
         /// </summary>
         [Display(Name = "Is this delivery classified as metro?")]
- 
+
         public bool IsMetro { get; set; }
 
         /// <summary>
         /// Gets or sets the delivery area
         /// </summary>
-        [Display(Name = "Delivery Area")]
+        [Required, Display(Name = "Delivery Area")]
         public string DeliveryArea { get; set; }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace SGFastFlyers.ViewModels
         /// <summary>
         /// Gets the attachment
         /// </summary>
-       // [Required, Display(Name = "Please attach your file for printing.")]
-       // public HttpPostedFileBase Attachment { get; set; }
+        // [Required, Display(Name = "Please attach your file for printing.")]
+        // public HttpPostedFileBase Attachment { get; set; }
 
         /// <summary>
         /// Gets or sets the cost of the new order.

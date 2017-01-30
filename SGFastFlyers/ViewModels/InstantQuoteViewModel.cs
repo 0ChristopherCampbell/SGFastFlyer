@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 namespace SGFastFlyers.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
@@ -22,7 +23,7 @@ namespace SGFastFlyers.ViewModels
         public string EmailAddress { get; set; }
         */
 
-        [Required, Range(1, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}"), Display(Name ="Quantity Needed?")]
+        [Required, Range(1, int.MaxValue, ErrorMessage = "Please enter a multiple of {1}"), Display(Name = "Quantity Needed?")]
         public int Quantity { get; set; }
 
         [Required, Display(Name = "Is this considered a metro area?")]
@@ -37,8 +38,8 @@ namespace SGFastFlyers.ViewModels
         [Required, Display(Name = "Do you require double sided printing?")]
         public Enums.PrintFormat PrintFormat { get; set; }
 
+        public DateTime DeliveryDate { get; set; }
 
-       
 
         [Display(Name = "Your Instant Quote:")]
         public string FormattedCost
@@ -48,7 +49,7 @@ namespace SGFastFlyers.ViewModels
 
         public bool IsDoubleSided { get; set; }
 
-     
+
         public decimal Cost
         {
             get
@@ -173,5 +174,5 @@ namespace SGFastFlyers.ViewModels
         }
     }
 }
-  
+
 

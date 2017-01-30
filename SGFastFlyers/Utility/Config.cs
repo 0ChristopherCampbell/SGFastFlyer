@@ -10,7 +10,7 @@ namespace SGFastFlyers.Utility
     {
         public static decimal? BaseCostPer1000()
         {
-            return decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["BaseCostPer1000"]);             
+            return decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["BaseCostPer1000"]);
         }
 
         public static decimal? NonMetroAddition()
@@ -34,6 +34,7 @@ namespace SGFastFlyers.Utility
             return decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["A5SingleSidedPer1000"]);
         }
 
+        #region eWay Details - Not sure if we need this?
         /// <summary>
         /// Used to make payments with eWay - Api Key
         /// </summary>
@@ -48,15 +49,15 @@ namespace SGFastFlyers.Utility
         /// Defines whether or not payments made will go to the sandbox or to the real payment system
         /// </summary>
         public static string apiRapidEndpoint = "Sandbox"; // Use "Production" when live..
+        #endregion
 
-      /// <summary>
-      /// Web path to object data e.g /ObjectData
-      /// </summary>
+        /// <summary>
+        /// Web path to object data e.g /ObjectData
+        /// </summary>
         public static string objectDataPath = "/ObjectData";
 
         public static string stripeKey = System.Configuration.ConfigurationManager.AppSettings["stripeKey"];
         public static string privateStripeKey = System.Configuration.ConfigurationManager.AppSettings["privateStripeKey"];
         public static string sgEmail = System.Configuration.ConfigurationManager.AppSettings["sgEmail"];
-
     }
 }
