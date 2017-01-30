@@ -20,7 +20,7 @@ namespace SGFastFlyers.Models
         public int OrderID { get; set; }
 
         [DataType(DataType.Date)]
-        [Display(Name = "Delivery Date")]
+        [Display(Name = "Delivery Start Date")]
        // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd")]    
         public DateTime DeliveryDate { get; set; }
 

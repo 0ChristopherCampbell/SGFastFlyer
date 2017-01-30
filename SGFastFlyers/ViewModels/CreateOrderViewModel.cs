@@ -62,7 +62,7 @@ namespace SGFastFlyers.ViewModels
         /// </summary>
         //[DataType(DataType.Date, ErrorMessage = "Please enter a valid date.")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        [Display(Name = "Delivery Date")]
+        [Display(Name = "Delivery Start Date")]
         public DateTime DeliveryDate { get; set; }
 
         /// <summary>

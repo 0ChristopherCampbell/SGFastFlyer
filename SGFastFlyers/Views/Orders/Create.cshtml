@@ -77,9 +77,9 @@
 
                 <div class="row">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2" })
+                        @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2", @title = "Delivery starts on Saturday and will be completed by the following Friday." })
                         <div class="col-sm-10 col-md-10 col-lg-10">
-                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Click to Enter Delivery Date Here", @readonly = "true" } })
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Click to Enter Delivery Date Here.", @title = "Delivery starts on Saturday and will be completed by the following Friday.", @readonly = "true" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
