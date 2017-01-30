@@ -65,7 +65,7 @@
                 </div><br />
 
                 <div class="row">
-                    <div class="form-group" oninput="setQuotePrice();">
+                    <div class="form-group" oninput="QuotePrice.SetQuotePrice();">
                         @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2" })
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             @Html.TextBoxFor(model => model.Quantity, htmlAttributes: new { @class = "form-control", Placeholder = "Enter Quantity Here, Minimum 5000" })
@@ -99,7 +99,7 @@
                     <strong>Heads up! </strong>Metro areas include major cities. For a full list please <a href="~/Content/Documents/SGFastFlyers_Metropolitan _Areas.pdf" target="_blank">Click Here.</a> Thank you.
                 </div>
                 <div class="row">
-                    <div class="form-group" onclick="setQuotePrice();">
+                    <div class="form-group" onclick="QuotePrice.SetQuotePrice();">
                         @Html.LabelFor(model => model.IsMetro, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2" })
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             @Html.CheckBoxFor(model => model.IsMetro, htmlAttributes: new { @checked = true, @class = "form-control", @onchange = "checkandChange()", @value = "true" })
@@ -109,7 +109,7 @@
                 </div><br />
 
                 <div class="row">
-                    <div class="form-group" id="NeedsPrintCheckBox" onclick="setQuotePrice();">
+                    <div class="form-group" id="NeedsPrintCheckBox" onclick="QuotePrice.SetQuotePrice();">
                         @Html.LabelFor(model => model.NeedsPrint, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2" })
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             @Html.CheckBoxFor(model => model.NeedsPrint, htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()" })
@@ -152,7 +152,7 @@
 
 
                 <div class="row">
-                    <div class="form-group" id="PrintSize1" style="display: none;" onclick="setQuotePrice();">
+                    <div class="form-group" id="PrintSize1" style="display: none;" onclick="QuotePrice.SetQuotePrice();">
                         @Html.LabelFor(model => model.PrintSize, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2", @title = "Choose DL (99mm × 210mm, 1/3 A4) or A5 (148mm X 210mm, 1/2 A4). For other sizes please contact us for a quote." })
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             @Html.EnumDropDownListFor(model => model.PrintSize, "-Please select-", htmlAttributes: new { @class = "form-control", @onchange = "checkandChange()", @title = "Choose DL (99mm × 210mm, 1/3 A4) or A5 (148mm X 210mm, 1/2 A4). For other sizes please contact us for a quote." })
@@ -163,7 +163,7 @@
                 </div><br />
 
                 <div class="row ">
-                    <div class="form-group" id="PrintFormat" style="display: none;" onclick="setQuotePrice();">
+                    <div class="form-group" id="PrintFormat" style="display: none;" onclick="QuotePrice.SetQuotePrice();">
                         @Html.LabelFor(model => model.PrintFormat, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             @Html.CheckBoxFor(model => model.IsDoubleSided, htmlAttributes: new { @checked = true, @class = "form-control", @onchange = "checkandChange()", @title = "Leave ticked if you would like to print on both sides. Untick for only one sided printing." })
@@ -282,7 +282,7 @@
 
             // Open Checkout with further options:
             var thisEmail = document.getElementById("EmailAddress");
-            var amounbt = setQuotePrice();
+            var amounbt = QuotePrice.SetQuotePrice();
             amounbt = amounbt.replace(/\./gi, "");
             amounbt = amounbt.replace(/\$/gi, "");
             amounbt = amounbt.replace(/\,/gi, "");
@@ -364,134 +364,11 @@
                         checkandChange();
                     });
                 </script>
-
+                <script src="~/Scripts/Custom/quoteprice.js"></script>
                 <script type="text/javascript">
-                        function setQuotePrice()
-                        {
-                            var quantity = 0;
-                            quantity = (document.getElementById('Quantity').value)/1000;
-                            var isMetro = document.getElementById('IsMetro').checked;
-                            var needsPrint = document.getElementById("NeedsPrint").checked;
-                            var isDoubleSided = document.getElementById("IsDoubleSided").checked;
-                            var printSize = document.getElementById('PrintSize').value;
-                            var cost = 0;
-                            var dlSingleSided = 0;
-                            var dlDoubleSided = 0;
-                            var A5SingleSided = 0;
-                            var A5DoubleSided = 0;
-
-                            if(quantity >= 1 && quantity < 20)
-                            {
-                                cost = 55;
-                                dlSingleSided = 40;
-                                dlDoubleSided = 43;
-                                A5SingleSided = 52;
-                                A5DoubleSided = 55.9;
-                            }
-                            if (quantity >= 20 && quantity < 50)
-                            {
-                                cost = 54;
-                                dlSingleSided = 38;
-                                dlDoubleSided = 41;
-                                A5SingleSided = 49.4;
-                                A5DoubleSided = 53.3;
-                            }
-                            if (quantity >= 50 && quantity < 75)
-                            {
-                                cost = 53;
-                                dlSingleSided = 36;
-                                dlDoubleSided = 41;
-                                A5SingleSided = 46.8;
-                                A5DoubleSided = 53.3;
-                            }
-                            if (quantity >= 75 && quantity <= 100)
-                            {
-                                cost = 52;
-                                dlSingleSided = 36;
-                                dlDoubleSided = 41;
-                                A5SingleSided = 46.8;
-                                A5DoubleSided = 53.3;
-                            }
-                            if (quantity >= 100 && quantity <= 200)
-                            {
-                                cost = 51;
-                                dlSingleSided = 34;
-                                dlDoubleSided = 38;
-                                A5SingleSided = 44.2;
-                                A5DoubleSided = 49.4;
-                            }
-                            if (quantity >= 200 && quantity < 300)
-                            {
-                                cost = 50;
-                                dlSingleSided = 34;
-                                dlDoubleSided = 38;
-                                A5SingleSided = 44.2;
-                                A5DoubleSided = 49.4;
-                            }
-                            if (quantity >= 300)
-                            {
-                                cost = 48;
-                                dlSingleSided = 32;
-                                dlDoubleSided = 36;
-                                A5SingleSided = 41.6;
-                                A5DoubleSided = 46.8;
-                            }
-                            cost = cost * quantity;
-                            if ( isMetro == false)
-                            {
-                                cost = cost + @SGFastFlyers.Utility.Config.NonMetroAddition();
-                            }
-
-
-
-                            if (needsPrint)
-
-
-                            {
-                                if (isDoubleSided)
-
-                                {
-
-                                    if (printSize == "1")
-
-                                    {
-                                        cost = cost + dlDoubleSided*quantity;
-                                    }
-                                    if (printSize == "5")
-                                    {
-                                        cost = cost + A5DoubleSided * quantity;
-                                    }
-                                }
-                                else
-                                {
-
-                                    if (printSize == "1")
-                                    {
-                                        cost = cost + dlSingleSided * quantity;
-                                    }
-
-                                    if (printSize == "5")
-                                    {
-                                        cost = cost + A5SingleSided * quantity;
-                                    }
-                                }
-                            }
-                            if (cost < 364)
-                            {
-                                cost = 363.63636363;
-                            }
-                            //GST
-                            cost = (cost * 0.1) + cost;
-                            // cost = cost.toLocaleString('aud-AUD', { style: 'currency', currency: 'AUD' });
-                            cost = cost.toFixed(2).toLocaleString();
-                            document.getElementById("quotePrice").innerHTML = "$" + cost  ;
-                            return cost;
-                        }
-
-                        window.onload = setQuotePrice();
+                    window.onload = QuotePrice.SetQuotePrice();
                 </script>
-                    <script type="text/javascript">
-
+                <script type="text/javascript">
                         $(document).ready(function () {
                             $('input[type=datetime]').datepicker({
                                 dateFormat: "yy-mm-dd",
