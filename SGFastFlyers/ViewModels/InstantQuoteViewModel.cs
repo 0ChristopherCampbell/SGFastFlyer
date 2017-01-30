@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 namespace SGFastFlyers.ViewModels
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
@@ -38,7 +37,7 @@ namespace SGFastFlyers.ViewModels
         [Required, Display(Name = "Do you require double sided printing?")]
         public Enums.PrintFormat PrintFormat { get; set; }
 
-        public DateTime DeliveryDate { get; set; }
+
 
 
         [Display(Name = "Your Instant Quote:")]

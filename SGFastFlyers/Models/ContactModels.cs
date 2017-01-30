@@ -22,7 +22,7 @@ namespace SGFastFlyers.Models
         [Required(ErrorMessage = "Email is required."), EmailAddress]
         public string Email { get; set; }
 
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no. Mobile: 0411222333 or Landline: 0711112222. Thank you.")]
+        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{8,15}$", ErrorMessage = "Please enter valid phone no. Mobile: 0411222333 or Landline: 0711112222. Thank you.")]
         public string PhoneNumber { get; set; }
         public string Subject { get; set; }
         public string Comment { get; set; }
