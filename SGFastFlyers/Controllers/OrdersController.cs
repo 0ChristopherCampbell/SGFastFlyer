@@ -115,7 +115,7 @@ namespace SGFastFlyers.Controllers
         /// <returns>A redirect to payment and eventual payment complete page.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
+        public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment,Cost")] CreateOrderViewModel createOrderViewModel)
         {
             if (!string.IsNullOrEmpty(Request["token1"]) && ModelState.IsValid)
             {
@@ -154,7 +154,8 @@ namespace SGFastFlyers.Controllers
                     message.Bcc.Add(new MailAddress(Config.sgEmail));
                     message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Order ID " + order.ID.ToString(); ;
-                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
+                    message.Body = string.Format(body, model.Quantity, (model.IsMetro == true ? Config.Yes : Config.No), (model.NeedsPrint == true ? Config.Yes : Config.No), model.PrintSize, 
+                        (model.IsDoubleSided == true ? Config.Yes : Config.No), model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
 
@@ -201,7 +202,8 @@ namespace SGFastFlyers.Controllers
                     message.Bcc.Add(new MailAddress(Config.sgEmail));
                     message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Order ID " + order.ID.ToString();
-                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
+                    message.Body = string.Format(body, model.Quantity, (model.IsMetro == true ? Config.Yes : Config.No), (model.NeedsPrint == true ? Config.Yes : Config.No), model.PrintSize, 
+                        (model.IsDoubleSided == true ? Config.Yes : Config.No), model.FormattedCost, model.FirstName, model.DeliveryArea, model.DeliveryDate, order.ID);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
 
@@ -250,7 +252,8 @@ namespace SGFastFlyers.Controllers
                     message.Bcc.Add(new MailAddress(Config.sgEmail));
                     message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Your Quote";
-                    message.Body = string.Format(body, model.FirstName, model.Quantity, model.DeliveryDate, model.DeliveryArea, model.IsMetro, model.FormattedCost, order.ID);
+                    message.Body = string.Format(body, model.FirstName, model.Quantity, model.DeliveryDate, model.DeliveryArea, (model.IsMetro == true ? Config.Yes : Config.No), 
+                        model.FormattedCost, order.ID);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
 

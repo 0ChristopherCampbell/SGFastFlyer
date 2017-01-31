@@ -130,13 +130,7 @@ namespace SGFastFlyers.ViewModels
         /// </summary>
         public decimal Cost
         {
-            get
-            {
-                return PricingHelper.CalculateCost(Quantity, IsMetro, NeedsPrint, IsDoubleSided, PrintSize);
-            }
-            set
-            {
-            }
+            get;set;
         }
 
         /// <summary>

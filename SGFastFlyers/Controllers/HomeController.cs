@@ -75,7 +75,8 @@ namespace SGFastFlyers.Controllers
                     message.Bcc.Add(new MailAddress(Config.sgEmail));
                     message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Your Quote";
-                    message.Body = string.Format(body, model.Quantity, model.IsMetro, model.NeedsPrint, model.PrintSize, model.IsDoubleSided, model.FormattedCost, model1.FirstName);
+                    message.Body = string.Format(body, model.Quantity, (model.IsMetro == true ? Config.Yes : Config.No), (model.NeedsPrint == true ? Config.Yes : Config.No), model.PrintSize, 
+                        (model.IsDoubleSided == true ? Config.Yes : Config.No), model.FormattedCost, model1.FirstName);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
 
@@ -113,7 +114,8 @@ namespace SGFastFlyers.Controllers
                     message.Bcc.Add(new MailAddress(Config.sgEmail));
                     message.From = new MailAddress(Config.sgEmail);  // replace with valid value
                     message.Subject = "Your Quote";
-                    message.Body = string.Format(body, model1.FirstName, model.Quantity, model.IsMetro, model.FormattedCost);
+                    message.Body = string.Format(body, model1.FirstName, model.Quantity, (model.IsMetro == true ? Config.Yes : Config.No), 
+                        model.FormattedCost);
                     message.IsBodyHtml = true;
                     message.Attachments.Add(new Attachment(attach));
 
