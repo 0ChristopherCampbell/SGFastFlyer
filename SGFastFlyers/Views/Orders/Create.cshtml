@@ -198,7 +198,7 @@
                     <script id="initialButtonClick" src="https://checkout.stripe.com/checkout.js"></script>
 
                     <input type="button" name="customButton" id="customButton" value="Pay by Card" class="btn btn-success" style="background-color:#7FFF00" />
-                    <input type="hidden" value="" name="tocken1" id="tocken1" />
+                    <input type="hidden" value="" name="token1" id="token1" />
                     <input type="button" name="directDebitEmail" id="directDebitEmail" value="Pay by Direct Debit" class="btn btn-success" style="background-color:#7FFF00" />
                     <input type="hidden" value="" name="hdndirectDebitEmail" id="hdndirectDebitEmail" />
                 </div>
@@ -242,7 +242,7 @@
             image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
             locale: 'auto',
             token: function(token) {
-                document.getElementById("tocken1").value = token.id;
+                document.getElementById("token1").value = token.id;
                 // alert(token.id);
                 document.forms[0].submit();
                 return true;
@@ -305,7 +305,7 @@
         });
 
         document.getElementById('directDebitEmail').addEventListener('click', function(e) {
-            $("#tocken1").val();
+            $("#token1").val();
             var flag = false;
 
             var $form = $('form');

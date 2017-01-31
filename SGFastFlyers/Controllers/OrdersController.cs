@@ -32,8 +32,6 @@ namespace SGFastFlyers.Controllers
         /// The database context
         /// </summary>
         private SGDbContext db = new SGDbContext();
-        private string today;
-
 
         /// <summary>
         /// GET: Orders
@@ -99,8 +97,7 @@ namespace SGFastFlyers.Controllers
                     IsDoubleSided = model.IsDoubleSided,
                     IsMetro = model.IsMetro,
                     Quantity = model.Quantity,
-                    PrintSize = model.PrintSize,
-                    //DeliveryDate = dateTime,
+                    PrintSize = model.PrintSize
                 };
 
                 return this.View(orderModel);
@@ -120,7 +117,7 @@ namespace SGFastFlyers.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment")] CreateOrderViewModel createOrderViewModel)
         {
-            if (!string.IsNullOrEmpty(Request["tocken1"]) && ModelState.IsValid)
+            if (!string.IsNullOrEmpty(Request["token1"]) && ModelState.IsValid)
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
                 CreateOrderViewModel model = (CreateOrderViewModel)HttpContext.Session["homePageModel1"];
@@ -135,8 +132,7 @@ namespace SGFastFlyers.Controllers
                     Amount = (int)(order.Quote.Cost * 100),
                     Currency = "aud",
                     Description = "SG Fast Flyers Order Number:" + order.ID.ToString(),
-                    SourceTokenOrExistingSourceId = Request["tocken1"]
-
+                    SourceTokenOrExistingSourceId = Request["token1"]
                 };
 
 
@@ -167,12 +163,13 @@ namespace SGFastFlyers.Controllers
                         using (SmtpClient smtp = new SmtpClient())
                         {
                             await smtp.SendMailAsync(message);
-
                         }
                     }
                     catch (Exception)
                     {
+                        //TODO: Something needs to be done with this exception...
                     }
+
                     return this.Redirect("/Orders/PaymentComplete");
                 }
             }
@@ -213,16 +210,16 @@ namespace SGFastFlyers.Controllers
                         using (SmtpClient smtp = new SmtpClient())
                         {
                             await smtp.SendMailAsync(message);
-
                         }
-                        ViewBag.Status = html;
 
+                        ViewBag.Status = html;
                     }
                     catch (Exception)
                     {
                         ViewBag.Status = "Problem while sending email, Please check details.";
                     }
                 }
+
                 return View("DirectDebitEmail", model1);
             }
 
@@ -262,16 +259,16 @@ namespace SGFastFlyers.Controllers
                         using (SmtpClient smtp = new SmtpClient())
                         {
                             await smtp.SendMailAsync(message);
-
                         }
-                        ViewBag.Status = html;
 
+                        ViewBag.Status = html;
                     }
                     catch (Exception)
                     {
                         ViewBag.Status = "Problem while sending email, Please check details.";
                     }
                 }
+
                 return View("DirectDebitEmail", model1);
             }
 
@@ -431,7 +428,6 @@ namespace SGFastFlyers.Controllers
                 NeedsPrint = createOrderViewModel.NeedsPrint,
                 PrintFormat = createOrderViewModel.PrintFormat,
                 PrintSize = createOrderViewModel.PrintSize
-
             };
 
             this.db.PrintDetails.Add(printDetail);

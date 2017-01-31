@@ -132,7 +132,7 @@ namespace SGFastFlyers.ViewModels
         {
             get
             {
-                return CustomHelper.CalcCost(Quantity, IsMetro, NeedsPrint, IsDoubleSided, PrintSize);
+                return PricingHelper.CalculateCost(Quantity, IsMetro, NeedsPrint, IsDoubleSided, PrintSize);
             }
             set
             {

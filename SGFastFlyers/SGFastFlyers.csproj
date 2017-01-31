@@ -253,7 +253,7 @@
     <Compile Include="Standards\Classes\ExampleController.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utility\Config.cs" />
-    <Compile Include="Utility\CustomHelper.cs" />
+    <Compile Include="Utility\PricingHelper.cs" />
     <Compile Include="Utility\Enums.cs" />
     <Compile Include="Utility\IO.cs" />
     <Compile Include="ViewModels\CreateOrderViewModel.cs" />

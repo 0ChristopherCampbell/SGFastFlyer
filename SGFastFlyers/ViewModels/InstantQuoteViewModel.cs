@@ -12,6 +12,9 @@ namespace SGFastFlyers.ViewModels
     using System.Web.Mvc;
     using Utility;
 
+    /// <summary>
+    /// Used for instant quotes on the home page
+    /// </summary>
     public class InstantQuoteViewModel
     {
         public int ID { get; set; }
@@ -36,30 +39,24 @@ namespace SGFastFlyers.ViewModels
 
         [Required, Display(Name = "Do you require double sided printing?")]
         public Enums.PrintFormat PrintFormat { get; set; }
-
-
-
-
+                
         [Display(Name = "Your Instant Quote:")]
         public string FormattedCost
         {
-            get { return string.Format("{0:C}", Cost); }
+            get { return string.Format("{0:C}", this.Cost); }
         }
 
         public bool IsDoubleSided { get; set; }
 
-
+        /// <summary>
+        /// Gets the cost of an instant quote
+        /// </summary>
         public decimal Cost
         {
             get
             {
-                return CustomHelper.CalcCost(Quantity, IsMetro, NeedsPrint, IsDoubleSided, PrintSize);
-            }
-            set
-            {
+                return PricingHelper.CalculateCost(this.Quantity, this.IsMetro, this.NeedsPrint, this.IsDoubleSided, this.PrintSize);
             }
         }
     }
 }
-
-
