@@ -18,19 +18,21 @@
 
         $("#quotePrice").empty();
         if (isHomePage) {
+            $("#HomePageQuoteViewModel_Cost").empty();
             QuotePrice.Quantity = $("#HomePageQuoteViewModel_Quantity").val() / QuotePrice.OneThousand;
             QuotePrice.IsMetro = $("#HomePageQuoteViewModel_IsMetro").is(':checked');
             QuotePrice.NeedsPrint = $("#HomePageQuoteViewModel_NeedsPrint").is(':checked');
             QuotePrice.IsDoubleSided = $("#HomePageQuoteViewModel_IsDoubleSided").is(':checked');
             QuotePrice.PrintSize = $("#HomePageQuoteViewModel_PrintSize").val();
         } else {
+            $("#Cost").empty();
             QuotePrice.Quantity = $("#Quantity").val() / QuotePrice.OneThousand;
             QuotePrice.IsMetro = $("#IsMetro").is(':checked');
             QuotePrice.NeedsPrint = $("#NeedsPrint").is(':checked');
             QuotePrice.IsDoubleSided = $("#IsDoubleSided").is(':checked');
             QuotePrice.PrintSize = $("#PrintSize").val();
         }
-        
+
         if (QuotePrice.Quantity >= 1 && QuotePrice.Quantity < 20) {
             QuotePrice.Cost = 55;
             QuotePrice.DLSingleSided = 40;
@@ -82,47 +84,45 @@
         }
 
         QuotePrice.Cost = QuotePrice.Cost * QuotePrice.Quantity;
-        if (QuotePrice.IsMetro == false)
-        {
+        if (QuotePrice.IsMetro == false) {
             QuotePrice.Cost = QuotePrice.Cost + QuotePrice.NonMetroAddition;
         }
 
-        if (QuotePrice.NeedsPrint)
-        {
-            if (QuotePrice.IsDoubleSided)
-            {
-                if (QuotePrice.PrintSize == "1")
-                {
+        if (QuotePrice.NeedsPrint) {
+            if (QuotePrice.IsDoubleSided) {
+                if (QuotePrice.PrintSize == "1") {
                     QuotePrice.Cost = QuotePrice.Cost + QuotePrice.DLDoubleSided * QuotePrice.Quantity;
                 }
 
-                if (QuotePrice.PrintSize == "5")
-                {
+                if (QuotePrice.PrintSize == "5") {
                     QuotePrice.Cost = QuotePrice.Cost + QuotePrice.A5DoubleSided * QuotePrice.Quantity;
                 }
             }
-            else
-            {
-                if (QuotePrice.PrintSize == "1")
-                {
+            else {
+                if (QuotePrice.PrintSize == "1") {
                     QuotePrice.Cost = QuotePrice.Cost + QuotePrice.DLSingleSided * QuotePrice.Quantity;
                 }
 
-                if (QuotePrice.PrintSize == "5")
-                {
+                if (QuotePrice.PrintSize == "5") {
                     QuotePrice.Cost = QuotePrice.Cost + QuotePrice.A5SingleSided * QuotePrice.Quantity;
                 }
             }
         }
-        if (QuotePrice.Cost < 364)
-        {
-            QuotePrice.Cost = 363.63636363;
+        if (QuotePrice.Cost < 364) {
+            QuotePrice.Cost = 400;
         }
 
         //GST
         QuotePrice.Cost = (QuotePrice.Cost * 0.1) + QuotePrice.Cost;
         QuotePrice.Cost = QuotePrice.Cost.toFixed(2).toLocaleString();
-        $("#quotePrice").html("$" + QuotePrice.Cost);        
+        $("#quotePrice").html("$" + QuotePrice.Cost);
+
+        if (isHomePage) {
+            $("#HomePageQuoteViewModel_Cost").val(QuotePrice.Cost);
+        } else {
+            $("#Cost").val(QuotePrice.Cost);
+        }
+
         return QuotePrice.Cost;
     }
 }
