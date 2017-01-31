@@ -109,7 +109,7 @@
             }
         }
         if (QuotePrice.Cost < 364) {
-            QuotePrice.Cost = 400;
+            QuotePrice.Cost = 363.63636363;
         }
 
         //GST
