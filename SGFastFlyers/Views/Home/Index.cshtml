@@ -2,9 +2,16 @@
 @{
     ViewBag.Title = "Home";
 }
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script type='text/javascript' src='~/Scripts/jquery.js?ver=1.12.3'></script>
+<script>var $j = jQuery.noConflict(true);</script>
+<script type="text/javascript" src='~/Scripts/jquery.easing.js'></script>
+<script type="text/javascript" src='~/Scripts/jquery.jcarousel.min.js'></script>
+<script type="text/javascript" src='~/Scripts/Custom/global.js'></script>
+<script type="text/javascript" src='~/Scripts/owl.carousel.min.js'></script>
 @using (Html.BeginForm())
 {
     <div class="jumbotron" style="background-color:transparent">
@@ -104,6 +111,65 @@
                 </div>
             </div>
         </div>
+
+
+        <div id="testimonial">
+            <div class="container-x">
+
+                <div class="testimonialrow">
+                    <div id="testimonial-slide" class="owl-carousel owl-theme testimonial-slide">
+
+                        <div class="item">
+                            <div class="testimonial-quote-item">
+                                <img alt='Lori H' src='~/Content/Images/avatars.png' class='avatar avatar-80 photo' height='80' width='80' />				         <span class="quote-text">
+                                    It was so quick and easy to sort out my flyer printing and delivery I thought it was a mistake. Such an efficient site that takes care of everything I needed. Will be using again. Thank you SG Fast Flyers.
+                                </span>
+                                <span class="quotes-author">– Lori H - Brisbane  </span>
+                                <!-- <span class="quotes-subtext">School Teacher</span> -->
+
+                            </div>
+                        </div><!--/ Item end -->
+
+                        <div class="item">
+                            <div class="testimonial-quote-item">
+                                <img alt='Jane S' src='~/Content/Images/avatars.png' class='avatar avatar-80 photo' height='80' width='80' />				         <span class="quote-text">
+                                    Even though the website was easy to use, I had some questions that I needed answered before I was able to go ahead. Adam and the team were quick and easy to deal with and had me sorted out in no time. Thanks Adam.
+                                </span>
+                                <span class="quotes-author">– Jane S – Rockhampton </span>
+                                <!-- <span class="quotes-subtext">Govt. Official</span> -->
+
+                            </div>
+                        </div><!--/ Item end -->
+
+                        <div class="item">
+                            <div class="testimonial-quote-item">
+                                <img alt='Scotty' src='~/Content/Images/avatars.png' class='avatar avatar-80 photo' height='80' width='80' />				         <span class="quote-text">
+                                    I knew exactly how many flyers I wanted delivered and printed, where they were going and when, so using www.sgfastflyers.com.au was a really pleasant experience. It has saved me about an hour a week. Great stuff.
+                                </span>
+                                <span class="quotes-author"> – Scotty – Geelong </span>
+                                <!--  <span class="quotes-subtext">Manager, Private Firm</span> -->
+
+                            </div>
+                        </div><!--/ Item end -->
+
+                        <div class="item">
+                            <div class="testimonial-quote-item">
+                                <img alt='Terry D' src='~/Content/Images/avatars.png' class='avatar avatar-80 photo' height='80' width='80' />				         <span class="quote-text">
+                                    Great site, easy to use. Quick and efficient.
+                                </span>
+                                <span class="quotes-author"> – Terry D - Sydney </span>
+                                <!--  <span class="quotes-subtext">Manager, Private Firm</span> -->
+
+                            </div>
+                        </div><!--/ Item end -->
+
+                    </div><!--/ Testimonial carousel end-->
+
+
+                </div><!--/ Content row end -->
+            </div><!--/ Container end -->
+        </div><!--/ Testimonial end -->
+
     </div>
 
     <script language="javascript">
@@ -159,3 +225,5 @@
         });
     </script>
 }
+
+

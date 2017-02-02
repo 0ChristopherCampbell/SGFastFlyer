@@ -3,8 +3,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-    <script src="~/Scripts/Custom/quoteprice.js"></script>
+    
+    <script type="text/javascript" src="~/Scripts/Custom/quoteprice.js"></script>
     <script type="text/javascript">
         $(function(){
             $('input').keydown(function(e){
@@ -15,6 +15,8 @@
             });
         });
     </script>
+   
+   
 
     <h2><b>Get an Instant Quote!</b></h2>
     <hr />
@@ -116,6 +118,7 @@
 
 
         </script>
+       
 }
 
 
