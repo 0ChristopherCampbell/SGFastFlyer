@@ -8,6 +8,7 @@ jQuery(document).ready(function ($) {
             navigation: false,
             pagination: true,
             items: 2,
+            autoPlay:true,           
             itemsDesktop: [1199, 2],
             itemsDesktopSmall: [980, 2],
             itemsTablet: [768, 2],
