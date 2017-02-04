@@ -73,18 +73,37 @@
                         </div>
                     </div>
                 </div><br />
+                <div class="alert alert-dismissible alert-info" id="DeliveryDate">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Heads up! </strong>Delivery starts on a Saturday and will be completed by Wednesday. Please <input id="btnShowDate" type="button" class="btn btn-primary btn-xs" value="Click Here" /> for a full explination of the delivery process.
+                </div>
+                <div class="modal" id="DeliveryDateInfo">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" id="closeDeliveryDate">&times;</span>
+                                <h4 class="modal-title">Heads Up! Printing Format.</h4>
+                            </div>
+                            <div class="modal-body" style="height:600px;">
+                                <iframe src="~/Content/Documents/SGFastFlyers_Delivery_Date_Explained .pdf" style="width: 100%; height: 100%;" frameborder="0" scrolling="no">
+                                    <p>It appears your web browser doesn't support iframes.</p>
+                                </iframe>
+                            </div>
 
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2", @title = "Delivery starts on Saturday and will be completed by the following Friday." })
+                        @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2", @title = "Delivery starts on Saturday and will be completed by the following Wednesday." })
                         <div class="col-sm-10 col-md-10 col-lg-10">
-                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Click to Enter Delivery Date Here.", @title = "Delivery starts on Saturday and will be completed by the following Friday.", @readonly = "true" } })
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Click to Enter Delivery Date Here.", @title = "Delivery starts on Saturday and will be completed by the following Wednesday.", @readonly = "true" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div><br />
-
+              
                 <div class="row">
                     <div class="form-group">
                         @Html.LabelFor(model => model.DeliveryArea, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2" })
@@ -127,29 +146,37 @@
                         <p><input id="btnShow" type="button" class="btn btn-primary btn-sm" value="Print Requirements" style="display: none;" /></p>
                     </div>
                 </div>
-                <div id="demo" class="alert alert-dismissible alert-info" style="display: none;">Heads Up! Printing Format.</div>
+                <div class="modal" id="PrintInformation">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" id="closePrint">&times;</span>
+                                <h4 class="modal-title">Heads Up! Printing Format.</h4>
+                            </div>
+                            <div class="modal-body" >
+                                <div class="alert alert-dismissible alert-info">
+                                    <ul>
+                                        <li style="padding-left: 20px;"><strong>Accepted File Types</strong>: <a class="alert-link" href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html" target="_blank">PDF </a>(version 1.4 or higher)</li>
+                                        <li style="padding-left: 20px;">Artwork must be Print Ready</li>
+                                        <li style="padding-left: 20px;">2mm Bleed on all sides of the flyer</li>
+                                        <li style="padding-left: 20px;">3mm Safe Zone on all sides is recommended</li>
+                                        <li style="padding-left: 20px;">300 dpi resolution for all images in&nbsp;<a class="alert-link" href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html" target="_blank">PDF</a> files</li>
+                                        <li style="padding-left: 20px;">CMYK or Grey Scale colours only</li>
+                                        <li style="padding-left: 20px;">Fonts need to be embedded or converted to curves</li>
+                                        <li style="padding-left: 20px;">We will transport the completed flyers to the distributor ready for delivery.</li>
+                                    </ul>
+                                </div>
+                                    <p class="alert alert-dismissible alert-danger"><strong>ALL FILES ARE PRINTED AS SUPPLIED TO US</strong></p>
+                                    <p class="alert alert-dismissible alert-info">
+                                        Please attach below or use our <a class="alert-link" href="/Home/Contact" target="_blank">Contact Us</a> page.<br />
+                                        Thank you
+                                    </p>
+                                   
+                            </div>
 
-                <div id="dialog" style="display: none">
-                    <div id="PrintInformation">
-                        <ul class="alert alert-dismissible alert-info" style="padding-left: 60px; ">
-                            <li style="padding-left: 20px;"><strong>Accepted File Types</strong>: <a class="alert-link" href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html" target="_blank">PDF </a>(version 1.4 or higher)</li>
-                            <li style="padding-left: 20px;">Artwork must be Print Ready</li>
-                            <li style="padding-left: 20px;">2mm Bleed on all sides of the flyer</li>
-                            <li style="padding-left: 20px;">3mm Safe Zone on all sides is recommended</li>
-                            <li style="padding-left: 20px;">300 dpi resolution for all images in&nbsp;<a class="alert-link" href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html" target="_blank">PDF</a> files</li>
-                            <li style="padding-left: 20px;">CMYK or Grey Scale colours only</li>
-                            <li style="padding-left: 20px;">Fonts need to be embedded or converted to curves</li>
-                            <li style="padding-left: 20px;">We will transport the completed flyers to the distributor ready for delivery.</li>
-                        </ul>
-                        <p class="alert alert-dismissible alert-danger"><strong>ALL FILES ARE PRINTED AS SUPPLIED TO US</strong></p>
-                        <p class="alert alert-dismissible alert-info">
-                            Please attach below or use our <a class="alert-link" href="/Home/Contact" target="_blank">Contact Us</a> page.<br />
-                            Thank you
-                        </p>
-                        <p>&nbsp;</p>
+                        </div>
                     </div>
                 </div>
-
 
                 <div class="row">
                     <div class="form-group" id="PrintSize1" style="display: none;" onclick="QuotePrice.SetQuotePrice();">
@@ -217,26 +244,43 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="~/Content/bootstrap-theme.css" />
 
-    <script type="text/javascript">
-                $(function () {
-                    var fileName = document.getElementById("demo").innerHTML;
-                    $("#btnShow").click(function () {
-                        $("#PrintInformation").dialog({
-                            modal: true,
-                            title: fileName,
-                            width: 540,
-                            height: 540,
-                            buttons: {
-                                Close: function () {
-                                    $(this).dialog('close');
-                                }
-                            },
 
-                        });
-                    });
-                });
+    <script>
+// Get the modal
+        var modal = document.getElementById('PrintInformation');
+        var modal2 = document.getElementById('DeliveryDateInfo');
+// Get the button that opens the modal
+        var btn = document.getElementById("btnShow");
+        var btn2 = document.getElementById("btnShowDate");
+// Get the <span> element that closes the modal
+        var span = document.getElementById("closePrint");
+        var span2 = document.getElementById("closeDeliveryDate");
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+btn2.onclick = function () {
+    modal2.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+span2.onclick = function () {
+    modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    if (event.target == modal2) {
+        modal2.style.display = "none";
+    }
+}
     </script>
-            <script>
+    <script>
 
         var handler = StripeCheckout.configure({
             key: '@SGFastFlyers.Utility.Config.stripeKey',
@@ -385,7 +429,7 @@
                                         return [false];
                                     }
                                 },
-                                minDate: "0 +7D"
+                                minDate: "0 +8D"
                             });
 
 
