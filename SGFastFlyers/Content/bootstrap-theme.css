@@ -5919,7 +5919,7 @@ button.close {
 .modal {
     display: none;
     position: fixed;
-   padding-top:5%;
+   padding-top:2%;
     margin: 10px;
     width: 100%; /* Full width */
     height: 100%; /* Full height */

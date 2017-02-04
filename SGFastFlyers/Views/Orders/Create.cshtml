@@ -75,35 +75,35 @@
                 </div><br />
                 <div class="alert alert-dismissible alert-info" id="DeliveryDate">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Heads up! </strong>Delivery starts on a Saturday and will be completed by Wednesday. Please <input id="btnShowDate" type="button" class="btn btn-primary btn-xs" value="Click Here" /> for a full explination of the delivery process.
+                    <strong>Heads up! </strong>Standard Delivery starts on a Saturday and will be completed by Wednesday.<br />Please <input id="btnShowDate" type="button" class="btn btn-primary btn-xs" value="Click Here" /> for a full explination of the delivery process.
                 </div>
-                <div class="modal" id="DeliveryDateInfo">
+               <div class="modal" id="DeliveryDateInfo">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <span class="close" id="closeDeliveryDate">&times;</span>
                                 <h4 class="modal-title">Heads Up! Printing Format.</h4>
                             </div>
-                            <div class="modal-body" style="height:600px;">
+                            <div class="modal-body" style="height:700px;">
                                 <iframe src="~/Content/Documents/SGFastFlyers_Delivery_Date_Explained.pdf" style="width: 100%; height: 100%;" frameborder="0" scrolling="no">
                                     <p>It appears your web browser doesn't support iframes.</p>
                                 </iframe>
                             </div>
-
                         </div>
                     </div>
-                </div>
+                </div>-
+
 
                 <div class="row">
                     <div class="form-group">
                         @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2", @title = "Delivery starts on Saturday and will be completed by the following Wednesday." })
                         <div class="col-sm-10 col-md-10 col-lg-10">
-                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Click to Enter Delivery Date Here.", @title = "Delivery starts on Saturday and will be completed by the following Wednesday.", @readonly = "true" } })
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Click to Select Delivery Date Here.", @title = "Delivery starts on Saturday and will be completed by the following Wednesday.", @readonly = "true" } })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div><br />
-              
+
                 <div class="row">
                     <div class="form-group">
                         @Html.LabelFor(model => model.DeliveryArea, htmlAttributes: new { @class = "control-label col-sm-2 col-md-2 col-lg-2" })
@@ -148,12 +148,12 @@
                 </div>
                 <div class="modal" id="PrintInformation">
                     <div class="modal-dialog">
-                        <div class="modal-content">
+                        <div class="modal-content" style="max-width:500px;">
                             <div class="modal-header">
                                 <span class="close" id="closePrint">&times;</span>
                                 <h4 class="modal-title">Heads Up! Printing Format.</h4>
                             </div>
-                            <div class="modal-body" >
+                            <div class="modal-body">
                                 <div class="alert alert-dismissible alert-info">
                                     <ul>
                                         <li style="padding-left: 20px;"><strong>Accepted File Types</strong>: <a class="alert-link" href="https://acrobat.adobe.com/us/en/why-adobe/about-adobe-pdf.html" target="_blank">PDF </a>(version 1.4 or higher)</li>
@@ -166,12 +166,12 @@
                                         <li style="padding-left: 20px;">We will transport the completed flyers to the distributor ready for delivery.</li>
                                     </ul>
                                 </div>
-                                    <p class="alert alert-dismissible alert-danger"><strong>ALL FILES ARE PRINTED AS SUPPLIED TO US</strong></p>
-                                    <p class="alert alert-dismissible alert-info">
-                                        Please attach below or use our <a class="alert-link" href="/Home/Contact" target="_blank">Contact Us</a> page.<br />
-                                        Thank you
-                                    </p>
-                                   
+                                <p class="alert alert-dismissible alert-danger"><strong>ALL FILES ARE PRINTED AS SUPPLIED TO US</strong></p>
+                                <p class="alert alert-dismissible alert-info">
+                                    Please attach below or use our <a class="alert-link" href="/Home/Contact" target="_blank">Contact Us</a> page.<br />
+                                    Thank you
+                                </p>
+
                             </div>
 
                         </div>
@@ -246,39 +246,39 @@
 
 
     <script>
-// Get the modal
+        // Get the modal
         var modal = document.getElementById('PrintInformation');
         var modal2 = document.getElementById('DeliveryDateInfo');
-// Get the button that opens the modal
+        // Get the button that opens the modal
         var btn = document.getElementById("btnShow");
         var btn2 = document.getElementById("btnShowDate");
-// Get the <span> element that closes the modal
+        // Get the <span> element that closes the modal
         var span = document.getElementById("closePrint");
         var span2 = document.getElementById("closeDeliveryDate");
-// When the user clicks the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-btn2.onclick = function () {
-    modal2.style.display = "block";
-}
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-span2.onclick = function () {
-    modal2.style.display = "none";
-}
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn2.onclick = function () {
+            modal2.style.display = "block";
+        }
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        span2.onclick = function () {
+            modal2.style.display = "none";
+        }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-    if (event.target == modal2) {
-        modal2.style.display = "none";
-    }
-}
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        }
     </script>
     <script>
 
@@ -286,7 +286,7 @@ window.onclick = function (event) {
             key: '@SGFastFlyers.Utility.Config.stripeKey',
             image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
             locale: 'auto',
-            token: function(token) {
+            token: function (token) {
                 document.getElementById("token1").value = token.id;
                 // alert(token.id);
                 document.forms[0].submit();
@@ -297,7 +297,7 @@ window.onclick = function (event) {
         });
 
         function validatePrintSize() {
-            if($("#NeedsPrint").is(':checked') && ($("#PrintSize").val() == "" || $("#PrintSize").val() == 0)) {
+            if ($("#NeedsPrint").is(':checked') && ($("#PrintSize").val() == "" || $("#PrintSize").val() == 0)) {
                 $('#PrintSize-error').css("display", "block");
                 $('#PrintSize-error').text("Choose DL (99mm × 210mm, 1/3 A4) or A5 (148mm X 210mm, 1/2 A4). For other sizes please contact us for a quote.");
                 return false;
@@ -308,18 +308,18 @@ window.onclick = function (event) {
             }
         }
 
-        document.getElementById('customButton').addEventListener('click', function(e) {
+        document.getElementById('customButton').addEventListener('click', function (e) {
             $("#hdndirectDebitEmail").val();
             var flag = false;
 
             var $form = $('form');
-            if($form.valid()) {
-                if(!validatePrintSize()) {
+            if ($form.valid()) {
+                if (!validatePrintSize()) {
                     flag = true;
                     return false;
                 }
             } else {
-                if(!validatePrintSize()) {
+                if (!validatePrintSize()) {
                     return false;
                 }
                 return false;
@@ -336,8 +336,8 @@ window.onclick = function (event) {
                 name: 'Smooth Glass Pty Ltd',
                 description: 'Secure Payment Gateway',
                 currency: 'aud',
-                email:thisEmail.value,
-                image:"/Content/Images/logo.jpg",
+                email: thisEmail.value,
+                image: "/Content/Images/logo.jpg",
                 amount: parseInt(amounbt)
             });
             e.preventDefault();
@@ -345,113 +345,112 @@ window.onclick = function (event) {
         }, true);
 
         // Close Checkout on page navigation:
-        window.addEventListener('popstate', function() {
+        window.addEventListener('popstate', function () {
             handler.close();
         });
 
-        document.getElementById('directDebitEmail').addEventListener('click', function(e) {
+        document.getElementById('directDebitEmail').addEventListener('click', function (e) {
             $("#token1").val();
             var flag = false;
 
             var $form = $('form');
-            if($form.valid()) {
-                if(!validatePrintSize()) {
+            if ($form.valid()) {
+                if (!validatePrintSize()) {
                     flag = true;
                     return false;
                 }
             } else {
-                if(!validatePrintSize()) {
+                if (!validatePrintSize()) {
                     return false;
                 }
             }
             $("#hdndirectDebitEmail").val(true);
             $('#OrdersForm').submit();
         }, true);
-            </script>
+    </script>
 
             <script type="text/javascript">
 
-                    $(function(){
-                        $('input').keydown(function(e){
-                            if (e.keyCode == 13) {
-                                $("input[value='emailQuote']").focus();
-                                return false;
-                            }
-                        });
+                $(function () {
+                    $('input').keydown(function (e) {
+                        if (e.keyCode == 13) {
+                            $("input[value='emailQuote']").focus();
+                            return false;
+                        }
                     });
+                });
             </script>
-                <script type="text/javascript">
-                    function checkandChange()
-                    {
-                        var checkbox = document.getElementById('NeedsPrint');
-                        var dependent =  $('#PrintSize1');
-                        var dependent2 =   $('#PrintFormat');
-                        var dependent3 = $('#Attachment');
-                        var printInformation = $('#btnShow');
-                        var printDetails = $('#PrintingHeadsUp')
-                        if (checkbox.checked) {
-                            dependent.show();
-                            dependent2.show();
-                            dependent3.show();
-                            printInformation.show();
-                            printDetails.show();
-                        }
-                        else {
-                            dependent.hide();
-                            dependent2.hide();
-                            dependent3.hide();
-                            printInformation.hide();
-                            printDetails.hide();
-                        }
+            <script type="text/javascript">
+                function checkandChange() {
+                    var checkbox = document.getElementById('NeedsPrint');
+                    var dependent = $('#PrintSize1');
+                    var dependent2 = $('#PrintFormat');
+                    var dependent3 = $('#Attachment');
+                    var printInformation = $('#btnShow');
+                    var printDetails = $('#PrintingHeadsUp')
+                    if (checkbox.checked) {
+                        dependent.show();
+                        dependent2.show();
+                        dependent3.show();
+                        printInformation.show();
+                        printDetails.show();
                     }
+                    else {
+                        dependent.hide();
+                        dependent2.hide();
+                        dependent3.hide();
+                        printInformation.hide();
+                        printDetails.hide();
+                    }
+                }
 
-                    $(document).ready(function () {
-                        checkandChange();
-                    });
-                </script>
+                $(document).ready(function () {
+                    checkandChange();
+                });
+            </script>
                 <script src="~/Scripts/Custom/quoteprice.js"></script>
                 <script type="text/javascript">
                     window.onload = QuotePrice.SetQuotePrice();
                 </script>
                 <script type="text/javascript">
-                        $(document).ready(function () {
-                            $('input[type=datetime]').datepicker({
-                                dateFormat: "yy-mm-dd",
-                                daysOfWeekDisabled: "0,1,2,3,4,5",
-                                daysOfWeekHighlighted: "6",
-                                changeMonth: true,
-                                changeYear: true,
-                                yearRange: "-0:+5",
-                                beforeShowDay: function(date){
-                                    if(date.getDay() == 6){
-                                        return [true];
-                                    } else {
-                                        return [false];
-                                    }
-                                },
-                                minDate: "0 +8D"
-                            });
-
-
-                            $.validator.addMethod('date',
-                                function (value, element) {
-                                    if (this.optional(element)) {
-                                        return true;
-                                    }
-                                    var ok = true;
-                                    try {
-                                        $.datepicker.parseDate('yy-mm-dd', value);
-                                    }
-                                    catch (err) {
-                                        ok = false;
-                                    }
-                                    return ok;
-                                });
+                    $(document).ready(function () {
+                        $('input[type=datetime]').datepicker({
+                            dateFormat: "yy-mm-dd",
+                            daysOfWeekDisabled: "0,1,2,3,4,5",
+                            daysOfWeekHighlighted: "6",
+                            changeMonth: true,
+                            changeYear: true,
+                            yearRange: "-0:+5",
+                            beforeShowDay: function (date) {
+                                if (date.getDay() == 6) {
+                                    return [true];
+                                } else {
+                                    return [false];
+                                }
+                            },
+                            minDate: "0 +8D"
                         });
 
-                    </script>
+
+                        $.validator.addMethod('date',
+                            function (value, element) {
+                                if (this.optional(element)) {
+                                    return true;
+                                }
+                                var ok = true;
+                                try {
+                                    $.datepicker.parseDate('yy-mm-dd', value);
+                                }
+                                catch (err) {
+                                    ok = false;
+                                }
+                                return ok;
+                            });
+                    });
+
+                </script>
                     <script>
-                        $(document).ready(function() {
+                        $(document).ready(function () {
                             $('[data-toggle="popover"]').popover({
                                 html: true,
                                 content: function () {
