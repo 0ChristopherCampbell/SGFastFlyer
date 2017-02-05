@@ -23,6 +23,8 @@ textarea {
     max-width: 280px;
 }
 
+.ui-autocomplete-loading { background: white url('/Content/themes/base/images/spinner.gif') right center no-repeat; }
+
 /* 
 =================================
          9.  Testimonial
@@ -67,7 +69,7 @@ textarea {
 }
 
 .testimonial-quote-item {
-    background-color: #F9E141;
+   background-color: #F9E141;
     height: 345px;
     width: 345px;
     -webkit-border-radius: 200px;
@@ -76,7 +78,6 @@ textarea {
 
 	padding: 53px 73px;
 	margin: 0 auto;
-	
 	position: relative;
 	border-right: 1px solid #e3e3e3;
 	border-left: 1px solid #e3e3e3;
@@ -84,6 +85,10 @@ textarea {
 	-webkit-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.24);
 	-moz-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.24);
 	box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.24);
+}
+
+.new-item {
+
 }
 
 .testimonial-quote-item:after { 

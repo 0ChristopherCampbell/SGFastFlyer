@@ -21,7 +21,7 @@ namespace SGFastFlyers.Controllers
     using System.Web;
     using Stripe;
     using System.ComponentModel.DataAnnotations;
-
+    using System.Data;
     /// <summary>
     /// The order controller. Order creation and payment is handled here.
     /// </summary>
@@ -381,6 +381,70 @@ namespace SGFastFlyers.Controllers
             this.db.Orders.Remove(order);
             this.db.SaveChanges();
             return this.RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult GetDistributionList(string searchTerm)
+        {
+            var DistributionModel = new DistributionListModels();
+            DataTable dt = ReadDistributionList(searchTerm, false);
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    DistributionModel.DistributionList.Add(new DistributionListModels()
+                    {
+                        DeliveryArea = row["F3"].ToString() + ", " + row["F6"].ToString(),
+                        Region = row["F2"].ToString()
+                    });
+                }
+            }
+            return Json(new { success = true, DistributionModel, message = "successfully" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetTotalUnits(string searchTerm, bool units = true)
+        {
+            int totalUnits = 0;
+            bool isCountry = false;
+            DataTable dt = ReadDistributionList(searchTerm, units);
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    totalUnits += int.Parse(row["F11"].ToString());
+                    isCountry = row["F2"].ToString() == "Country" ? true : false;
+                }
+            }
+            return Json(new { success = true, totalUnits, country = isCountry, message = "successfully" }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Read the Excel Distribution List
+        /// </summary>
+        public DataTable ReadDistributionList(string sLookUpString, bool units)
+        {
+            DataTable dt;
+            string connString = string.Empty;
+            string path = string.Format("{0}", Server.MapPath(Config.ExcelFilePath));
+
+            if (!System.IO.File.Exists(path))
+            {
+                return null;
+            }
+            else
+            {
+                connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=3\"";
+                if (!units)
+                {
+                    dt = IO.ConvertXSLXtoDataTable(path, connString, sLookUpString);
+                }
+                else
+                {
+                    dt = IO.ConvertXSLXtoDataTableUnits(path, connString, sLookUpString);
+                }
+            }
+            return dt;
         }
 
         /// <summary>

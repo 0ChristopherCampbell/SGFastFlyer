@@ -91,8 +91,7 @@
                             </div>
                         </div>
                     </div>
-                </div>-
-
+                </div>
 
                 <div class="row">
                     <div class="form-group">
@@ -110,6 +109,13 @@
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             @Html.EditorFor(model => model.DeliveryArea, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Suburbs or post codes for delivery." } })
                             @Html.ValidationMessageFor(model => model.DeliveryArea, "", new { @class = "text-danger" })
+                            <br />
+                            <div id="spinner" style="display:none">
+                                <img src="~/Content/themes/base/images/spinner.gif" />
+                            </div>
+                            <div id="distributionListing" style="display:none">
+                                <div id="totalUnits"></div>
+                            </div>
                         </div>
                     </div>
                 </div><br />
@@ -481,6 +487,68 @@
                     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
                     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            BindDeliveryAreaControls();
+                        });
+
+                        function BindDeliveryAreaControls() {
+                            $("#DeliveryArea").autocomplete({
+                                source: function (request, response) {
+                                    var param = { searchTerm:  $('#DeliveryArea').val() };
+                                    $.ajax({
+                                        url: '@Url.Action("GetDistributionList")',
+                                        dataType: "json",
+                                        type: "POST",
+                                        contentType: 'application/json; charset=utf-8',
+                                        cache: false,
+                                        data: JSON.stringify(param),
+                                        success: function (data) {
+                                            if (data.success) {
+                                                response($.map(data.DistributionModel.DistributionList, function (item) {
+                                                    return {
+                                                        label: item.DeliveryArea, value: item.DeliveryArea
+                                                    }
+                                                }))
+                                            }
+                                        },
+                                        error: function (xhr) {
+                                            alert('Error while fetching details. Please try again.');
+                                        }
+                                    });
+                                },
+                                minLength: 4,
+                                select: function (event, ui) {
+                                    $("#spinner").show();
+                                    $("#totalUnits").empty();
+                                    var param = { searchTerm:  ui.item.label };
+                                    $.ajax({
+                                        url: "@(Url.Action("GetTotalUnits", "Orders"))",
+                                        type: "POST",
+                                        dataType: "json",
+                                        contentType: 'application/json; charset=utf-8',
+                                        data: JSON.stringify(param),
+                                        cache: false,
+                                        success: function (data) {
+                                            if (data.success) {
+                                                $("#distributionListing").show();
+                                                $("#totalUnits").html("<label>Total Units :</label> " + data.totalUnits);
+                                                if(data.country) {
+                                                    $("#IsMetro").prop('checked', false);
+                                                } else {
+                                                    $("#IsMetro").prop('checked', true);
+                                                }
+                                                $("#spinner").hide();
+                                            }
+                                        },
+                                        error: function (xhr, ajaxOptions, thrownError) {
+                                            alert('Failed to retrieve Item.');
+                                        }
+                                });
+                                }
+                            });
+                        }
+                    </script>
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

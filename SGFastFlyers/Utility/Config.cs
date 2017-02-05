@@ -25,6 +25,8 @@ namespace SGFastFlyers.Utility
         #region CONSTANT VALUES
         public const string Yes = "Yes";
         public const string No = "No";
+        public const string ExcelFilePath = "~/Content/Documents/October 2016 National Distribution Listing.xlsx";
+        public const string DistributionListing = "Distribution Listing$";
         #endregion
     }
 }
