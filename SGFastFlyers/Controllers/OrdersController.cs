@@ -22,9 +22,9 @@ namespace SGFastFlyers.Controllers
     using Stripe;
     using System.ComponentModel.DataAnnotations;
     using System.Data;
-    /// <summary>
-    /// The order controller. Order creation and payment is handled here.
-    /// </summary>
+    using Excel;    /// <summary>
+                    /// The order controller. Order creation and payment is handled here.
+                    /// </summary>
 
     public class OrdersController : Controller
     {
@@ -394,12 +394,12 @@ namespace SGFastFlyers.Controllers
                 {
                     DistributionModel.DistributionList.Add(new DistributionListModels()
                     {
-                        DeliveryArea = row["F3"].ToString() + ", " + row["F6"].ToString(),
-                        Region = row["F2"].ToString()
+                        DeliveryArea = row["Column3"].ToString() + ", " + row["Column6"].ToString(),
+                        Region = row["Column2"].ToString()
                     });
                 }
             }
-            return Json(new { success = true, DistributionModel, message = "successfully" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, DistributionModel, message = "successfully." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -412,11 +412,11 @@ namespace SGFastFlyers.Controllers
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    totalUnits += int.Parse(row["F11"].ToString());
-                    isCountry = row["F2"].ToString() == "Country" ? true : false;
+                    totalUnits += int.Parse(row["Column11"].ToString());
+                    isCountry = row["Column2"].ToString() == "Country" ? true : false;
                 }
             }
-            return Json(new { success = true, totalUnits, country = isCountry, message = "successfully" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, totalUnits, country = isCountry, message = "successfully." }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -434,14 +434,19 @@ namespace SGFastFlyers.Controllers
             }
             else
             {
-                connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=3\"";
+                FileStream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read);
+                IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                excelReader.IsFirstRowAsColumnNames = false;
+                DataSet result = excelReader.AsDataSet();
+                //connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=3\"";
                 if (!units)
                 {
-                    dt = IO.ConvertXSLXtoDataTable(path, connString, sLookUpString);
+                    //2. Reading from a OpenXml Excel file (2007 format; *.xlsx)
+                    dt = IO.ConvertXSLXtoDataTable(result.Tables[1], sLookUpString);
                 }
                 else
                 {
-                    dt = IO.ConvertXSLXtoDataTableUnits(path, connString, sLookUpString);
+                    dt = IO.ConvertXSLXtoDataTableUnits(result.Tables[1], sLookUpString);
                 }
             }
             return dt;

@@ -14,9 +14,7 @@ jQuery(document).ready(function ($) {
             //itemsTablet: [768, 2],
             //itemsTabletSmall: false,
             //itemsMobile: [479, 1]
-
         });
-
 
     });
 
@@ -35,7 +33,7 @@ jQuery(document).ready(function ($) {
             } else if (width >= 350) {
                 width = width / 2;
             }
-
+           
             jcarousel.jcarousel('items').css('width', width + 'px');
         })
         .jcarousel({

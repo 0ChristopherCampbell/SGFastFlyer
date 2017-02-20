@@ -208,63 +208,56 @@ namespace SGFastFlyers.Utility
             return System.Text.RegularExpressions.Regex.Replace(name, invalidReStr, "_");
         }
 
+
         /// <summary>
-        /// Convert the XSLX to DataTable
+        /// Convert the DataTable to DataTable and Filter Rows
         /// </summary>
-        /// <param name="strFilePath">A string path location of xsls file.</param>
-        /// <param name="connString">A connection to xsls file.</param>
+        /// <param name="DataTable">A datatable.</param>       
         /// <param name="searchTerm">A search string.</param>
         /// <returns>DataTable</returns>
-        public static DataTable ConvertXSLXtoDataTable(string strFilePath, string connString, string searchTerm)
+        public static DataTable ConvertXSLXtoDataTable(DataTable dt, string searchTerm)
         {
-            OleDbConnection oledbConn = new OleDbConnection(connString);
-            DataTable dt = new DataTable();
-            if (!string.IsNullOrEmpty(searchTerm))
+            string[] TobeDistinct = { "Column3", "Column6", "Column2" };
+            DataTable _newDataTable = new DataTable();
+            if (dt.Rows.Count > 0 && !string.IsNullOrEmpty(searchTerm))
             {
                 try
                 {
-                    oledbConn.Open();
-                    OleDbCommand cmd;
                     int result;
                     if (int.TryParse(searchTerm, out result))
                     {
-                        cmd = new OleDbCommand("SELECT Distinct F3, F6, F2 FROM [" + Config.DistributionListing + "] WHERE F6='" + searchTerm + "'", oledbConn);
+                        string _sqlWhere = "Column6='" + searchTerm + "'";
+                        _newDataTable = GetDistinctRecords(dt, TobeDistinct);
+                        _newDataTable = _newDataTable.Select(_sqlWhere).CopyToDataTable();
                     }
                     else
                     {
-                        cmd = new OleDbCommand("SELECT Distinct F3, F6, F2 FROM [" + Config.DistributionListing + "] WHERE F3='" + searchTerm + "'", oledbConn);
+                        string _sqlWhere = "Column3='" + searchTerm + "'";
+                        _newDataTable = GetDistinctRecords(dt, TobeDistinct);
+                        _newDataTable = _newDataTable.Select(_sqlWhere).CopyToDataTable();
                     }
-
-                    OleDbDataAdapter oleda = new OleDbDataAdapter();
-                    oleda.SelectCommand = cmd;
-                    DataSet ds = new DataSet();
-                    oleda.Fill(ds);
-                    dt = ds.Tables[0];
                 }
                 catch
                 {
                 }
                 finally
                 {
-                    oledbConn.Close();
                 }
             }
-            return dt;
+            return _newDataTable;
         }
 
 
         /// <summary>
-        /// Convert the XSLX to DataTable with Units
+        /// Convert the DataTable to DataTable with Units and Filter Rows
         /// </summary>
-        /// <param name="strFilePath">A string path location of xsls file.</param>
-        /// <param name="connString">A connection to xsls file.</param>
+        /// <param name="DataTable">A datatable.</param>       
         /// <param name="searchTerm">A search string.</param>
         /// <returns>DataTable</returns>
-        public static DataTable ConvertXSLXtoDataTableUnits(string strFilePath, string connString, string searchTerm)
+        public static DataTable ConvertXSLXtoDataTableUnits(DataTable dt, string searchTerm)
         {
-            OleDbConnection oledbConn = new OleDbConnection(connString);
-            DataTable dt = new DataTable();
-            if (!string.IsNullOrEmpty(searchTerm))
+            DataTable _newDataTable = new DataTable();
+            if (dt.Rows.Count > 0 && !string.IsNullOrEmpty(searchTerm))
             {
                 string[] splitTerm = searchTerm.Split(',');
                 string mainTerm = splitTerm[1].Trim();
@@ -272,24 +265,26 @@ namespace SGFastFlyers.Utility
                 {
                     try
                     {
-                        oledbConn.Open();
-                        OleDbCommand cmd = new OleDbCommand("SELECT * FROM [" + Config.DistributionListing + "] WHERE F6='" + mainTerm + "'", oledbConn);
-                        OleDbDataAdapter oleda = new OleDbDataAdapter();
-                        oleda.SelectCommand = cmd;
-                        DataSet ds = new DataSet();
-                        oleda.Fill(ds);
-                        dt = ds.Tables[0];
+                        string _sqlWhere = "Column6='" + mainTerm + "'";
+                        _newDataTable = dt.Select(_sqlWhere).CopyToDataTable();
                     }
                     catch
                     {
                     }
                     finally
                     {
-                        oledbConn.Close();
                     }
                 }
             }
-            return dt;
+            return _newDataTable;
+        }
+
+        
+        public static DataTable GetDistinctRecords(DataTable dt, string[] Columns)
+        {
+            DataTable dtUniqRecords = new DataTable();
+            dtUniqRecords = dt.DefaultView.ToTable(true, Columns);
+            return dtUniqRecords;
         }
     }
 }
