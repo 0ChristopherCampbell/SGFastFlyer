@@ -438,8 +438,8 @@ namespace SGFastFlyers.Controllers
                 FileStream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read);
                 IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                 excelReader.IsFirstRowAsColumnNames = false;
+                
                 DataSet result = excelReader.AsDataSet();
-                //connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=3\"";
                 if (!units)
                 {
                     //2. Reading from a OpenXml Excel file (2007 format; *.xlsx)
@@ -449,6 +449,9 @@ namespace SGFastFlyers.Controllers
                 {
                     dt = IO.ConvertXSLXtoDataTableUnits(result.Tables[1], sLookUpString);
                 }
+
+                //Free resources (IExcelDataReader is IDisposable)
+                excelReader.Close();
             }
             return dt;
         }
