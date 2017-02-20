@@ -22,7 +22,8 @@ namespace SGFastFlyers.Controllers
     using Stripe;
     using System.ComponentModel.DataAnnotations;
     using System.Data;
-    using Excel;    /// <summary>
+    using Excel;    
+    /// <summary>
                     /// The order controller. Order creation and payment is handled here.
                     /// </summary>
 
