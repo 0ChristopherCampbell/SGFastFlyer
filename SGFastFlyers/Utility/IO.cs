@@ -258,8 +258,7 @@ namespace SGFastFlyers.Utility
             DataTable _newDataTable = new DataTable();
             if (dt.Rows.Count > 0 && !string.IsNullOrEmpty(searchTerm))
             {
-                string[] splitTerm = searchTerm.Split(',');
-                string mainTerm = splitTerm[1].Trim();
+                string mainTerm = searchTerm.Substring(searchTerm.Length - 4).Trim();
                 if (!string.IsNullOrEmpty(mainTerm))
                 {
                     try

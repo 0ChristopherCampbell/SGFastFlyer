@@ -275,6 +275,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\circle.css" />
     <Content Include="Content\Images\avatars.png" />
+    <Content Include="Content\Images\close.png" />
     <Content Include="Content\Images\flyers.jpg" />
     <Content Include="Content\Images\logo.jpg" />
     <Content Include="Content\Images\LogoGreyBack.jpg" />
