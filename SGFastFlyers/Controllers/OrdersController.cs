@@ -33,7 +33,8 @@ namespace SGFastFlyers.Controllers
         /// The database context
         /// </summary>
         private SGDbContext db = new SGDbContext();
-
+        IExcelDataReader excelReader;       
+       
         /// <summary>
         /// GET: Orders
         /// </summary>
@@ -118,6 +119,14 @@ namespace SGFastFlyers.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ID,FirstName,LastName,EmailAddress,PhoneNumber,Quantity,DeliveryDate,IsMetro,DeliveryArea,NeedsPrint,PrintSize,PrintFormat,IsDoubleSided,Attachment,Cost")] CreateOrderViewModel createOrderViewModel)
         {
+            if (!string.IsNullOrEmpty(createOrderViewModel.DeliveryArea))
+            {
+                if (createOrderViewModel.DeliveryArea.EndsWith(", "))
+                {
+                    createOrderViewModel.DeliveryArea = createOrderViewModel.DeliveryArea.Remove(createOrderViewModel.DeliveryArea.Length - 2);
+                }
+            }
+
             if (!string.IsNullOrEmpty(Request["token1"]) && ModelState.IsValid)
             {
                 HttpContext.Session["homePageModel1"] = createOrderViewModel;
@@ -395,7 +404,7 @@ namespace SGFastFlyers.Controllers
                 {
                     DistributionModel.DistributionList.Add(new DistributionListModels()
                     {
-                        DeliveryArea = row["Column3"].ToString() + ", " + row["Column6"].ToString(),
+                        DeliveryArea = row["Column3"].ToString() + " " + row["Column6"].ToString(),
                         Region = row["Column2"].ToString()
                     });
                 }
@@ -406,18 +415,21 @@ namespace SGFastFlyers.Controllers
         [HttpPost]
         public ActionResult GetTotalUnits(string searchTerm, bool units = true)
         {
+            string postcodes = string.Empty;
             int totalUnits = 0;
             bool isCountry = false;
-            DataTable dt = ReadDistributionList(searchTerm, units);
+            DataTable dt = ReadDistributionListUnits(searchTerm, units);
             if (dt.Rows.Count > 0)
             {
                 foreach (DataRow row in dt.Rows)
                 {
+                    postcodes = string.Join(", ", row["Column6"].ToString());
                     totalUnits += int.Parse(row["Column11"].ToString());
                     isCountry = row["Column2"].ToString() == "Country" ? true : false;
                 }
             }
-            return Json(new { success = true, totalUnits, country = isCountry, message = "successfully." }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, totalUnits, country = isCountry, postcodes,
+                message = "successfully." }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -425,30 +437,105 @@ namespace SGFastFlyers.Controllers
         /// </summary>
         public DataTable ReadDistributionList(string sLookUpString, bool units)
         {
-            DataTable dt;
-            string connString = string.Empty;
+            DataTable dt = new DataTable();
+            DataSet result = HttpContext.Cache["sk"] as DataSet;
             string path = string.Format("{0}", Server.MapPath(Config.ExcelFilePath));
 
-            if (!System.IO.File.Exists(path))
+            try
             {
-                return null;
-            }
-            else
-            {
-                FileStream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read);
-                IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-                excelReader.IsFirstRowAsColumnNames = false;
-                DataSet result = excelReader.AsDataSet();
-                //connString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=3\"";
-                if (!units)
+                if (!System.IO.File.Exists(path))
                 {
-                    //2. Reading from a OpenXml Excel file (2007 format; *.xlsx)
-                    dt = IO.ConvertXSLXtoDataTable(result.Tables[1], sLookUpString);
+                    return null;
                 }
                 else
                 {
-                    dt = IO.ConvertXSLXtoDataTableUnits(result.Tables[1], sLookUpString);
+                    if (HttpContext.Cache["sk"] == null)
+                    {
+                        FileStream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read);
+                        excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                        excelReader.IsFirstRowAsColumnNames = false;
+
+                        result = excelReader.AsDataSet();
+                        if (!units)
+                        {
+                            dt = IO.ConvertXSLXtoDataTable(result.Tables[1], sLookUpString);
+                        }
+                        else
+                        {
+                            dt = IO.ConvertXSLXtoDataTableUnits(result.Tables[1], sLookUpString);
+                        }
+                        HttpContext.Cache.Insert("sk", result, null, DateTime.Now.AddHours(2), System.Web.Caching.Cache.NoSlidingExpiration);
+                        excelReader.Close();
+                    }
+                    else
+                    {
+                        if (!units)
+                        {
+                            dt = IO.ConvertXSLXtoDataTable(result.Tables[1], sLookUpString);
+                        }
+                        else
+                        {
+                            dt = IO.ConvertXSLXtoDataTableUnits(result.Tables[1], sLookUpString);
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            { 
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// Read the Excel Distribution List
+        /// </summary>
+        public DataTable ReadDistributionListUnits(string sLookUpString, bool units)
+        {
+            DataTable dt = new DataTable();
+            DataSet resultUnits = HttpContext.Cache["units"] as DataSet;
+            string path = string.Format("{0}", Server.MapPath(Config.ExcelFilePath));
+
+            try
+            {
+                if (!System.IO.File.Exists(path))
+                {
+                    return null;
+                }
+                else
+                {
+                    if (HttpContext.Cache["units"] == null)
+                    {
+                        FileStream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Read);
+                        excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                        excelReader.IsFirstRowAsColumnNames = false;
+
+                        resultUnits = excelReader.AsDataSet();
+                        if (!units)
+                        {
+                            dt = IO.ConvertXSLXtoDataTable(resultUnits.Tables[1], sLookUpString);
+                        }
+                        else
+                        {
+                            dt = IO.ConvertXSLXtoDataTableUnits(resultUnits.Tables[1], sLookUpString);
+                        }
+                        HttpContext.Cache.Insert("units", resultUnits, null, DateTime.Now.AddHours(2), System.Web.Caching.Cache.NoSlidingExpiration);
+                        excelReader.Close();
+                    }
+                    else
+                    {
+                        if (!units)
+                        {
+                            dt = IO.ConvertXSLXtoDataTable(resultUnits.Tables[1], sLookUpString);
+                        }
+                        else
+                        {
+                            dt = IO.ConvertXSLXtoDataTableUnits(resultUnits.Tables[1], sLookUpString);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
             }
             return dt;
         }

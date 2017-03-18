@@ -224,16 +224,15 @@ namespace SGFastFlyers.Utility
                 try
                 {
                     int result;
+                    _newDataTable = GetDistinctRecords(dt, TobeDistinct);
                     if (int.TryParse(searchTerm, out result))
                     {
                         string _sqlWhere = "Column6='" + searchTerm + "'";
-                        _newDataTable = GetDistinctRecords(dt, TobeDistinct);
                         _newDataTable = _newDataTable.Select(_sqlWhere).CopyToDataTable();
                     }
                     else
                     {
                         string _sqlWhere = "Column3='" + searchTerm + "'";
-                        _newDataTable = GetDistinctRecords(dt, TobeDistinct);
                         _newDataTable = _newDataTable.Select(_sqlWhere).CopyToDataTable();
                     }
                 }
@@ -259,8 +258,7 @@ namespace SGFastFlyers.Utility
             DataTable _newDataTable = new DataTable();
             if (dt.Rows.Count > 0 && !string.IsNullOrEmpty(searchTerm))
             {
-                string[] splitTerm = searchTerm.Split(',');
-                string mainTerm = splitTerm[1].Trim();
+                string mainTerm = searchTerm.Substring(searchTerm.Length - 4).Trim();
                 if (!string.IsNullOrEmpty(mainTerm))
                 {
                     try
