@@ -34,49 +34,49 @@
         }
 
         if (QuotePrice.Quantity >= 1 && QuotePrice.Quantity < 20) {
-            QuotePrice.Cost = 55;
+            QuotePrice.Cost = 48;
             QuotePrice.DLSingleSided = 40;
             QuotePrice.DLDoubleSided = 43;
             QuotePrice.A5SingleSided = 52;
             QuotePrice.A5DoubleSided = 55.9;
         }
         if (QuotePrice.Quantity >= 20 && QuotePrice.Quantity < 50) {
-            QuotePrice.Cost = 54;
+            QuotePrice.Cost = 47;
             QuotePrice.DLSingleSided = 38;
             QuotePrice.DLDoubleSided = 41;
             QuotePrice.A5SingleSided = 49.4;
             QuotePrice.A5DoubleSided = 53.3;
         }
         if (QuotePrice.Quantity >= 50 && QuotePrice.Quantity < 75) {
-            QuotePrice.Cost = 53;
+            QuotePrice.Cost = 46;
             QuotePrice.DLSingleSided = 36;
             QuotePrice.DLDoubleSided = 41;
             QuotePrice.A5SingleSided = 46.8;
             QuotePrice.A5DoubleSided = 53.3;
         }
         if (QuotePrice.Quantity >= 75 && QuotePrice.Quantity <= 100) {
-            QuotePrice.Cost = 52;
+            QuotePrice.Cost = 45;
             QuotePrice.DLSingleSided = 36;
             QuotePrice.DLDoubleSided = 41;
             QuotePrice.A5SingleSided = 46.8;
             QuotePrice.A5DoubleSided = 53.3;
         }
         if (QuotePrice.Quantity >= 100 && QuotePrice.Quantity <= 200) {
-            QuotePrice.Cost = 51;
+            QuotePrice.Cost = 44;
             QuotePrice.DLSingleSided = 34;
             QuotePrice.DLDoubleSided = 38;
             QuotePrice.A5SingleSided = 44.2;
             QuotePrice.A5DoubleSided = 49.4;
         }
         if (QuotePrice.Quantity >= 200 && QuotePrice.Quantity < 300) {
-            QuotePrice.Cost = 50;
+            QuotePrice.Cost = 43;
             QuotePrice.DLSingleSided = 34;
             QuotePrice.DLDoubleSided = 38;
             QuotePrice.A5SingleSided = 44.2;
             QuotePrice.A5DoubleSided = 49.4;
         }
         if (QuotePrice.Quantity >= 300) {
-            QuotePrice.Cost = 48;
+            QuotePrice.Cost = 42;
             QuotePrice.DLSingleSided = 32;
             QuotePrice.DLDoubleSided = 36;
             QuotePrice.A5SingleSided = 41.6;

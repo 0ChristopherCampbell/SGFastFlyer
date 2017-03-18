@@ -26,7 +26,7 @@
 
             if (decimalQuantity >= 1 && decimalQuantity < 20)
             {
-                cost = 55;
+                cost = 48;
                 dlSingleSided = 40;
                 dlDoubleSided = 43;
                 A5SingleSided = 52;
@@ -35,7 +35,7 @@
 
             if (decimalQuantity >= 20 && decimalQuantity < 50)
             {
-                cost = 54;
+                cost = 47;
                 dlSingleSided = 38;
                 dlDoubleSided = 41;
                 A5SingleSided = 49.4m;
@@ -44,7 +44,7 @@
 
             if (decimalQuantity >= 50 && decimalQuantity < 75)
             {
-                cost = 53;
+                cost = 46;
                 dlSingleSided = 36;
                 dlDoubleSided = 41;
                 A5SingleSided = 46.8m;
@@ -53,7 +53,7 @@
 
             if (decimalQuantity >= 75 && decimalQuantity <= 100)
             {
-                cost = 52;
+                cost = 45;
                 dlSingleSided = 36;
                 dlDoubleSided = 41;
                 A5SingleSided = 46.8m;
@@ -62,7 +62,7 @@
 
             if (decimalQuantity >= 100 && decimalQuantity <= 200)
             {
-                cost = 51;
+                cost = 44;
                 dlSingleSided = 34;
                 dlDoubleSided = 38;
                 A5SingleSided = 44.2m;
@@ -71,7 +71,7 @@
 
             if (decimalQuantity >= 200 && decimalQuantity < 300)
             {
-                cost = 50;
+                cost = 43;
                 dlSingleSided = 34;
                 dlDoubleSided = 38;
                 A5SingleSided = 44.2m;
@@ -80,7 +80,7 @@
 
             if (decimalQuantity >= 300)
             {
-                cost = 48;
+                cost = 42;
                 dlSingleSided = 32;
                 dlDoubleSided = 36;
                 A5SingleSided = 41.6m;
@@ -88,6 +88,11 @@
             }
 
             cost = cost * decimalQuantity;
+            if (cost < 364)
+            {
+                /// Charge minimum cost of 400
+                return 400m;
+            }
 
             if (!isMetro)
             {
@@ -120,11 +125,7 @@
                 }
             }
 
-            if (cost < 364)
-            {
-                /// Charge minimum cost of 400
-                return 400m;
-            }
+           
 
             //GST
             cost = decimal.Multiply(cost, gst) + cost;
